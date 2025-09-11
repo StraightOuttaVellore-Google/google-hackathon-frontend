@@ -1,68 +1,64 @@
 import { useState } from 'react'
-import { useAuth } from './contexts/AuthContext'
+import { useTheme } from './contexts/ThemeContext'
 import StudyPage from './pages/study'
 import WellnessPage from './pages/wellness'
+import UserDropdown from './components/UserDropdown'
+import DarkModeToggle from './components/DarkModeToggle'
 
 export default function App() {
+  const { isDarkMode } = useTheme()
   const [isStudyMode, setIsStudyMode] = useState(true)
-  const { user, signOut } = useAuth()
 
   const toggleMode = () => {
     setIsStudyMode(!isStudyMode)
   }
 
-  const handleSignOut = async () => {
-    await signOut()
-  }
+  const bgClasses = isStudyMode 
+    ? 'bg-gradient-to-br from-sky-50 to-sky-100 dark:from-sky-950 dark:to-black'
+    : 'bg-gradient-to-br from-teal-50 to-teal-100 dark:from-teal-950 dark:to-black'
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className={`${isDarkMode ? 'dark' : ''} min-h-screen transition-all duration-500 ${bgClasses}`}>
+      {/* Dark Mode Toggle - Top Left */}
+      <div className="fixed top-6 left-6 z-50">
+        <DarkModeToggle />
+      </div>
+
       {/* Floating Toggle Switch */}
       <div className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50">
-        <div className="bg-white rounded-full p-1 shadow-lg border border-gray-200">
+        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full p-1 shadow-xl border border-gray-200 dark:border-gray-600">
           <div className="flex items-center">
             <button
               onClick={toggleMode}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+              className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-500 transform ${
                 isStudyMode 
-                  ? 'bg-blue-500 text-white shadow-md' 
-                  : 'text-gray-600 hover:text-gray-800'
+                  ? 'bg-gradient-to-r from-sky-500 to-sky-600 text-white shadow-lg scale-105' 
+                  : 'text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 hover:bg-white/20'
               }`}
             >
-              Study
+              📚 Study
             </button>
             <button
               onClick={toggleMode}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+              className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-500 transform ${
                 !isStudyMode 
-                  ? 'bg-green-500 text-white shadow-md' 
-                  : 'text-gray-600 hover:text-gray-800'
+                  ? 'bg-gradient-to-r from-teal-500 to-teal-600 text-white shadow-lg scale-105' 
+                  : 'text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 hover:bg-white/20'
               }`}
             >
-              Wellness
+              🌿 Wellness
             </button>
           </div>
         </div>
       </div>
 
-      {/* User Info & Logout */}
+      {/* User Dropdown - Top Right */}
       <div className="fixed top-6 right-6 z-50">
-        <div className="bg-white rounded-lg p-3 shadow-lg border border-gray-200 flex items-center space-x-3">
-          <div className="text-sm">
-            <p className="text-gray-600">Welcome,</p>
-            <p className="font-medium text-gray-800">{user?.email}</p>
-          </div>
-          <button
-            onClick={handleSignOut}
-            className="px-3 py-1 bg-red-500 text-white text-sm rounded-md hover:bg-red-600 transition-colors"
-          >
-            Logout
-          </button>
-        </div>
+        <UserDropdown />
       </div>
 
       {/* Page Content */}
-      <div className="pt-20">
+      <div className="pt-24">
         {isStudyMode ? <StudyPage /> : <WellnessPage />}
       </div>
     </div>
