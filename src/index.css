@@ -1,3 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap');
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
+
+/* CSS Variables for Hero Section Spacing */
+:root {
+  --header-height: 64px;
+  --spacer-4: 36px;
+  --spacer-6: 60px;
+}
+
+
+/* Twinkling stars animation */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
+}

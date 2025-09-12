@@ -37,24 +37,39 @@ export const AuthProvider = ({ children }) => {
   }, [])
 
   const signInWithEmail = async (email, password) => {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    })
-    return { data, error }
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      })
+      return { data, error }
+    } catch (error) {
+      console.error('Sign in error:', error)
+      return { data: null, error: { message: 'Failed to sign in. Please try again.' } }
+    }
   }
 
   const signUpWithEmail = async (email, password) => {
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-    })
-    return { data, error }
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+      })
+      return { data, error }
+    } catch (error) {
+      console.error('Sign up error:', error)
+      return { data: null, error: { message: 'Failed to sign up. Please try again.' } }
+    }
   }
 
   const signOut = async () => {
-    const { error } = await supabase.auth.signOut()
-    return { error }
+    try {
+      const { error } = await supabase.auth.signOut()
+      return { error }
+    } catch (error) {
+      console.error('Sign out error:', error)
+      return { error: { message: 'Failed to sign out. Please try again.' } }
+    }
   }
 
   const value = {

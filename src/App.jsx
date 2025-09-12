@@ -1,9 +1,10 @@
+
 import { useState } from 'react'
 import { useTheme } from './contexts/ThemeContext'
 import StudyPage from './pages/study'
 import WellnessPage from './pages/wellness'
-import UserDropdown from './components/UserDropdown'
 import DarkModeToggle from './components/DarkModeToggle'
+import UserDropdown from './components/UserDropdown'
 
 export default function App() {
   const { isDarkMode } = useTheme()
@@ -22,6 +23,11 @@ export default function App() {
       {/* Dark Mode Toggle - Top Left */}
       <div className="fixed top-6 left-6 z-50">
         <DarkModeToggle />
+      </div>
+
+      {/* User Dropdown - Top Right */}
+      <div className="fixed top-6 right-6 z-50">
+        <UserDropdown />
       </div>
 
       {/* Floating Toggle Switch */}
@@ -50,11 +56,6 @@ export default function App() {
             </button>
           </div>
         </div>
-      </div>
-
-      {/* User Dropdown - Top Right */}
-      <div className="fixed top-6 right-6 z-50">
-        <UserDropdown />
       </div>
 
       {/* Page Content */}
