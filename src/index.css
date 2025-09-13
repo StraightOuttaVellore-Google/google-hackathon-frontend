@@ -8,8 +8,142 @@
   --header-height: 64px;
   --spacer-4: 36px;
   --spacer-6: 60px;
+  
+  /* Gemini Card Variables */
+  --card-asset-ratio: 16/9;
+  --card-asset-width: 214px;
+  --card-asset-width-tablet: 140px;
+  --spacer-md: 16px;
+  --spacer-lg: 24px;
+  --surfaces-surface-container-bright: #121212;
 }
 
+
+/* Gemini Action Card Styles */
+.gemini-action-card {
+  cursor: pointer;
+  position: relative;
+}
+
+.gemini-action-card:hover {
+  border: 2px solid transparent !important;
+  background: linear-gradient(var(--surfaces-surface-container-bright), var(--surfaces-surface-container-bright)) padding-box,
+              linear-gradient(90deg, #3b6bff, #2e96ff 65%, #acb7ff) border-box !important;
+}
+
+.gemini-action-card:hover .external-link-icon {
+  color: #add8e6 !important;
+}
+
+/* Gemini Loader Dots */
+.gemini-loader-dot {
+  border: none;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* Container for pushing effect */
+.gemini-loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 0 auto;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 30px;
+  padding: 0 40px;
+  gap: 20px;
+}
+
+
+.gemini-loader-dot--inactive {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid rgba(224, 224, 224, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(1);
+}
+
+.gemini-loader-dot--inactive:hover {
+  border: 1px solid rgba(66, 133, 244, 0.5);
+  box-shadow: 0 0 8px rgba(66, 133, 244, 0.3);
+  transform: scale(1.1);
+}
+
+.gemini-loader-dot--active {
+  width: 80px;
+  height: 18px;
+  border-radius: 999px;
+  background: transparent;
+  border: 2px solid #4285F4;
+  box-shadow: 
+    0 0 10px rgba(66, 133, 244, 0.6),
+    0 0 20px rgba(66, 133, 244, 0.4),
+    0 0 30px rgba(66, 133, 244, 0.3),
+    0 0 40px rgba(66, 133, 244, 0.2);
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(1.1);
+  animation: expandPulse 0.3s ease-out;
+}
+
+@keyframes expandPulse {
+  0% {
+    transform: scale(1);
+    width: 18px;
+  }
+  50% {
+    transform: scale(1.15);
+    width: 80px;
+  }
+  100% {
+    transform: scale(1.1);
+    width: 80px;
+  }
+}
+
+.gemini-loader-dot--active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #4285F4, #A5A1F7);
+  border-radius: 999px;
+  animation: gemini-loader-fill 4s ease-in-out forwards;
+}
+
+@keyframes gemini-loader-fill {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+/* Responsive card asset widths */
+@media (max-width: 768px) {
+  .gemini-action-card .card-asset {
+    width: 100% !important;
+    margin-bottom: var(--spacer-md);
+  }
+  
+  .gemini-action-card {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .gemini-action-card .card-asset {
+    width: var(--card-asset-width-tablet) !important;
+  }
+}
 
 /* Twinkling stars animation */
 @keyframes twinkle {
