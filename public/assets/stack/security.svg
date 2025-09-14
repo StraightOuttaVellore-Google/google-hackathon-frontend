@@ -1,0 +1,19 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="securityGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#06B6D4;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#0891B2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0E7490;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="securityAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#22D3EE;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#67E8F9;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" rx="20" fill="url(#securityGrad)"/>
+  <path d="M100 20L150 35V100C150 140 100 160 100 160S50 140 50 100V35L100 20Z" fill="rgba(255,255,255,0.1)"/>
+  <path d="M75 70L85 80L125 50" stroke="url(#securityAccent)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="100" cy="60" r="6" fill="url(#securityAccent)"/>
+  <rect x="85" y="90" width="30" height="12" rx="6" fill="url(#securityAccent)" opacity="0.4"/>
+  <text x="100" y="180" text-anchor="middle" fill="white" font-family="Arial" font-size="16" font-weight="bold">AES-256 + OAuth 2.0</text>
+</svg>
