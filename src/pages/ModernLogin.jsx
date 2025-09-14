@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
+import { useTheme } from '../contexts/ThemeContext'
+import { Sun, Moon } from 'lucide-react'
 
 export default function ModernLogin() {
   const navigate = useNavigate()
@@ -11,6 +13,7 @@ export default function ModernLogin() {
   const [message, setMessage] = useState('')
   
   const { signInWithEmail, signUpWithEmail } = useAuth()
+  const { isDarkMode, toggleDarkMode } = useTheme()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -38,126 +41,202 @@ export default function ModernLogin() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
-        {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center space-x-2 mb-6">
-            <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
-              <span className="text-white font-bold text-lg">★</span>
-            </div>
-            <span className="text-2xl font-bold text-white">Voice Journal</span>
-          </div>
-          <h1 className="text-3xl font-bold text-white mb-2">
-            {isSignUp ? 'Create your account' : 'Welcome back'}
-          </h1>
-          <p className="text-slate-400">
-            {isSignUp ? 'Start your wellness journey today' : 'Sign in to continue your journey'}
-          </p>
-        </div>
+    <div className={`min-h-screen flex items-center justify-center p-4 ${
+      isDarkMode ? 'bg-black' : 'bg-white'
+    }`}>
+      {/* Logo - Top Left (Clickable) */}
+      <button 
+        onClick={() => navigate('/')}
+        className="absolute top-6 left-6 hover:opacity-80 transition-opacity"
+      >
+        <span className={`font-medium text-2xl tracking-wide ${
+          isDarkMode ? 'text-white' : 'text-gray-900'
+        }`} style={{ 
+          fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' 
+        }}>
+          Sahayata आवाज़AI
+        </span>
+      </button>
 
-        {/* Form */}
-        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 shadow-2xl">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Email Field */}
-            <div className="space-y-2">
-              <label htmlFor="email" className="text-sm font-medium text-slate-200">
-                Email address
-              </label>
-              <input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                placeholder="Enter your email"
-                required
-              />
-            </div>
+      {/* Theme Toggle - Top Right */}
+      <button
+        onClick={toggleDarkMode}
+        className={`absolute top-6 right-6 p-2 rounded-lg transition-colors ${
+          isDarkMode 
+            ? 'bg-gray-800 hover:bg-gray-700 text-white' 
+            : 'bg-gray-100 hover:bg-gray-200 text-gray-900'
+        }`}
+      >
+        {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+      </button>
 
-            {/* Password Field */}
-            <div className="space-y-2">
-              <label htmlFor="password" className="text-sm font-medium text-slate-200">
-                Password
-              </label>
-              <input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                placeholder="Enter your password"
-                required
-                minLength={6}
-              />
-            </div>
-
-            {/* Message */}
-            {message && (
-              <div className={`p-4 rounded-xl text-sm ${
-                message.includes('Check your email') 
-                  ? 'bg-green-500/20 text-green-300 border border-green-500/30' 
-                  : 'bg-red-500/20 text-red-300 border border-red-500/30'
-              }`}>
-                {message}
-              </div>
-            )}
-
-            {/* Submit Button */}
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-3 px-4 rounded-xl font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-[1.02] active:scale-[0.98]"
-            >
-              {loading ? (
-                <div className="flex items-center justify-center space-x-2">
-                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                  <span>Loading...</span>
+      {/* Main Form Container - Larger Size */}
+      <div className="w-full max-w-lg">
+        <div className={`${
+          isDarkMode 
+            ? 'bg-black' 
+            : 'bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-2xl'
+        } p-8`}>
+          <div className="flex flex-col gap-6">
+            <form onSubmit={handleSubmit}>
+              <div className="flex flex-col gap-6">
+                <div className="flex flex-col items-center gap-2">
+                  <h1 className={`text-3xl font-bold ${
+                    isDarkMode ? 'text-white' : 'text-gray-900'
+                  }`} style={{ 
+                    fontFamily: 'Arial, Helvetica, sans-serif' 
+                  }}>
+                    {isSignUp ? 'Welcome to Sahayata' : 'Welcome to Sahayata'}
+                  </h1>
+                  <div className={`text-center text-sm ${
+                    isDarkMode ? 'text-gray-300' : 'text-gray-600'
+                  }`}>
+                    {isSignUp ? "Don't have an account? " : "Already have an account? "}
+                    <button
+                      type="button"
+                      onClick={() => setIsSignUp(!isSignUp)}
+                      className="underline underline-offset-4 hover:text-blue-500 transition-colors"
+                    >
+                      {isSignUp ? 'Sign in' : 'Sign up'}
+                    </button>
+                  </div>
                 </div>
-              ) : (
-                isSignUp ? 'Create Account' : 'Sign In'
-              )}
-            </button>
-          </form>
 
-          {/* Toggle Sign Up/Sign In */}
-          <div className="mt-6 text-center">
-            <button
-              onClick={() => setIsSignUp(!isSignUp)}
-              className="text-slate-300 hover:text-white text-sm font-medium transition-colors"
-            >
-              {isSignUp 
-                ? 'Already have an account? Sign in' 
-                : "Don't have an account? Sign up"
-              }
-            </button>
-          </div>
+                <div className="flex flex-col gap-6">
+                  <div className="grid gap-3">
+                    <label 
+                      htmlFor="email" 
+                      className={`text-sm font-medium ${
+                        isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                      }`}
+                    >
+                      Email
+                    </label>
+                    <input
+                      id="email"
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className={`w-full px-3 py-2 rounded-lg border transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                        isDarkMode 
+                          ? 'bg-gray-800 border-gray-600 text-white placeholder-gray-400' 
+                          : 'bg-white/50 border-gray-300 text-gray-900 placeholder-gray-500'
+                      }`}
+                      placeholder="m@example.com"
+                      required
+                    />
+                  </div>
 
-          {/* Divider */}
-          <div className="mt-6 flex items-center">
-            <div className="flex-1 border-t border-white/20"></div>
-            <span className="px-4 text-slate-400 text-sm">or</span>
-            <div className="flex-1 border-t border-white/20"></div>
-          </div>
+                  <div className="grid gap-3">
+                    <label 
+                      htmlFor="password" 
+                      className={`text-sm font-medium ${
+                        isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                      }`}
+                    >
+                      Password
+                    </label>
+                    <input
+                      id="password"
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className={`w-full px-3 py-2 rounded-lg border transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                        isDarkMode 
+                          ? 'bg-gray-800 border-gray-600 text-white placeholder-gray-400' 
+                          : 'bg-white/50 border-gray-300 text-gray-900 placeholder-gray-500'
+                      }`}
+                      placeholder="Enter your password"
+                      required
+                      minLength={6}
+                    />
+                  </div>
 
-          {/* Social Login Buttons */}
-          <div className="mt-6 space-y-3">
-            <button className="w-full bg-white/10 hover:bg-white/20 border border-white/20 text-white py-3 px-4 rounded-xl font-medium transition-all flex items-center justify-center space-x-2">
-              <svg className="w-5 h-5" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-              </svg>
-              <span>Continue with Google</span>
-            </button>
-            
-            <button className="w-full bg-white/10 hover:bg-white/20 border border-white/20 text-white py-3 px-4 rounded-xl font-medium transition-all flex items-center justify-center space-x-2">
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.746-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24.009 12.017 24.009c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641.001.012.001z"/>
-              </svg>
-              <span>Continue with GitHub</span>
-            </button>
+                  {message && (
+                    <div className={`p-3 rounded-lg text-sm ${
+                      message.includes('Check your email') 
+                        ? (isDarkMode ? 'bg-green-900/30 text-green-300' : 'bg-green-100 text-green-700')
+                        : (isDarkMode ? 'bg-red-900/30 text-red-300' : 'bg-red-100 text-red-700')
+                    }`}>
+                      {message}
+                    </div>
+                  )}
+
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {loading ? (
+                      <div className="flex items-center justify-center space-x-2">
+                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                        <span>Loading...</span>
+                      </div>
+                    ) : (
+                      isSignUp ? 'Sign Up' : 'Sign In'
+                    )}
+                  </button>
+                </div>
+
+                <div className={`relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center ${
+                  isDarkMode ? 'after:border-gray-600' : 'after:border-gray-300'
+                } after:border-t`}>
+                  <span className={`relative z-10 px-2 ${
+                    isDarkMode ? 'bg-black text-gray-400' : 'bg-white/10 text-gray-500'
+                  }`}>
+                    Or
+                  </span>
+                </div>
+
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <button 
+                    type="button" 
+                    className={`w-full py-2 px-4 rounded-lg border font-medium transition-all duration-200 flex items-center justify-center gap-2 ${
+                      isDarkMode
+                        ? 'border-gray-600 text-gray-300 hover:bg-gray-800'
+                        : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                    }`}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-4 h-4">
+                      <path
+                        d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"
+                        fill="currentColor"
+                      />
+                    </svg>
+                    Apple
+                  </button>
+                  <button 
+                    type="button" 
+                    className={`w-full py-2 px-4 rounded-lg border font-medium transition-all duration-200 flex items-center justify-center gap-2 ${
+                      isDarkMode
+                        ? 'border-gray-600 text-gray-300 hover:bg-gray-800'
+                        : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                    }`}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-4 h-4">
+                      <path
+                        d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"
+                        fill="currentColor"
+                      />
+                    </svg>
+                    Google
+                  </button>
+                </div>
+              </div>
+            </form>
+
+            <div className={`text-center text-xs ${
+              isDarkMode ? 'text-gray-400' : 'text-gray-500'
+            }`}>
+              By clicking continue, you agree to our{' '}
+              <a href="#" className="underline underline-offset-4 hover:text-blue-500 transition-colors">
+                Terms of Service
+              </a>{' '}
+              and{' '}
+              <a href="#" className="underline underline-offset-4 hover:text-blue-500 transition-colors">
+                Privacy Policy
+              </a>.
+            </div>
           </div>
         </div>
 
@@ -165,7 +244,9 @@ export default function ModernLogin() {
         <div className="mt-6 text-center">
           <button 
             onClick={() => window.history.back()}
-            className="text-slate-400 hover:text-white text-sm transition-colors"
+            className={`text-sm transition-colors ${
+              isDarkMode ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-700'
+            }`}
           >
             ← Back to home
           </button>
