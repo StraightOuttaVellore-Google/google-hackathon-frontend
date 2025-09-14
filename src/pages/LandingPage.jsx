@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import UserDropdown from '../components/UserDropdown'
+import TechnicalArchitecture from '../components/TechnicalArchitecture'
 import { motion, AnimatePresence } from 'framer-motion'
 
 
@@ -191,7 +192,7 @@ export default function LandingPage() {
       setShowStickyNav(shouldShowSticky)
 
       // Update active section based on scroll position
-      const sections = ['features-section', 'research-section', 'safety-section', 'architecture-section', 'pricing-section']
+      const sections = ['features-section', 'research-section', 'architecture-section', 'safety-section', 'pricing-section']
       let current = 'features-section'
       
       for (const sectionId of sections) {
@@ -719,13 +720,13 @@ export default function LandingPage() {
            }}
          >
            <div className="flex flex-wrap justify-center gap-6">
-             {[
-               { name: 'Features', target: 'features-section' },
-               { name: 'Research', target: 'research-section' },
-               { name: 'Safety', target: 'safety-section' },
-               { name: 'Architecture', target: 'architecture-section' },
-               { name: 'Pricing', target: 'pricing-section' }
-               ].map((item, index) => (
+              {[
+                { name: 'Features', target: 'features-section' },
+                { name: 'Research', target: 'research-section' },
+                { name: 'Architecture', target: 'architecture-section' },
+                { name: 'Safety', target: 'safety-section' },
+                { name: 'Pricing', target: 'pricing-section' }
+                ].map((item, index) => (
                  <button
                    key={item.name}
                    className={`px-4 py-2 rounded-full text-lg font-medium transition-all duration-300 ${
@@ -767,23 +768,23 @@ export default function LandingPage() {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto">
             {/* Voice Journaling */}
             <div 
               className="relative transition-all duration-300 hover:scale-105 cursor-pointer group"
               style={{
-                background: 'var(--surfaces-surface-container-bright, #1a1a1a)',
+                background: '#000000',
                 borderRadius: '24px',
-                border: '1px solid rgba(255,255,255,0.15)',
-                minHeight: '600px',
-                padding: '24px'
+                border: '1px solid rgba(255,255,255,0.3)',
+                minHeight: '500px',
+                padding: '32px'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.border = '1px solid rgba(66, 133, 244, 0.5)';
-                e.currentTarget.style.boxShadow = '0 0 20px rgba(66, 133, 244, 0.2), 0 0 40px rgba(66, 133, 244, 0.1)';
+                e.currentTarget.style.border = '1px solid rgba(66, 133, 244, 0.6)';
+                e.currentTarget.style.boxShadow = '0 0 20px rgba(66, 133, 244, 0.3), 0 0 40px rgba(66, 133, 244, 0.15)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.border = '1px solid rgba(255,255,255,0.15)';
+                e.currentTarget.style.border = '1px solid rgba(255,255,255,0.3)';
                 e.currentTarget.style.boxShadow = 'none';
               }}
             >
@@ -795,13 +796,13 @@ export default function LandingPage() {
                     className="w-full h-full object-contain"
                   />
                 </div>
-                <div className="text-xs uppercase tracking-wider text-gray-400 mb-3 font-medium">
+                <div className="text-xs uppercase tracking-wider text-gray-300 mb-3 font-medium">
                   GENERAL AVAILABILITY
                 </div>
                 <h3 className="text-2xl font-bold text-white mb-4" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
                   Voice Journaling
                 </h3>
-                <p className="text-gray-400 mb-6 leading-relaxed">
+                <p className="text-gray-300 mb-6 leading-relaxed font-medium">
                   Express your thoughts naturally through voice.<br />
                   Our AI understands context and provides gentle guidance.
                 </p>
@@ -821,18 +822,18 @@ export default function LandingPage() {
             <div 
               className="relative transition-all duration-300 hover:scale-105 cursor-pointer group"
               style={{
-                background: 'var(--surfaces-surface-container-bright, #1a1a1a)',
+                background: '#000000',
                 borderRadius: '24px',
-                border: '1px solid rgba(255,255,255,0.15)',
-                minHeight: '600px',
-                padding: '24px'
+                border: '1px solid rgba(255,255,255,0.3)',
+                minHeight: '500px',
+                padding: '32px'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.border = '1px solid rgba(66, 133, 244, 0.5)';
-                e.currentTarget.style.boxShadow = '0 0 20px rgba(66, 133, 244, 0.2), 0 0 40px rgba(66, 133, 244, 0.1)';
+                e.currentTarget.style.border = '1px solid rgba(66, 133, 244, 0.6)';
+                e.currentTarget.style.boxShadow = '0 0 20px rgba(66, 133, 244, 0.3), 0 0 40px rgba(66, 133, 244, 0.15)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.border = '1px solid rgba(255,255,255,0.15)';
+                e.currentTarget.style.border = '1px solid rgba(255,255,255,0.3)';
                 e.currentTarget.style.boxShadow = 'none';
               }}
             >
@@ -844,13 +845,13 @@ export default function LandingPage() {
                     className="w-full h-full object-contain"
                   />
                 </div>
-                <div className="text-xs uppercase tracking-wider text-gray-400 mb-3 font-medium">
+                <div className="text-xs uppercase tracking-wider text-gray-300 mb-3 font-medium">
                   GENERAL AVAILABILITY
                 </div>
                 <h3 className="text-2xl font-bold text-white mb-4" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
                   Mood Dashboard
                 </h3>
-                <p className="text-gray-400 mb-6 leading-relaxed">
+                <p className="text-gray-300 mb-6 leading-relaxed font-medium">
                   Track patterns, set goals, and understand your<br />
                   emotional landscape with beautiful visualizations.
                 </p>
@@ -868,20 +869,20 @@ export default function LandingPage() {
 
             {/* Study Matrix */}
             <div 
-              className="relative transition-all duration-300 hover:scale-105 cursor-pointer group sm:col-span-2 lg:col-span-1"
+              className="relative transition-all duration-300 hover:scale-105 cursor-pointer group md:col-span-2"
               style={{
-                background: 'var(--surfaces-surface-container-bright, #1a1a1a)',
+                background: '#000000',
                 borderRadius: '24px',
-                border: '1px solid rgba(255,255,255,0.15)',
-                minHeight: '600px',
-                padding: '24px'
+                border: '1px solid rgba(255,255,255,0.3)',
+                minHeight: '500px',
+                padding: '32px'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.border = '1px solid rgba(66, 133, 244, 0.5)';
-                e.currentTarget.style.boxShadow = '0 0 20px rgba(66, 133, 244, 0.2), 0 0 40px rgba(66, 133, 244, 0.1)';
+                e.currentTarget.style.border = '1px solid rgba(66, 133, 244, 0.6)';
+                e.currentTarget.style.boxShadow = '0 0 20px rgba(66, 133, 244, 0.3), 0 0 40px rgba(66, 133, 244, 0.15)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.border = '1px solid rgba(255,255,255,0.15)';
+                e.currentTarget.style.border = '1px solid rgba(255,255,255,0.3)';
                 e.currentTarget.style.boxShadow = 'none';
               }}
             >
@@ -893,13 +894,13 @@ export default function LandingPage() {
                     className="w-full h-full object-contain"
                   />
                 </div>
-                <div className="text-xs uppercase tracking-wider text-gray-400 mb-3 font-medium">
+                <div className="text-xs uppercase tracking-wider text-gray-300 mb-3 font-medium">
                   GENERAL AVAILABILITY
                 </div>
                 <h3 className="text-2xl font-bold text-white mb-4" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
                   Study Matrix
                 </h3>
-                <p className="text-gray-400 mb-6 leading-relaxed">
+                <p className="text-gray-300 mb-6 leading-relaxed font-medium">
                   Organize your learning journey with AI-powered<br />
                   study plans and progress tracking tools.
                 </p>
@@ -919,106 +920,190 @@ export default function LandingPage() {
       </section>
 
       {/* Research Section */}
-      <section id="research-section" className="py-20 px-6" style={{ background: 'transparent' }}>
-        <div className="container mx-auto max-w-6xl">
+      <section id="research-section" className="py-20 px-6" style={{ background: '#000000' }}>
+        <div className="container mx-auto max-w-7xl">
+          {/* Header */}
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-100 mb-8">
+            <h2 className="text-5xl md:text-6xl font-bold text-white mb-8" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
               Research & Science
             </h2>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-              Built on evidence-based practices and cutting-edge AI research
+            <p className="text-2xl text-gray-300 max-w-3xl mx-auto font-medium" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
+              Our research advances the science of artificial intelligence<br />
+              and its applications in mental health and wellness.
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h3 className="text-3xl font-bold text-white mb-6">Evidence-Based Approach</h3>
-              <p className="text-lg text-gray-400 mb-8">
-                Our platform is built on proven psychological frameworks including Cognitive Behavioral Therapy (CBT), 
-                mindfulness-based interventions, and positive psychology principles.
-              </p>
-              
-              <div className="space-y-6">
-                <div className="flex items-start">
-                  <div className="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center mr-4 mt-1">
-                    <span className="text-blue-400 font-bold">1</span>
-                  </div>
-                  <div>
-                    <h4 className="text-xl font-bold text-white mb-2">CBT Integration</h4>
-                    <p className="text-gray-400">Cognitive restructuring techniques help identify and challenge negative thought patterns.</p>
-                  </div>
+          {/* Research Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Research Card 1 */}
+            <a href="/article/article1" className="group cursor-pointer block">
+              <div className="bg-black rounded-2xl overflow-hidden border border-gray-300/30 hover:border-blue-400/60 transition-all duration-300">
+                <div className="aspect-video overflow-hidden">
+                  <img 
+                    src="/images/img6.png" 
+                    alt="AI-Driven Conversational Agents for Youth"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
                 </div>
-                
-                <div className="flex items-start">
-                  <div className="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center mr-4 mt-1">
-                    <span className="text-green-400 font-bold">2</span>
+                <div className="p-6 relative z-10">
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="text-sm text-gray-300 font-medium">May 2025</span>
+                    <span className="text-sm text-gray-500">•</span>
+                    <span className="text-sm text-gray-300 font-medium">AI Research</span>
                   </div>
-                  <div>
-                    <h4 className="text-xl font-bold text-white mb-2">Mindfulness Practices</h4>
-                    <p className="text-gray-400">Guided meditation and awareness exercises promote emotional regulation and stress reduction.</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start">
-                  <div className="w-8 h-8 bg-purple-500/20 rounded-full flex items-center justify-center mr-4 mt-1">
-                    <span className="text-purple-400 font-bold">3</span>
-                  </div>
-                  <div>
-                    <h4 className="text-xl font-bold text-white mb-2">Positive Psychology</h4>
-                    <p className="text-gray-400">Strengths-based approach focusing on building resilience and well-being.</p>
-                  </div>
+                  <h3 className="text-xl font-semibold text-white mb-3" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
+                    AI-Driven Conversational Agents for Youth
+                  </h3>
+                  <p className="text-gray-300 mb-4 leading-relaxed font-medium">
+                    Feng et al., JMIR Mental Health, May 14, 2025 — Systematic review & meta-analysis of 14 studies (1,974 youth, ages 12–25). Found AI chatbots significantly reduced depressive symptoms, with moderate-to-large effect sizes, supporting their role as scalable mental health interventions.
+                  </p>
+                  <span className="text-gray-300 group-hover:text-white transition-colors duration-200 inline-flex items-center font-medium">
+                    Learn more →
+                  </span>
                 </div>
               </div>
-            </div>
-            
-            <div className="bg-gray-900/50 rounded-2xl p-8 border border-gray-800">
-              <h4 className="text-2xl font-bold text-white mb-6">Research Partners</h4>
-              <div className="space-y-4">
-                <div className="flex items-center justify-between py-3 border-b border-gray-800">
-                  <span className="text-gray-300">Stanford University</span>
-                  <span className="text-blue-400 text-sm">AI & Mental Health</span>
+            </a>
+
+            {/* Research Card 2 */}
+            <a href="/article/article2" className="group cursor-pointer block">
+              <div className="bg-black rounded-2xl overflow-hidden border border-gray-300/30 hover:border-blue-400/60 transition-all duration-300">
+                <div className="aspect-video overflow-hidden">
+                  <img 
+                    src="/images/img6.png" 
+                    alt="Voice-Based Depression Recognition"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
                 </div>
-                <div className="flex items-center justify-between py-3 border-b border-gray-800">
-                  <span className="text-gray-300">MIT Media Lab</span>
-                  <span className="text-green-400 text-sm">Human-Computer Interaction</span>
-                </div>
-                <div className="flex items-center justify-between py-3 border-b border-gray-800">
-                  <span className="text-gray-300">Harvard Medical School</span>
-                  <span className="text-purple-400 text-sm">Digital Therapeutics</span>
-                </div>
-                <div className="flex items-center justify-between py-3">
-                  <span className="text-gray-300">NIMH</span>
-                  <span className="text-orange-400 text-sm">Clinical Validation</span>
+                <div className="p-6 relative z-10">
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="text-sm text-gray-300 font-medium">June 2024</span>
+                    <span className="text-sm text-gray-500">•</span>
+                    <span className="text-sm text-gray-300 font-medium">Machine Learning</span>
+                  </div>
+                  <h3 className="text-xl font-semibold text-white mb-3" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
+                    Voice-Based Depression Recognition
+                  </h3>
+                  <p className="text-gray-300 mb-4 leading-relaxed font-medium">
+                    Huang et al., Scientific Reports, June 11, 2024 — Developed a voice-based pre-training model (wav2vec 2.0) tested on the DAIC-WOZ dataset. Achieved 96.5% accuracy for binary classification of depression, demonstrating the strong potential of acoustic features in mental health detection.
+                  </p>
+                  <span className="text-gray-300 group-hover:text-white transition-colors duration-200 inline-flex items-center font-medium">
+                    Learn more →
+                  </span>
                 </div>
               </div>
-            </div>
+            </a>
+
+            {/* Research Card 3 */}
+            <a href="/article/article3" className="group cursor-pointer block">
+              <div className="bg-black rounded-2xl overflow-hidden border border-gray-300/30 hover:border-blue-400/60 transition-all duration-300">
+                <div className="aspect-video overflow-hidden">
+                  <img 
+                    src="/images/img6.png" 
+                    alt="STARS Guided Chatbot Trial"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-6 relative z-10">
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="text-sm text-gray-300 font-medium">January 2025</span>
+                    <span className="text-sm text-gray-500">•</span>
+                    <span className="text-sm text-gray-300 font-medium">Digital Health</span>
+                  </div>
+                  <h3 className="text-xl font-semibold text-white mb-3" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
+                    STARS Guided Chatbot Trial
+                  </h3>
+                  <p className="text-gray-300 mb-4 leading-relaxed font-medium">
+                    de Graaff et al., JMIR Mental Health, January 2025 — Evaluated an 8-week guided chatbot intervention with Jordanian youth (ages 18–21). Found the chatbot feasible and acceptable in low- and middle-income country settings, while noting challenges in retention and personalization.
+                  </p>
+                  <span className="text-gray-300 group-hover:text-white transition-colors duration-200 inline-flex items-center font-medium">
+                    Learn more →
+                  </span>
+                </div>
+              </div>
+            </a>
+
+            {/* Research Card 4 */}
+            <a href="/article/article4" className="group cursor-pointer block">
+              <div className="bg-black rounded-2xl overflow-hidden border border-gray-300/30 hover:border-blue-400/60 transition-all duration-300">
+                <div className="aspect-video overflow-hidden">
+                  <img 
+                    src="/images/img6.png" 
+                    alt="Federated Learning in Mental Health"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-6 relative z-10">
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="text-sm text-gray-300 font-medium">March 2024</span>
+                    <span className="text-sm text-gray-500">•</span>
+                    <span className="text-sm text-gray-300 font-medium">Privacy & Security</span>
+                  </div>
+                  <h3 className="text-xl font-semibold text-white mb-3" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
+                    Federated Learning in Mental Health
+                  </h3>
+                  <p className="text-gray-300 mb-4 leading-relaxed font-medium">
+                    Frontiers in Digital Health, March 2024 — Systematic review on applying federated learning to mental health and activity recognition. Showed FL can preserve privacy while enabling collaborative AI training on sensitive data, though challenges in bias, heterogeneity, and security remain.
+                  </p>
+                  <span className="text-gray-300 group-hover:text-white transition-colors duration-200 inline-flex items-center font-medium">
+                    Learn more →
+                  </span>
+                </div>
+              </div>
+            </a>
           </div>
         </div>
       </section>
 
+      <TechnicalArchitecture />
+
       {/* Safety Section */}
-      <section id="safety-section" className="py-20 px-6" style={{ background: 'transparent' }}>
+      <section id="safety-section" className="py-20 px-6" style={{ background: '#000000' }}>
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-100 mb-8">
+            <h2 className="text-5xl md:text-6xl font-bold text-white mb-8" style={{ 
+              fontFamily: 'Google Sans, Arial, Helvetica, sans-serif',
+              textShadow: '0 0 15px rgba(255, 255, 255, 0.4)',
+              filter: 'brightness(1.15)',
+              WebkitFontSmoothing: 'antialiased'
+            }}>
               Safety & Privacy
             </h2>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+            <p className="text-2xl text-gray-300 max-w-3xl mx-auto font-medium" style={{ 
+              fontFamily: 'Google Sans, Arial, Helvetica, sans-serif',
+              textShadow: '0 0 10px rgba(255, 255, 255, 0.25)',
+              filter: 'brightness(1.1)',
+              WebkitFontSmoothing: 'antialiased'
+            }}>
               Your mental health data deserves the highest level of protection and care
             </p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
             {/* Data Protection */}
-            <div className="bg-gray-900/50 rounded-2xl p-8 border border-gray-800 text-center">
+            <div className="bg-black rounded-2xl p-8 border border-gray-300/30 hover:border-blue-400/60 transition-all duration-300 text-center">
               <div className="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
                 <span className="text-3xl">🔒</span>
               </div>
-              <h3 className="text-2xl font-bold text-white mb-4">End-to-End Encryption</h3>
-              <p className="text-gray-400 mb-6">
+              <h3 className="text-2xl font-bold text-white mb-4" style={{ 
+                fontFamily: 'Google Sans, Arial, Helvetica, sans-serif',
+                textShadow: '0 0 15px rgba(255, 255, 255, 0.4)',
+                filter: 'brightness(1.15)',
+                WebkitFontSmoothing: 'antialiased'
+              }}>End-to-End Encryption</h3>
+              <p className="text-gray-300 mb-6 font-medium" style={{ 
+                fontFamily: 'Google Sans, Arial, Helvetica, sans-serif',
+                textShadow: '0 0 10px rgba(255, 255, 255, 0.25)',
+                filter: 'brightness(1.1)',
+                WebkitFontSmoothing: 'antialiased'
+              }}>
                 All voice data and personal information is encrypted using industry-standard AES-256 encryption.
               </p>
-              <ul className="text-sm text-gray-300 space-y-2">
+              <ul className="text-sm text-gray-300 space-y-2 font-medium" style={{ 
+                fontFamily: 'Google Sans, Arial, Helvetica, sans-serif',
+                textShadow: '0 0 8px rgba(255, 255, 255, 0.2)',
+                filter: 'brightness(1.05)',
+                WebkitFontSmoothing: 'antialiased'
+              }}>
                 <li>• Zero-knowledge architecture</li>
                 <li>• Local data processing</li>
                 <li>• Secure key management</li>
@@ -1026,15 +1111,30 @@ export default function LandingPage() {
             </div>
 
             {/* Privacy Controls */}
-            <div className="bg-gray-900/50 rounded-2xl p-8 border border-gray-800 text-center">
+            <div className="bg-black rounded-2xl p-8 border border-gray-300/30 hover:border-blue-400/60 transition-all duration-300 text-center">
               <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
                 <span className="text-3xl">👤</span>
               </div>
-              <h3 className="text-2xl font-bold text-white mb-4">Privacy Controls</h3>
-              <p className="text-gray-400 mb-6">
+              <h3 className="text-2xl font-bold text-white mb-4" style={{ 
+                fontFamily: 'Google Sans, Arial, Helvetica, sans-serif',
+                textShadow: '0 0 15px rgba(255, 255, 255, 0.4)',
+                filter: 'brightness(1.15)',
+                WebkitFontSmoothing: 'antialiased'
+              }}>Privacy Controls</h3>
+              <p className="text-gray-300 mb-6 font-medium" style={{ 
+                fontFamily: 'Google Sans, Arial, Helvetica, sans-serif',
+                textShadow: '0 0 10px rgba(255, 255, 255, 0.25)',
+                filter: 'brightness(1.1)',
+                WebkitFontSmoothing: 'antialiased'
+              }}>
                 You have complete control over your data. Delete, export, or modify your information anytime.
               </p>
-              <ul className="text-sm text-gray-300 space-y-2">
+              <ul className="text-sm text-gray-300 space-y-2 font-medium" style={{ 
+                fontFamily: 'Google Sans, Arial, Helvetica, sans-serif',
+                textShadow: '0 0 8px rgba(255, 255, 255, 0.2)',
+                filter: 'brightness(1.05)',
+                WebkitFontSmoothing: 'antialiased'
+              }}>
                 <li>• Data portability</li>
                 <li>• Right to deletion</li>
                 <li>• Granular permissions</li>
@@ -1042,15 +1142,30 @@ export default function LandingPage() {
             </div>
 
             {/* Compliance */}
-            <div className="bg-gray-900/50 rounded-2xl p-8 border border-gray-800 text-center">
+            <div className="bg-black rounded-2xl p-8 border border-gray-300/30 hover:border-blue-400/60 transition-all duration-300 text-center">
               <div className="w-16 h-16 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
                 <span className="text-3xl">✅</span>
               </div>
-              <h3 className="text-2xl font-bold text-white mb-4">Compliance & Standards</h3>
-              <p className="text-gray-400 mb-6">
+              <h3 className="text-2xl font-bold text-white mb-4" style={{ 
+                fontFamily: 'Google Sans, Arial, Helvetica, sans-serif',
+                textShadow: '0 0 15px rgba(255, 255, 255, 0.4)',
+                filter: 'brightness(1.15)',
+                WebkitFontSmoothing: 'antialiased'
+              }}>Compliance & Standards</h3>
+              <p className="text-gray-300 mb-6 font-medium" style={{ 
+                fontFamily: 'Google Sans, Arial, Helvetica, sans-serif',
+                textShadow: '0 0 10px rgba(255, 255, 255, 0.25)',
+                filter: 'brightness(1.1)',
+                WebkitFontSmoothing: 'antialiased'
+              }}>
                 We meet the highest international standards for data protection and healthcare privacy.
               </p>
-              <ul className="text-sm text-gray-300 space-y-2">
+              <ul className="text-sm text-gray-300 space-y-2 font-medium" style={{ 
+                fontFamily: 'Google Sans, Arial, Helvetica, sans-serif',
+                textShadow: '0 0 8px rgba(255, 255, 255, 0.2)',
+                filter: 'brightness(1.05)',
+                WebkitFontSmoothing: 'antialiased'
+              }}>
                 <li>• GDPR compliant</li>
                 <li>• HIPAA ready</li>
                 <li>• SOC 2 Type II</li>
@@ -1060,104 +1175,69 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Architecture Section */}
-      <section id="architecture-section" className="py-20 px-6" style={{ background: 'transparent' }}>
-        <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-100 mb-8">
-              Technical Architecture
-            </h2>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-              Built on a robust, scalable infrastructure designed for privacy and performance
-            </p>
-          </div>
-          
-          <div className="grid lg:grid-cols-2 gap-12">
-            <div>
-              <h3 className="text-3xl font-bold text-white mb-6">System Overview</h3>
-              <p className="text-lg text-gray-400 mb-8">
-                Our architecture is designed with privacy-first principles, ensuring your data never leaves 
-                your device without explicit consent and proper encryption.
-              </p>
-              
-              <div className="space-y-6">
-                <div className="bg-gray-900/50 rounded-lg p-6 border border-gray-800">
-                  <h4 className="text-xl font-bold text-white mb-3">Edge Computing</h4>
-                  <p className="text-gray-400">Voice processing happens locally on your device, minimizing data transmission.</p>
-                </div>
-                
-                <div className="bg-gray-900/50 rounded-lg p-6 border border-gray-800">
-                  <h4 className="text-xl font-bold text-white mb-3">Federated Learning</h4>
-                  <p className="text-gray-400">AI models improve without accessing individual user data through privacy-preserving techniques.</p>
-                </div>
-                
-                <div className="bg-gray-900/50 rounded-lg p-6 border border-gray-800">
-                  <h4 className="text-xl font-bold text-white mb-3">Microservices</h4>
-                  <p className="text-gray-400">Modular architecture ensures reliability, scalability, and easy maintenance.</p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="bg-gray-900/50 rounded-2xl p-8 border border-gray-800">
-              <h4 className="text-2xl font-bold text-white mb-6">Technology Stack</h4>
-              <div className="space-y-4">
-                <div className="flex items-center justify-between py-3 border-b border-gray-800">
-                  <span className="text-gray-300">Frontend</span>
-                  <span className="text-blue-400 text-sm">React, TypeScript</span>
-                </div>
-                <div className="flex items-center justify-between py-3 border-b border-gray-800">
-                  <span className="text-gray-300">Backend</span>
-                  <span className="text-green-400 text-sm">Node.js, Python</span>
-                </div>
-                <div className="flex items-center justify-between py-3 border-b border-gray-800">
-                  <span className="text-gray-300">AI/ML</span>
-                  <span className="text-purple-400 text-sm">TensorFlow, PyTorch</span>
-                </div>
-                <div className="flex items-center justify-between py-3 border-b border-gray-800">
-                  <span className="text-gray-300">Database</span>
-                  <span className="text-orange-400 text-sm">PostgreSQL, Redis</span>
-                </div>
-                <div className="flex items-center justify-between py-3 border-b border-gray-800">
-                  <span className="text-gray-300">Infrastructure</span>
-                  <span className="text-cyan-400 text-sm">AWS, Docker</span>
-                </div>
-                <div className="flex items-center justify-between py-3">
-                  <span className="text-gray-300">Security</span>
-                  <span className="text-red-400 text-sm">AES-256, OAuth 2.0</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Pricing Section */}
-      <section id="pricing-section" className="py-16 px-6" style={{ background: 'transparent' }}>
+      <section id="pricing-section" className="py-16 px-6" style={{ background: '#000000' }}>
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-100 mb-8">
+            <h2 className="text-5xl md:text-6xl font-bold text-white mb-8" style={{ 
+              fontFamily: 'Google Sans, Arial, Helvetica, sans-serif',
+              textShadow: '0 0 15px rgba(255, 255, 255, 0.4)',
+              filter: 'brightness(1.15)',
+              WebkitFontSmoothing: 'antialiased'
+            }}>
               Simple, Transparent Pricing
             </h2>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+            <p className="text-2xl text-gray-300 max-w-3xl mx-auto font-medium" style={{ 
+              fontFamily: 'Google Sans, Arial, Helvetica, sans-serif',
+              textShadow: '0 0 10px rgba(255, 255, 255, 0.25)',
+              filter: 'brightness(1.1)',
+              WebkitFontSmoothing: 'antialiased'
+            }}>
               Choose the plan that fits your wellness journey. All plans include our core features with no hidden fees.
             </p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {/* Free Plan */}
-            <div className="bg-gray-900/50 rounded-2xl p-8 border border-gray-800">
-              <h3 className="text-2xl font-bold text-white mb-4">Free</h3>
-              <div className="text-4xl font-bold text-white mb-6">$0<span className="text-lg text-gray-400">/month</span></div>
+            <div className="bg-black rounded-2xl p-8 border border-gray-300/30 hover:border-blue-400/60 transition-all duration-300">
+              <h3 className="text-2xl font-bold text-white mb-4" style={{ 
+                fontFamily: 'Google Sans, Arial, Helvetica, sans-serif',
+                textShadow: '0 0 15px rgba(255, 255, 255, 0.4)',
+                filter: 'brightness(1.15)',
+                WebkitFontSmoothing: 'antialiased'
+              }}>Free</h3>
+              <div className="text-4xl font-bold text-white mb-6" style={{ 
+                fontFamily: 'Google Sans, Arial, Helvetica, sans-serif',
+                textShadow: '0 0 15px rgba(255, 255, 255, 0.4)',
+                filter: 'brightness(1.15)',
+                WebkitFontSmoothing: 'antialiased'
+              }}>$0<span className="text-lg text-gray-300" style={{ 
+                textShadow: '0 0 8px rgba(255, 255, 255, 0.2)',
+                filter: 'brightness(1.05)',
+                WebkitFontSmoothing: 'antialiased'
+              }}>/month</span></div>
               <ul className="space-y-4 mb-8">
-                <li className="flex items-center text-gray-300">
+                <li className="flex items-center text-gray-300" style={{ 
+                  textShadow: '0 0 8px rgba(255, 255, 255, 0.2)',
+                  filter: 'brightness(1.05)',
+                  WebkitFontSmoothing: 'antialiased'
+                }}>
                   <span className="text-green-400 mr-3">✓</span>
                   Basic voice journaling
                 </li>
-                <li className="flex items-center text-gray-300">
+                <li className="flex items-center text-gray-300" style={{ 
+                  textShadow: '0 0 8px rgba(255, 255, 255, 0.2)',
+                  filter: 'brightness(1.05)',
+                  WebkitFontSmoothing: 'antialiased'
+                }}>
                   <span className="text-green-400 mr-3">✓</span>
                   Mood tracking
                 </li>
-                <li className="flex items-center text-gray-300">
+                <li className="flex items-center text-gray-300" style={{ 
+                  textShadow: '0 0 8px rgba(255, 255, 255, 0.2)',
+                  filter: 'brightness(1.05)',
+                  WebkitFontSmoothing: 'antialiased'
+                }}>
                   <span className="text-green-400 mr-3">✓</span>
                   Community access
                 </li>
@@ -1168,26 +1248,56 @@ export default function LandingPage() {
             </div>
 
             {/* Pro Plan */}
-            <div className="bg-blue-900/20 rounded-2xl p-8 border-2 border-blue-500 relative">
+            <div className="bg-black rounded-2xl p-8 border-2 border-blue-500 relative hover:border-blue-400/60 transition-all duration-300">
               <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                 <span className="bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-medium">Most Popular</span>
               </div>
-              <h3 className="text-2xl font-bold text-white mb-4">Pro</h3>
-              <div className="text-4xl font-bold text-white mb-6">$9.99<span className="text-lg text-gray-400">/month</span></div>
+              <h3 className="text-2xl font-bold text-white mb-4" style={{ 
+                fontFamily: 'Google Sans, Arial, Helvetica, sans-serif',
+                textShadow: '0 0 15px rgba(255, 255, 255, 0.4)',
+                filter: 'brightness(1.15)',
+                WebkitFontSmoothing: 'antialiased'
+              }}>Pro</h3>
+              <div className="text-4xl font-bold text-white mb-6" style={{ 
+                fontFamily: 'Google Sans, Arial, Helvetica, sans-serif',
+                textShadow: '0 0 15px rgba(255, 255, 255, 0.4)',
+                filter: 'brightness(1.15)',
+                WebkitFontSmoothing: 'antialiased'
+              }}>$9.99<span className="text-lg text-gray-300" style={{ 
+                textShadow: '0 0 8px rgba(255, 255, 255, 0.2)',
+                filter: 'brightness(1.05)',
+                WebkitFontSmoothing: 'antialiased'
+              }}>/month</span></div>
               <ul className="space-y-4 mb-8">
-                <li className="flex items-center text-gray-300">
+                <li className="flex items-center text-gray-300" style={{ 
+                  textShadow: '0 0 8px rgba(255, 255, 255, 0.2)',
+                  filter: 'brightness(1.05)',
+                  WebkitFontSmoothing: 'antialiased'
+                }}>
                   <span className="text-green-400 mr-3">✓</span>
                   Everything in Free
                 </li>
-                <li className="flex items-center text-gray-300">
+                <li className="flex items-center text-gray-300" style={{ 
+                  textShadow: '0 0 8px rgba(255, 255, 255, 0.2)',
+                  filter: 'brightness(1.05)',
+                  WebkitFontSmoothing: 'antialiased'
+                }}>
                   <span className="text-green-400 mr-3">✓</span>
                   Advanced AI insights
                 </li>
-                <li className="flex items-center text-gray-300">
+                <li className="flex items-center text-gray-300" style={{ 
+                  textShadow: '0 0 8px rgba(255, 255, 255, 0.2)',
+                  filter: 'brightness(1.05)',
+                  WebkitFontSmoothing: 'antialiased'
+                }}>
                   <span className="text-green-400 mr-3">✓</span>
                   Kinship Circles
                 </li>
-                <li className="flex items-center text-gray-300">
+                <li className="flex items-center text-gray-300" style={{ 
+                  textShadow: '0 0 8px rgba(255, 255, 255, 0.2)',
+                  filter: 'brightness(1.05)',
+                  WebkitFontSmoothing: 'antialiased'
+                }}>
                   <span className="text-green-400 mr-3">✓</span>
                   Priority support
                 </li>
@@ -1198,23 +1308,49 @@ export default function LandingPage() {
             </div>
 
             {/* Enterprise Plan */}
-            <div className="bg-gray-900/50 rounded-2xl p-8 border border-gray-800">
-              <h3 className="text-2xl font-bold text-white mb-4">Enterprise</h3>
-              <div className="text-4xl font-bold text-white mb-6">Custom</div>
+            <div className="bg-black rounded-2xl p-8 border border-gray-300/30 hover:border-blue-400/60 transition-all duration-300">
+              <h3 className="text-2xl font-bold text-white mb-4" style={{ 
+                fontFamily: 'Google Sans, Arial, Helvetica, sans-serif',
+                textShadow: '0 0 15px rgba(255, 255, 255, 0.4)',
+                filter: 'brightness(1.15)',
+                WebkitFontSmoothing: 'antialiased'
+              }}>Enterprise</h3>
+              <div className="text-4xl font-bold text-white mb-6" style={{ 
+                fontFamily: 'Google Sans, Arial, Helvetica, sans-serif',
+                textShadow: '0 0 15px rgba(255, 255, 255, 0.4)',
+                filter: 'brightness(1.15)',
+                WebkitFontSmoothing: 'antialiased'
+              }}>Custom</div>
               <ul className="space-y-4 mb-8">
-                <li className="flex items-center text-gray-300">
+                <li className="flex items-center text-gray-300" style={{ 
+                  textShadow: '0 0 8px rgba(255, 255, 255, 0.2)',
+                  filter: 'brightness(1.05)',
+                  WebkitFontSmoothing: 'antialiased'
+                }}>
                   <span className="text-green-400 mr-3">✓</span>
                   Everything in Pro
                 </li>
-                <li className="flex items-center text-gray-300">
+                <li className="flex items-center text-gray-300" style={{ 
+                  textShadow: '0 0 8px rgba(255, 255, 255, 0.2)',
+                  filter: 'brightness(1.05)',
+                  WebkitFontSmoothing: 'antialiased'
+                }}>
                   <span className="text-green-400 mr-3">✓</span>
                   Custom integrations
                 </li>
-                <li className="flex items-center text-gray-300">
+                <li className="flex items-center text-gray-300" style={{ 
+                  textShadow: '0 0 8px rgba(255, 255, 255, 0.2)',
+                  filter: 'brightness(1.05)',
+                  WebkitFontSmoothing: 'antialiased'
+                }}>
                   <span className="text-green-400 mr-3">✓</span>
                   Dedicated support
                 </li>
-                <li className="flex items-center text-gray-300">
+                <li className="flex items-center text-gray-300" style={{ 
+                  textShadow: '0 0 8px rgba(255, 255, 255, 0.2)',
+                  filter: 'brightness(1.05)',
+                  WebkitFontSmoothing: 'antialiased'
+                }}>
                   <span className="text-green-400 mr-3">✓</span>
                   Advanced analytics
                 </li>

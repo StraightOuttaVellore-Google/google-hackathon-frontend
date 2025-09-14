@@ -1,0 +1,21 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="dbGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F59E0B;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#D97706;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#B45309;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="dbAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#FBBF24;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FDE68A;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" rx="20" fill="url(#dbGrad)"/>
+  <ellipse cx="100" cy="50" rx="60" ry="18" fill="rgba(255,255,255,0.1)"/>
+  <path d="M40 50V150" stroke="url(#dbAccent)" stroke-width="6"/>
+  <path d="M160 50V150" stroke="url(#dbAccent)" stroke-width="6"/>
+  <ellipse cx="100" cy="100" rx="60" ry="18" fill="rgba(255,255,255,0.1)"/>
+  <ellipse cx="100" cy="150" rx="60" ry="18" fill="rgba(255,255,255,0.1)"/>
+  <rect x="85" y="65" width="30" height="70" rx="6" fill="url(#dbAccent)" opacity="0.4"/>
+  <text x="100" y="180" text-anchor="middle" fill="white" font-family="Arial" font-size="16" font-weight="bold">PostgreSQL + Redis</text>
+</svg>

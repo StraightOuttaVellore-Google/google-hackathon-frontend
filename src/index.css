@@ -150,3 +150,211 @@
   0%, 100% { opacity: 0.3; transform: scale(1); }
   50% { opacity: 1; transform: scale(1.2); }
 }
+
+/* Carousel dragging utility */
+.is-dragging {
+  cursor: grabbing !important;
+}
+
+/* Hide scrollbar utility */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Swiper Custom Styles */
+.tech-architecture-swiper {
+  width: 100%;
+  height: auto;
+  min-height: 800px;
+  padding: 0.6rem 0 0.8rem 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  overflow: visible;
+}
+
+.tech-architecture-swiper .swiper {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0;
+  overflow: visible;
+}
+
+.tech-architecture-swiper .swiper-wrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  transform: translate3d(0, 0, 0);
+  padding-top: 0;
+}
+
+.tech-architecture-swiper .swiper-slide {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  border-radius: 16px;
+  overflow: visible;
+  height: auto;
+  min-height: fit-content;
+  transition: none;
+  position: relative;
+  flex-shrink: 0;
+  opacity: 1;
+  visibility: visible;
+}
+
+.tech-architecture-swiper .swiper-slide-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.tech-architecture-swiper .swiper-slide-prev,
+.tech-architecture-swiper .swiper-slide-next {
+  opacity: 0.6;
+  visibility: visible;
+}
+
+/* Ensure proper centering and equal side visibility */
+.tech-architecture-swiper .swiper-slide {
+  transform: translateX(0);
+  opacity: 0.6;
+  visibility: visible;
+}
+
+.tech-architecture-swiper .swiper-slide-active {
+  transform: translateX(0) !important;
+  z-index: 2;
+  opacity: 1 !important;
+}
+
+.tech-architecture-swiper .swiper-slide-prev {
+  transform: translateX(-25%) !important;
+  z-index: 1;
+  opacity: 0.6 !important;
+}
+
+.tech-architecture-swiper .swiper-slide-next {
+  transform: translateX(25%) !important;
+  z-index: 1;
+  opacity: 0.6 !important;
+}
+
+/* Force initial visibility for all slides */
+.tech-architecture-swiper .swiper-slide:not(.swiper-slide-active):not(.swiper-slide-prev):not(.swiper-slide-next) {
+  opacity: 0.6;
+  visibility: visible;
+}
+
+.tech-architecture-swiper .swiper-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.tech-architecture-swiper .swiper-slide-active {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.tech-architecture-swiper .swiper-slide:not(.swiper-slide-active) {
+  transform: scale(0.9);
+  opacity: 0.7;
+}
+
+/* Equal visibility for left and right cards */
+.tech-architecture-swiper .swiper-slide-prev {
+  transform: scale(0.9);
+  opacity: 0.6;
+}
+
+.tech-architecture-swiper .swiper-slide-next {
+  transform: scale(0.9);
+  opacity: 0.6;
+}
+
+.tech-architecture-swiper .swiper-pagination {
+  bottom: 8px !important;
+  position: absolute !important;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 0 auto;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 30px;
+  padding: 0 40px;
+  gap: 20px;
+}
+
+.tech-architecture-swiper .swiper-pagination-bullet {
+  border: none;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid rgba(224, 224, 224, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(1);
+  margin: 0;
+}
+
+.tech-architecture-swiper .swiper-pagination-bullet:hover {
+  border: 1px solid rgba(66, 133, 244, 0.5);
+  box-shadow: 0 0 8px rgba(66, 133, 244, 0.3);
+  transform: scale(1.1);
+}
+
+.tech-architecture-swiper .swiper-pagination-bullet-active {
+  width: 80px;
+  height: 18px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #4285F4, #A5A1F7);
+  border: 2px solid #4285F4;
+  box-shadow: 
+    0 0 10px rgba(66, 133, 244, 0.6),
+    0 0 20px rgba(66, 133, 244, 0.4),
+    0 0 30px rgba(66, 133, 244, 0.3),
+    0 0 40px rgba(66, 133, 244, 0.2);
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(1.1);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .tech-architecture-swiper {
+    height: 600px;
+    padding: 0 0 100px 0;
+  }
+  
+  .tech-architecture-swiper .swiper-slide {
+    width: 85vw !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .tech-architecture-swiper {
+    height: 550px;
+    padding: 0 0 120px 0;
+  }
+}
+
+/* Extra brightness for AI/ML image */
+.tech-architecture-swiper .swiper-slide img[src*="img1.png"] {
+  filter: brightness(2.5) contrast(1.5) saturate(1.2) !important;
+}
