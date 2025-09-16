@@ -12,6 +12,8 @@ import Article1 from './pages/Article1'
 import Article2 from './pages/Article2'
 import Article3 from './pages/Article3'
 import Article4 from './pages/Article4'
+import EisenhowerMatrixPage from './pages/EisenhowerMatrixPage'
+import VoiceAIAgent from './pages/VoiceAIAgent'
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -25,6 +27,15 @@ createRoot(document.getElementById('root')).render(
           <Route path="/article/article2" element={<Article2 />} />
           <Route path="/article/article3" element={<Article3 />} />
           <Route path="/article/article4" element={<Article4 />} />
+          <Route 
+            path="/eisenhower-matrix" 
+            element={
+              <ProtectedRoute>
+                <EisenhowerMatrixPage />
+              </ProtectedRoute>
+            } 
+          />
+          <Route path="/voice-ai" element={<VoiceAIAgent />} />
           <Route 
             path="/app/*" 
             element={
