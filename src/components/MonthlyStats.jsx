@@ -9,7 +9,7 @@ import {
 } from '@heroicons/react/24/solid';
 import { fetchAllMonthlyStats, transformStatsData, generateMockStats } from '../utils/statsApi';
 
-export default function MonthlyStats() {
+export default function MonthlyStats({ onHistoryClick }) {
     const [currentCard, setCurrentCard] = useState(0);
     const [stats, setStats] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -318,7 +318,11 @@ export default function MonthlyStats() {
             </div>
 
             {/* Card Content */}
-            <div className="flex-1 flex items-center justify-center">
+            <div 
+              className="flex-1 flex items-center justify-center cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-lg transition-colors"
+              onClick={onHistoryClick}
+              title="Click to view detailed history"
+            >
                 {currentCardData.render()}
             </div>
         </div>

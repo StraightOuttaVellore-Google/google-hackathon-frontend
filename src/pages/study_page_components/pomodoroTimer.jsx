@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef } from "react";
+import useStudyStore from "../../stores/studyStore";
 
 export default function PomodoroTimer(){
-    const [studyTime, setStudyTime] = useState(25);
-    const [breakTime, setBreakTime] = useState(5);
-    const [iterations, setIterations] = useState(4);
-    const [currentTime, setCurrentTime] = useState(25 * 60); // in seconds
+    const { studyData, updatePomodoroTimer } = useStudyStore();
+    const pomodoro = studyData.pomodoro_timer;
+    
+    const [currentTime, setCurrentTime] = useState(pomodoro.work_time * 60); // in seconds
     const [isRunning, setIsRunning] = useState(false);
     const [isBreak, setIsBreak] = useState(false);
     const [currentIteration, setCurrentIteration] = useState(1);
@@ -13,10 +14,26 @@ export default function PomodoroTimer(){
     const intervalRef = useRef(null);
   
     const presets = {
-      none: { study: 25, break: 5, iterations: 4 },
-      focus: { study: 45, break: 10, iterations: 3 },
-      sprint: { study: 15, break: 3, iterations: 6 },
-      deep: { study: 90, break: 20, iterations: 2 }
+      none: { 
+        study: pomodoro.work_time, 
+        break: pomodoro.break_time, 
+        iterations: pomodoro.no_of_iterations 
+      },
+      preset1: { 
+        study: pomodoro.work_time_preset1 || 45, 
+        break: pomodoro.break_time_preset1 || 10, 
+        iterations: pomodoro.no_of_iterations1 || 3 
+      },
+      preset2: { 
+        study: pomodoro.work_time_preset2 || 15, 
+        break: pomodoro.break_time_preset2 || 3, 
+        iterations: pomodoro.no_of_iterations2 || 6 
+      },
+      preset3: { 
+        study: pomodoro.work_time_preset3 || 90, 
+        break: pomodoro.break_time_preset3 || 20, 
+        iterations: pomodoro.no_of_iterations3 || 2 
+      }
     };
   
     useEffect(() => {
@@ -29,26 +46,26 @@ export default function PomodoroTimer(){
         if (!isBreak) {
           // Study session finished, start break
           setIsBreak(true);
-          setCurrentTime(breakTime * 60);
+          setCurrentTime(pomodoro.break_time * 60);
         } else {
           // Break finished
-          if (currentIteration < iterations) {
+          if (currentIteration < pomodoro.no_of_iterations) {
             // Start next iteration
             setIsBreak(false);
             setCurrentIteration(prev => prev + 1);
-            setCurrentTime(studyTime * 60);
+            setCurrentTime(pomodoro.work_time * 60);
           } else {
             // All iterations complete
             setIsRunning(false);
             setCurrentIteration(1);
             setIsBreak(false);
-            setCurrentTime(studyTime * 60);
+            setCurrentTime(pomodoro.work_time * 60);
           }
         }
       }
   
       return () => clearInterval(intervalRef.current);
-    }, [isRunning, currentTime, isBreak, studyTime, breakTime, iterations, currentIteration]);
+    }, [isRunning, currentTime, isBreak, pomodoro.work_time, pomodoro.break_time, pomodoro.no_of_iterations, currentIteration]);
   
     const formatTime = (seconds) => {
       const mins = Math.floor(seconds / 60);
@@ -60,9 +77,11 @@ export default function PomodoroTimer(){
       setSelectedPreset(preset);
       if (preset !== "none") {
         const config = presets[preset];
-        setStudyTime(config.study);
-        setBreakTime(config.break);
-        setIterations(config.iterations);
+        updatePomodoroTimer({
+          work_time: config.study,
+          break_time: config.break,
+          no_of_iterations: config.iterations
+        });
         setCurrentTime(config.study * 60);
       }
       setIsRunning(false);
@@ -78,12 +97,13 @@ export default function PomodoroTimer(){
       setIsRunning(false);
       setIsBreak(false);
       setCurrentIteration(1);
-      setCurrentTime(studyTime * 60);
+      setCurrentTime(pomodoro.work_time * 60);
     };
   
-    const handleCustomTimeChange = () => {
+    const handleCustomTimeChange = (field, value) => {
       if (!isRunning) {
-        setCurrentTime(studyTime * 60);
+        updatePomodoroTimer({ [field]: value });
+        setCurrentTime(pomodoro.work_time * 60);
         setSelectedPreset("none");
       }
     };
@@ -97,10 +117,10 @@ export default function PomodoroTimer(){
               {formatTime(currentTime)}
             </div>
             <div className="text-sm font-medium text-sky-600 dark:text-sky-300">
-              {isBreak ? 'Break' : 'Study'} {isBreak ? breakTime : studyTime} min
+              {isBreak ? 'Break' : 'Study'} {isBreak ? pomodoro.break_time : pomodoro.work_time} min
             </div>
             <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-              Cycle {currentIteration} of {iterations}
+              Cycle {currentIteration} of {pomodoro.no_of_iterations}
             </div>
           </div>
         </div>
@@ -117,9 +137,9 @@ export default function PomodoroTimer(){
               className="w-full p-3 pr-8 border-2 border-gray-200 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-800 dark:text-white text-sm font-medium focus:border-sky-400 dark:focus:border-sky-500 focus:ring-2 focus:ring-sky-200 dark:focus:ring-sky-800 transition-all duration-200 appearance-none cursor-pointer hover:border-gray-300 dark:hover:border-gray-500"
             >
               <option value="none">🎯 None</option>
-              <option value="focus">🎯 Focus (45/10)</option>
-              <option value="sprint">⚡ Sprint (15/3)</option>
-              <option value="deep">🧠 Deep Work (90/20)</option>
+              <option value="preset1">🎯 Preset 1 ({pomodoro.work_time_preset1 || 45}/{pomodoro.break_time_preset1 || 10})</option>
+              <option value="preset2">⚡ Preset 2 ({pomodoro.work_time_preset2 || 15}/{pomodoro.break_time_preset2 || 3})</option>
+              <option value="preset3">🧠 Preset 3 ({pomodoro.work_time_preset3 || 90}/{pomodoro.break_time_preset3 || 20})</option>
             </select>
             <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
               <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -136,10 +156,9 @@ export default function PomodoroTimer(){
             <div className="relative">
               <input
                 type="number"
-                value={studyTime}
+                value={pomodoro.work_time}
                 onChange={(e) => {
-                  setStudyTime(Number(e.target.value));
-                  handleCustomTimeChange();
+                  handleCustomTimeChange('work_time', Number(e.target.value));
                 }}
                 min="1"
                 max="120"
@@ -153,8 +172,8 @@ export default function PomodoroTimer(){
             <div className="relative">
               <input
                 type="number"
-                value={breakTime}
-                onChange={(e) => setBreakTime(Number(e.target.value))}
+                value={pomodoro.break_time}
+                onChange={(e) => handleCustomTimeChange('break_time', Number(e.target.value))}
                 min="1"
                 max="60"
                 className="w-full p-2 border-2 border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white text-sm font-medium text-center focus:border-sky-400 dark:focus:border-sky-500 focus:ring-2 focus:ring-sky-200 dark:focus:ring-sky-800 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed group-hover:border-gray-300 dark:group-hover:border-gray-500"
@@ -167,8 +186,8 @@ export default function PomodoroTimer(){
             <div className="relative">
               <input
                 type="number"
-                value={iterations}
-                onChange={(e) => setIterations(Number(e.target.value))}
+                value={pomodoro.no_of_iterations}
+                onChange={(e) => handleCustomTimeChange('no_of_iterations', Number(e.target.value))}
                 min="1"
                 max="10"
                 className="w-full p-2 border-2 border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white text-sm font-medium text-center focus:border-sky-400 dark:focus:border-sky-500 focus:ring-2 focus:ring-sky-200 dark:focus:ring-sky-800 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed group-hover:border-gray-300 dark:group-hover:border-gray-500"

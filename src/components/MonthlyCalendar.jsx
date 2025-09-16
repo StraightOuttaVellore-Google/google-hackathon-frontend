@@ -68,13 +68,14 @@ export default function MonthlyCalendar({ onDayClick }) {
     const dateKey = `${year}-${month + 1}-${day}`
     const dayData = dailyData[dateKey]
     
-    if (dayData && onDayClick) {
+    // Always call onDayClick for any day, with or without existing data
+    if (onDayClick) {
       onDayClick({
         day,
         month: month + 1,
         year,
-        emoji: dayData.emoji,
-        summary: dayData.summary
+        emoji: dayData?.emoji || 'BALANCED',
+        summary: dayData?.summary || ''
       })
     }
   }

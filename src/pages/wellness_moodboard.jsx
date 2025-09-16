@@ -1,19 +1,15 @@
 import { useState } from 'react'
 import VoiceAICard from '../components/VoiceAICard'
-import MonthlyCalendar from '../components/MonthlyCalendar'
-import MonthlyStats from '../components/MonthlyStats'
+import WellnessCalendar from '../components/WellnessCalendar'
+import WellnessStats from '../components/WellnessStats'
 
-export default function MoodBoardWidget({ onCalendarDayClick, onHistoryClick, onMatrixClick }) {
+export default function WellnessMoodBoardWidget() {
   const [selectedDayData, setSelectedDayData] = useState(null)
   const [showDayDetails, setShowDayDetails] = useState(false)
 
   const handleDayClick = (dayData) => {
     setSelectedDayData(dayData)
     setShowDayDetails(true)
-    // Also trigger the overlay callback
-    if (onCalendarDayClick) {
-      onCalendarDayClick(new Date(dayData.year, dayData.month - 1, dayData.day))
-    }
   }
 
   const closeDayDetails = () => {
@@ -22,11 +18,11 @@ export default function MoodBoardWidget({ onCalendarDayClick, onHistoryClick, on
   }
 
   return (
-    <div className="pt-0 pb-3 px-6">
-      <div className="flex bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-sky-200 dark:border-gray-600 hover:shadow-xl transition-all duration-300 gap-16">
+    <div className="pt-0 pb-2 px-6">
+      <div className="flex bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-teal-200 dark:border-gray-600 hover:shadow-xl transition-all duration-300 gap-16">
         <VoiceAICard />
-        <MonthlyCalendar onDayClick={handleDayClick} />
-        <MonthlyStats onHistoryClick={onHistoryClick} />
+        <WellnessCalendar onDayClick={handleDayClick} />
+        <WellnessStats />
       </div>
 
       {/* Day Details Modal */}
@@ -49,19 +45,19 @@ export default function MoodBoardWidget({ onCalendarDayClick, onHistoryClick, on
               {/* Emoji Display */}
               <div className="flex items-center gap-3">
                 <span className="text-3xl">
-                  {selectedDayData.emoji === 'RELAXED' && '😌'}
-                  {selectedDayData.emoji === 'BALANCED' && '🙂'}
-                  {selectedDayData.emoji === 'FOCUSED' && '📚'}
-                  {selectedDayData.emoji === 'INTENSE' && '🔥'}
-                  {selectedDayData.emoji === 'OVERWHELMED' && '😵'}
-                  {selectedDayData.emoji === 'BURNT_OUT' && '💀'}
+                  {selectedDayData.emoji === 'ENERGIZED' && '⚡'}
+                  {selectedDayData.emoji === 'BALANCED' && '😌'}
+                  {selectedDayData.emoji === 'RELAXED' && '🧘'}
+                  {selectedDayData.emoji === 'STRESSED' && '😰'}
+                  {selectedDayData.emoji === 'MOTIVATED' && '💪'}
+                  {selectedDayData.emoji === 'TIRED' && '😴'}
                 </span>
                 <div>
                   <p className="font-medium text-gray-800 dark:text-gray-200 capitalize">
                     {selectedDayData.emoji.toLowerCase().replace('_', ' ')}
                   </p>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Study mood for this day
+                    Wellness mood for this day
                   </p>
                 </div>
               </div>
@@ -87,7 +83,7 @@ export default function MoodBoardWidget({ onCalendarDayClick, onHistoryClick, on
                     // Future: Navigate to detailed view or edit
                     console.log('Edit day data:', selectedDayData)
                   }}
-                  className="flex-1 py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors duration-200"
+                  className="flex-1 py-2 px-4 bg-teal-500 hover:bg-teal-600 text-white rounded-lg transition-colors duration-200"
                 >
                   View Details
                 </button>

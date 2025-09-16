@@ -1,20 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { ExternalLink, Clock, AlertCircle, Edit2, Trash2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-
-// Constants matching the backend enums
-const TaskQuadrant = {
-  HUHI: "high_urgency_high_importanct",
-  LUHI: "low_urgency_high_importanct", 
-  HULI: "high_urgency_low_importanct",
-  LULI: "low_urgency_low_importanct"
-};
-
-const TaskStatus = {
-  CREATED: "created",
-  IN_PROGRESS: "in_progress",
-  COMPLETED: "completed"
-};
+import useStudyStore from '../stores/studyStore';
+import { TaskQuadrant, TaskStatus } from '../types/studyTypes';
 
 // Quadrant definitions
 const quadrantConfig = {
@@ -60,30 +48,7 @@ const statusColors = {
   [TaskStatus.COMPLETED]: "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300"
 };
 
-// API service for widget (with status update capability)
-const taskService = {
-  async getAllTasks() {
-    // TODO: Replace with actual API call - GET /api/eisenhower-matrix
-    const savedTasks = localStorage.getItem('eisenhower_tasks');
-    return savedTasks ? JSON.parse(savedTasks) : [];
-  },
-  
-  async updateTaskStatus(taskId, newStatus) {
-    // TODO: For now update locally, in production this should sync with backend
-    const tasks = await this.getAllTasks();
-    const taskIndex = tasks.findIndex(t => t.id === taskId);
-    if (taskIndex !== -1) {
-      tasks[taskIndex] = {
-        ...tasks[taskIndex],
-        status: newStatus,
-        updated_at: new Date().toISOString()
-      };
-      localStorage.setItem('eisenhower_tasks', JSON.stringify(tasks));
-      return tasks[taskIndex];
-    }
-    throw new Error('Task not found');
-  }
-};
+// Remove taskService - now using Zustand store
 
 function TaskItem({ task, onUpdateStatus, isWidget = false }) {
   const handleStatusChange = (newStatus) => {
@@ -153,59 +118,19 @@ function QuadrantView({ quadrant, tasks, onUpdateStatus }) {
 
 export default function EisenhowerMatrix() {
   const navigate = useNavigate();
-  const [tasks, setTasks] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { 
+    studyData, 
+    updateTask, 
+    getTasksByQuadrant, 
+    getTotalTasks, 
+    getCompletedTasks 
+  } = useStudyStore();
 
-  useEffect(() => {
-    loadTasks();
-  }, []);
-
-  const loadTasks = async () => {
-    try {
-      const allTasks = await taskService.getAllTasks();
-      setTasks(allTasks);
-    } catch (error) {
-      console.error('Failed to load tasks:', error);
-    } finally {
-      setLoading(false);
-    }
+  const handleUpdateStatus = (taskId, newStatus) => {
+    updateTask(taskId, { status: newStatus });
   };
 
-  const handleUpdateStatus = async (taskId, newStatus) => {
-    try {
-      const updatedTask = await taskService.updateTaskStatus(taskId, newStatus);
-      setTasks(prev => prev.map(t => t.id === taskId ? updatedTask : t));
-    } catch (error) {
-      console.error('Failed to update task status:', error);
-    }
-  };
-
-  const getTasksByQuadrant = (quadrant) => {
-    return tasks.filter(task => task.quadrant === quadrant);
-  };
-
-  const getTotalTaskCount = () => {
-    return tasks.length;
-  };
-
-  const getCompletedTaskCount = () => {
-    return tasks.filter(task => task.status === TaskStatus.COMPLETED).length;
-  };
-
-  const handleOpenFullView = () => {
-    navigate('/eisenhower-matrix');
-  };
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-2"></div>
-          <p className="text-sm text-gray-600 dark:text-gray-400">Loading tasks...</p>
-        </div>
-      </div>
-    );
-  }
+  // Removed handleOpenFullView - no longer needed
 
   return (
     <div className="h-full flex flex-col min-h-0">
@@ -213,16 +138,10 @@ export default function EisenhowerMatrix() {
         <div className="min-w-0 flex-1">
           <h2 className="text-lg font-semibold dark:text-white truncate">Eisenhower Matrix</h2>
           <p className="text-sm text-gray-600 dark:text-gray-400 truncate">
-            {getCompletedTaskCount()}/{getTotalTaskCount()} tasks completed
+            {getCompletedTasks()}/{getTotalTasks()} tasks completed
           </p>
         </div>
-        <button
-          onClick={handleOpenFullView}
-          className="p-2 text-gray-500 hover:text-blue-500 transition-colors flex-shrink-0"
-          title="Open full view"
-        >
-          <ExternalLink size={18} />
-        </button>
+        {/* Removed external link button - no longer needed */}
       </div>
       
       <div className="grid grid-cols-2 gap-2 flex-1 min-h-0">

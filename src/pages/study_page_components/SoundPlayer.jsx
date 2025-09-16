@@ -1,24 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Play, Pause, ChevronLeft, ChevronRight } from 'lucide-react';
-
-// Sound type enums matching your backend
-const NOISES = {
-  WHITE: 'white',
-  PINK: 'pink',
-  BROWN: 'brown'
-};
-
-const AMBIENT = {
-  FOREST: 'forest',
-  RAIN: 'rain',
-  CITY: 'city', 
-  OCEAN: 'ocean',
-  CAFE_CHATTER: 'cafe_chatter'
-};
+import useStudyStore from '../../stores/studyStore';
+import { TypeOfSound, Noises, Ambient } from '../../types/studyTypes';
 
 // Convert enums to arrays for slider navigation
-const NOISE_ARRAY = Object.values(NOISES);
-const AMBIENT_ARRAY = Object.values(AMBIENT);
+const NOISE_ARRAY = Object.values(Noises);
+const AMBIENT_ARRAY = Object.values(Ambient);
 
 // Subtle tint overlays for different sound types
 const SOUND_TINTS = {
@@ -47,22 +34,30 @@ const SOUND_LABELS = {
 };
 
 export default function SoundPlayer() {
-  const [soundTypeIndex, setSoundTypeIndex] = useState(0); // 0 = ambient, 1 = noise
-  const [soundIndex, setSoundIndex] = useState(0); // Index within the current sound array
+  const { studyData, updateSound } = useStudyStore();
+  const sound = studyData.sound;
+  
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
-
+  
   // Get current sound type and array
-  const isAmbient = soundTypeIndex === 0;
+  const isAmbient = sound.class_of_noise === TypeOfSound.AMBIENT;
   const currentSoundArray = isAmbient ? AMBIENT_ARRAY : NOISE_ARRAY;
-  const selectedSound = currentSoundArray[soundIndex];
+  const soundIndex = currentSoundArray.findIndex(s => s === sound.sub_classification);
+  const selectedSound = currentSoundArray[soundIndex] || currentSoundArray[0];
 
   // Handle sound type navigation
   const navigateSoundType = (direction) => {
     const wasPlaying = isPlaying;
-    const newIndex = direction === 'next' ? 1 : 0;
-    setSoundTypeIndex(newIndex);
-    setSoundIndex(0); // Reset to first sound of new type
+    const newType = direction === 'next' ? TypeOfSound.NOISE : TypeOfSound.AMBIENT;
+    const newArray = newType === TypeOfSound.AMBIENT ? AMBIENT_ARRAY : NOISE_ARRAY;
+    const newSubClassification = newArray[0];
+    
+    updateSound({
+      class_of_noise: newType,
+      sub_classification: newSubClassification
+    });
+    
     if (wasPlaying) {
       // Keep playing state but audio will switch in useEffect
       setIsPlaying(true);
@@ -72,11 +67,18 @@ export default function SoundPlayer() {
   // Handle specific sound navigation
   const navigateSound = (direction) => {
     const wasPlaying = isPlaying;
+    let newIndex;
     if (direction === 'next') {
-      setSoundIndex((prev) => (prev + 1) % currentSoundArray.length);
+      newIndex = (soundIndex + 1) % currentSoundArray.length;
     } else {
-      setSoundIndex((prev) => (prev - 1 + currentSoundArray.length) % currentSoundArray.length);
+      newIndex = (soundIndex - 1 + currentSoundArray.length) % currentSoundArray.length;
     }
+    
+    const newSubClassification = currentSoundArray[newIndex];
+    updateSound({
+      sub_classification: newSubClassification
+    });
+    
     if (wasPlaying) {
       // Keep playing state but audio will switch in useEffect
       setIsPlaying(true);
@@ -141,11 +143,11 @@ export default function SoundPlayer() {
             <button 
               onClick={() => navigateSoundType('prev')}
               className={`p-2 rounded-full transition-all duration-300 ${
-                soundTypeIndex === 0 
+                isAmbient 
                   ? 'bg-white/50 dark:bg-gray-700/50 text-gray-400 cursor-not-allowed' 
                   : 'bg-white/80 dark:bg-gray-700/80 text-gray-700 dark:text-gray-200 hover:bg-white dark:hover:bg-gray-600 hover:scale-110'
               }`}
-              disabled={soundTypeIndex === 0}
+              disabled={isAmbient}
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
@@ -162,11 +164,11 @@ export default function SoundPlayer() {
             <button 
               onClick={() => navigateSoundType('next')}
               className={`p-2 rounded-full transition-all duration-300 ${
-                soundTypeIndex === 1 
+                !isAmbient 
                   ? 'bg-white/50 dark:bg-gray-700/50 text-gray-400 cursor-not-allowed' 
                   : 'bg-white/80 dark:bg-gray-700/80 text-gray-700 dark:text-gray-200 hover:bg-white dark:hover:bg-gray-600 hover:scale-110'
               }`}
-              disabled={soundTypeIndex === 1}
+              disabled={!isAmbient}
             >
               <ChevronRight className="w-4 h-4" />
             </button>
