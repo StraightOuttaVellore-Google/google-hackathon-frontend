@@ -8,7 +8,6 @@ export const TypeOfSound = {
 
 export const Noises = {
   WHITE: "white",
-  BLACK: "black", 
   PINK: "pink",
   BROWN: "brown"
 };

@@ -98,6 +98,43 @@ const CalendarOverlay = ({ isOpen, onClose, selectedDate }) => {
 
         {/* Content */}
         <div className="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
+          {/* Daily Summary Section */}
+          <div className="mb-6 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg border border-blue-200 dark:border-blue-700">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+              📊 Daily Summary
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+                  {dayTasks.length}
+                </div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">Total Tasks</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-green-600 dark:text-green-400">
+                  {dayTasks.filter(task => task.status === TaskStatus.COMPLETED).length}
+                </div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">Completed</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">
+                  {dayTasks.filter(task => task.status === TaskStatus.IN_PROGRESS).length}
+                </div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">In Progress</div>
+              </div>
+            </div>
+            {selectedDate && (
+              <div className="mt-3 text-sm text-gray-600 dark:text-gray-400">
+                <strong>Date:</strong> {selectedDate.toLocaleDateString('en-US', { 
+                  weekday: 'long', 
+                  year: 'numeric', 
+                  month: 'long', 
+                  day: 'numeric' 
+                })}
+              </div>
+            )}
+          </div>
+
           {/* Add Task Button */}
           <div className="mb-6">
             <button

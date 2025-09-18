@@ -109,40 +109,71 @@ export default function PomodoroTimer(){
     };
   
     return (
-      <div className="h-full flex flex-col">
+      <div className="h-full flex flex-col relative">
+        {/* Stars Background */}
+        {[...Array(8)].map((_, i) => (
+          <div
+            key={`pomodoro-star-${i}`}
+            className="absolute animate-pulse"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              width: `${Math.random() * 1 + 0.5}px`,
+              height: `${Math.random() * 1 + 0.5}px`,
+              background: 'rgba(200, 220, 255, 0.6)',
+              borderRadius: '50%',
+              boxShadow: '0 0 3px rgba(150, 180, 255, 0.4)',
+              animationDelay: `${Math.random() * 4}s`,
+              animationDuration: `${Math.random() * 3 + 2}s`,
+              zIndex: 1
+            }}
+          />
+        ))}
+
         {/* Timer Display - Now at Top */}
-        <div className="text-center mb-1">
-          <div className="bg-gradient-to-br from-sky-50 to-blue-50 dark:from-gray-700 dark:to-gray-800 rounded-xl p-2 mb-3 border border-sky-100 dark:border-gray-600">
-            <div className="text-3xl font-mono font-bold text-sky-800 dark:text-sky-200 mb-1">
+        <div className="relative z-10 text-center mb-1">
+          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2 mb-3 border border-white/20"
+            style={{
+              background: 'rgba(0, 0, 0, 0.2)',
+              border: '1px solid rgba(255, 255, 255, 0.15)',
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08), 0 0 20px rgba(100, 150, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
+            }}
+          >
+            <div className="text-3xl font-mono font-bold text-white mb-1">
               {formatTime(currentTime)}
             </div>
-            <div className="text-sm font-medium text-sky-600 dark:text-sky-300">
+            <div className="text-sm font-medium text-white/80">
               {isBreak ? 'Break' : 'Study'} {isBreak ? pomodoro.break_time : pomodoro.work_time} min
             </div>
-            <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+            <div className="text-xs text-white/60 mt-1">
               Cycle {currentIteration} of {pomodoro.no_of_iterations}
             </div>
           </div>
         </div>
   
         {/* Preset Selection */}
-        <div className="mb-4">
-          <label className="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2 tracking-wide uppercase">
+        <div className="relative z-10 mb-4">
+          <label className="block text-xs font-semibold text-white/80 mb-2 tracking-wide uppercase">
             Load Preset
           </label>
           <div className="relative">
             <select 
               value={selectedPreset}
               onChange={(e) => handlePresetChange(e.target.value)}
-              className="w-full p-3 pr-8 border-2 border-gray-200 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-800 dark:text-white text-sm font-medium focus:border-sky-400 dark:focus:border-sky-500 focus:ring-2 focus:ring-sky-200 dark:focus:ring-sky-800 transition-all duration-200 appearance-none cursor-pointer hover:border-gray-300 dark:hover:border-gray-500"
+              className="w-full p-3 pr-8 rounded-xl text-white text-sm font-medium appearance-none cursor-pointer backdrop-blur-sm transition-all duration-200"
+              style={{
+                background: 'rgba(0, 0, 0, 0.2)',
+                border: '1px solid rgba(255, 255, 255, 0.15)',
+                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08), 0 0 20px rgba(100, 150, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
+              }}
             >
-              <option value="none">🎯 None</option>
-              <option value="preset1">🎯 Preset 1 ({pomodoro.work_time_preset1 || 45}/{pomodoro.break_time_preset1 || 10})</option>
-              <option value="preset2">⚡ Preset 2 ({pomodoro.work_time_preset2 || 15}/{pomodoro.break_time_preset2 || 3})</option>
-              <option value="preset3">🧠 Preset 3 ({pomodoro.work_time_preset3 || 90}/{pomodoro.break_time_preset3 || 20})</option>
+              <option value="none" className="bg-gray-800 text-white">🎯 None</option>
+              <option value="preset1" className="bg-gray-800 text-white">🎯 Preset 1 ({pomodoro.work_time_preset1 || 45}/{pomodoro.break_time_preset1 || 10})</option>
+              <option value="preset2" className="bg-gray-800 text-white">⚡ Preset 2 ({pomodoro.work_time_preset2 || 15}/{pomodoro.break_time_preset2 || 3})</option>
+              <option value="preset3" className="bg-gray-800 text-white">🧠 Preset 3 ({pomodoro.work_time_preset3 || 90}/{pomodoro.break_time_preset3 || 20})</option>
             </select>
             <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-              <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
             </div>
@@ -150,9 +181,9 @@ export default function PomodoroTimer(){
         </div>
   
         {/* Custom Settings */}
-        <div className="grid grid-cols-3 gap-3 mb-6">
+        <div className="relative z-10 grid grid-cols-3 gap-3 mb-6">
           <div className="group">
-            <label className="block text-xs font-semibold text-gray-600 dark:text-gray-400 mb-2">Study (min)</label>
+            <label className="block text-xs font-semibold text-white/80 mb-2">Study (min)</label>
             <div className="relative">
               <input
                 type="number"
@@ -162,13 +193,18 @@ export default function PomodoroTimer(){
                 }}
                 min="1"
                 max="120"
-                className="w-full p-2 border-2 border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white text-sm font-medium text-center focus:border-sky-400 dark:focus:border-sky-500 focus:ring-2 focus:ring-sky-200 dark:focus:ring-sky-800 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed group-hover:border-gray-300 dark:group-hover:border-gray-500"
+                className="w-full p-2 rounded-lg text-white text-sm font-medium text-center backdrop-blur-sm transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                style={{
+                  background: 'rgba(0, 0, 0, 0.2)',
+                  border: '1px solid rgba(255, 255, 255, 0.15)',
+                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08), 0 0 20px rgba(100, 150, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
+                }}
                 disabled={isRunning}
               />
             </div>
           </div>
           <div className="group">
-            <label className="block text-xs font-semibold text-gray-600 dark:text-gray-400 mb-2">Break (min)</label>
+            <label className="block text-xs font-semibold text-white/80 mb-2">Break (min)</label>
             <div className="relative">
               <input
                 type="number"
@@ -176,13 +212,18 @@ export default function PomodoroTimer(){
                 onChange={(e) => handleCustomTimeChange('break_time', Number(e.target.value))}
                 min="1"
                 max="60"
-                className="w-full p-2 border-2 border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white text-sm font-medium text-center focus:border-sky-400 dark:focus:border-sky-500 focus:ring-2 focus:ring-sky-200 dark:focus:ring-sky-800 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed group-hover:border-gray-300 dark:group-hover:border-gray-500"
+                className="w-full p-2 rounded-lg text-white text-sm font-medium text-center backdrop-blur-sm transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                style={{
+                  background: 'rgba(0, 0, 0, 0.2)',
+                  border: '1px solid rgba(255, 255, 255, 0.15)',
+                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08), 0 0 20px rgba(100, 150, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
+                }}
                 disabled={isRunning}
               />
             </div>
           </div>
           <div className="group">
-            <label className="block text-xs font-semibold text-gray-600 dark:text-gray-400 mb-2">Cycles (times)</label>
+            <label className="block text-xs font-semibold text-white/80 mb-2">Cycles (times)</label>
             <div className="relative">
               <input
                 type="number"
@@ -190,7 +231,12 @@ export default function PomodoroTimer(){
                 onChange={(e) => handleCustomTimeChange('no_of_iterations', Number(e.target.value))}
                 min="1"
                 max="10"
-                className="w-full p-2 border-2 border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white text-sm font-medium text-center focus:border-sky-400 dark:focus:border-sky-500 focus:ring-2 focus:ring-sky-200 dark:focus:ring-sky-800 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed group-hover:border-gray-300 dark:group-hover:border-gray-500"
+                className="w-full p-2 rounded-lg text-white text-sm font-medium text-center backdrop-blur-sm transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                style={{
+                  background: 'rgba(0, 0, 0, 0.2)',
+                  border: '1px solid rgba(255, 255, 255, 0.15)',
+                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08), 0 0 20px rgba(100, 150, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
+                }}
                 disabled={isRunning}
               />
             </div>
@@ -198,10 +244,10 @@ export default function PomodoroTimer(){
         </div>
   
         {/* Control Buttons */}
-        <div className="flex gap-3 mt-auto">
+        <div className="relative z-10 flex gap-3 mt-auto">
           <button
             onClick={handleStart}
-            className={`flex-1 font-semibold py-3 px-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 transform hover:scale-105 active:scale-95 shadow-lg ${
+            className={`flex-1 font-semibold py-3 px-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 transform hover:scale-105 active:scale-95 backdrop-blur-sm ${
               isRunning 
                 ? 'bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white shadow-yellow-200 dark:shadow-yellow-900' 
                 : 'bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white shadow-green-200 dark:shadow-green-900'
