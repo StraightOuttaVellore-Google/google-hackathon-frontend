@@ -91,7 +91,7 @@ export default function ModernLogin() {
                   <div className={`text-center text-sm ${
                     isDarkMode ? 'text-gray-300' : 'text-gray-600'
                   }`}>
-                    {isSignUp ? "Don't have an account? " : "Already have an account? "}
+                    {isSignUp ? "Already have an account? " : "Don't have an account? "}
                     <button
                       type="button"
                       onClick={() => setIsSignUp(!isSignUp)}
