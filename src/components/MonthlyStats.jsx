@@ -8,12 +8,14 @@ import {
     SpeakerWaveIcon 
 } from '@heroicons/react/24/solid';
 import { fetchAllMonthlyStats, transformStatsData, generateMockStats } from '../utils/statsApi';
+import WearableInsightsOverlay from './WearableInsightsOverlay';
 
 export default function MonthlyStats({ onHistoryClick }) {
     const [currentCard, setCurrentCard] = useState(0);
     const [stats, setStats] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [wearableOverlayOpen, setWearableOverlayOpen] = useState(false);
 
     useEffect(() => {
         const fetchStats = async () => {
@@ -59,8 +61,8 @@ export default function MonthlyStats({ onHistoryClick }) {
             icon: <ClockIcon className="w-6 h-6 text-blue-500" />,
             render: () => (
                 <div className="space-y-3 w-full">
-                    <div className="grid grid-cols-2 gap-3">
-                        <div className="text-center">
+                    <div className="grid grid-cols-2 gap-4 w-full">
+                        <div className="text-center flex-1">
                             <div className="text-xl font-bold text-blue-600 dark:text-blue-400">
                                 {stats?.studyOverview.totalStudyHours}h
                             </div>
@@ -68,7 +70,7 @@ export default function MonthlyStats({ onHistoryClick }) {
                                 Total Study Time
                             </div>
                         </div>
-                        <div className="text-center">
+                        <div className="text-center flex-1">
                             <div className="text-xl font-bold text-green-600 dark:text-green-400">
                                 {stats?.studyOverview.studyStreak}
                             </div>
@@ -77,7 +79,7 @@ export default function MonthlyStats({ onHistoryClick }) {
                             </div>
                         </div>
                     </div>
-                    <div className="text-center">
+                    <div className="text-center w-full">
                         <div className="text-base font-semibold text-gray-700 dark:text-gray-300">
                             {stats?.studyOverview.averageDailyHours}h avg/day
                         </div>
@@ -207,26 +209,44 @@ export default function MonthlyStats({ onHistoryClick }) {
             )
         },
         {
-            id: 'environment',
-            title: 'Environment',
+            id: 'wearable-insights',
+            title: 'Wearable Insights',
             icon: <SpeakerWaveIcon className="w-6 h-6 text-purple-500" />,
             render: () => (
                 <div className="space-y-3 w-full">
                     <div className="text-center">
-                        <div className="text-xl mb-1">🌲</div>
-                        <div className="text-base font-semibold text-gray-700 dark:text-gray-300 capitalize">
-                            {stats?.soundPreferences.mostUsedSound.toLowerCase()}
+                        <div className="text-xl mb-1">⌚</div>
+                        <div className="text-base font-semibold text-gray-700 dark:text-gray-300">
+                            Smart Watch Connected
                         </div>
                         <div className="text-xs text-gray-500 dark:text-gray-400">
-                            Most Used Sound
+                            Device Status • Click for details
                         </div>
                     </div>
-                    <div className="text-center">
-                        <div className="text-lg font-bold text-purple-600 dark:text-purple-400">
-                            {stats?.soundPreferences.ambientPercentage}%
+                    <div className="grid grid-cols-2 gap-4 w-full">
+                        <div className="text-center flex-1">
+                            <div className="text-lg font-bold text-purple-600 dark:text-purple-400">
+                                {stats?.soundPreferences.ambientPercentage}%
+                            </div>
+                            <div className="text-xs text-gray-600 dark:text-gray-400">
+                                Heart Rate Variability
+                            </div>
                         </div>
-                        <div className="text-xs text-gray-600 dark:text-gray-400">
-                            Prefer Ambient Sounds
+                        <div className="text-center flex-1">
+                            <div className="text-lg font-bold text-blue-600 dark:text-blue-400">
+                                8,500
+                            </div>
+                            <div className="text-xs text-gray-600 dark:text-gray-400">
+                                Daily Steps
+                            </div>
+                        </div>
+                    </div>
+                    <div className="text-center w-full">
+                        <div className="text-base font-semibold text-gray-700 dark:text-gray-300">
+                            {stats?.soundPreferences.mostUsedSound} Environment
+                        </div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">
+                            Optimal study setting
                         </div>
                     </div>
                 </div>
@@ -240,6 +260,13 @@ export default function MonthlyStats({ onHistoryClick }) {
 
     const prevCard = () => {
         setCurrentCard((prev) => (prev - 1 + statsCards.length) % statsCards.length);
+    };
+
+    const handleWearableCardClick = () => {
+        console.log('Wearable card clicked!');
+        console.log('Setting wearable overlay to true');
+        setWearableOverlayOpen(true);
+        console.log('Wearable overlay state should now be true');
     };
 
     if (loading) {
@@ -272,59 +299,74 @@ export default function MonthlyStats({ onHistoryClick }) {
     const currentCardData = statsCards[currentCard];
 
     return (
-        <div className="w-full h-72 flex flex-col">
-            <div className="flex items-center justify-between mb-3">
-                <h1 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Monthly Stats</h1>
-                
-                {/* Navigation */}
-                <div className="flex items-center space-x-2">
-                    <button
-                        onClick={prevCard}
-                        className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                        aria-label="Previous stat"
-                    >
-                        <ChevronLeftIcon className="w-4 h-4 text-gray-600 dark:text-gray-400" />
-                    </button>
+        <>
+            <div className="w-full h-72 flex flex-col">
+                <div className="flex items-center justify-between mb-3">
+                    <h1 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Monthly Stats</h1>
                     
-                    <div className="flex space-x-1">
-                        {statsCards.map((_, index) => (
-                            <div
-                                key={index}
-                                className={`w-2 h-2 rounded-full transition-colors ${
-                                    index === currentCard 
-                                        ? 'bg-blue-500' 
-                                        : 'bg-gray-300 dark:bg-gray-600'
-                                }`}
-                            />
-                        ))}
+                    {/* Navigation */}
+                    <div className="flex items-center space-x-2">
+                        <button
+                            onClick={prevCard}
+                            className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                            aria-label="Previous stat"
+                        >
+                            <ChevronLeftIcon className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                        </button>
+                        
+                        <div className="flex space-x-1">
+                            {statsCards.map((_, index) => (
+                                <div
+                                    key={index}
+                                    className={`w-2 h-2 rounded-full transition-colors ${
+                                        index === currentCard 
+                                            ? 'bg-blue-500' 
+                                            : 'bg-gray-300 dark:bg-gray-600'
+                                    }`}
+                                />
+                            ))}
+                        </div>
+                        
+                        <button
+                            onClick={nextCard}
+                            className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                            aria-label="Next stat"
+                        >
+                            <ChevronRightIcon className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                        </button>
                     </div>
-                    
-                    <button
-                        onClick={nextCard}
-                        className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                        aria-label="Next stat"
-                    >
-                        <ChevronRightIcon className="w-4 h-4 text-gray-600 dark:text-gray-400" />
-                    </button>
+                </div>
+
+                {/* Current Card Header */}
+                <div className="flex items-center space-x-2 mb-4">
+                    {currentCardData.icon}
+                    <span className="font-semibold text-gray-800 dark:text-gray-200">
+                        {currentCardData.title}
+                    </span>
+                </div>
+
+                {/* Card Content */}
+                <div 
+                  className="flex-1 flex items-center justify-center cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-lg transition-colors"
+                  onClick={() => {
+                    console.log('Card clicked, current card ID:', currentCardData.id);
+                    if (currentCardData.id === 'wearable-insights') {
+                        handleWearableCardClick();
+                    } else {
+                        onHistoryClick();
+                    }
+                  }}
+                  title={currentCardData.id === 'wearable-insights' ? "Click to view detailed wearable insights" : "Click to view detailed history"}
+                >
+                    {currentCardData.render()}
                 </div>
             </div>
 
-            {/* Current Card Header */}
-            <div className="flex items-center space-x-2 mb-4">
-                {currentCardData.icon}
-                <span className="font-semibold text-gray-800 dark:text-gray-200">
-                    {currentCardData.title}
-                </span>
-            </div>
-
-            {/* Card Content */}
-            <div 
-              className="flex-1 flex items-center justify-center cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-lg transition-colors"
-              onClick={onHistoryClick}
-              title="Click to view detailed history"
-            >
-                {currentCardData.render()}
-            </div>
-        </div>
+            {/* Wearable Insights Overlay */}
+            <WearableInsightsOverlay 
+                isOpen={wearableOverlayOpen}
+                onClose={() => setWearableOverlayOpen(false)}
+            />
+        </>
     );
 }

@@ -27,10 +27,10 @@ export default function MoodBoardWidget({ onCalendarDayClick, onHistoryClick, on
           <div className="w-1/4">
             <VoiceAICard />
           </div>
-          <div className="w-2/5">
+          <div className="w-1/3">
             <MonthlyCalendar onDayClick={handleDayClick} />
           </div>
-          <div className="w-[35%]">
+          <div className="w-5/12">
             <MonthlyStats onHistoryClick={onHistoryClick} />
           </div>
         </div>

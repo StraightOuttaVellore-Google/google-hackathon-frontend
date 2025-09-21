@@ -5,13 +5,16 @@ import {
     FireIcon, 
     ChartBarIcon, 
     FaceSmileIcon,
-    SpeakerWaveIcon 
+    SpeakerWaveIcon,
+    MoonIcon
 } from '@heroicons/react/24/solid'
+import WearableInsightsOverlay from './WearableInsightsOverlay'
 
 export default function WellnessStats() {
   const [currentCard, setCurrentCard] = useState(0)
   const [stats, setStats] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [wearableOverlayOpen, setWearableOverlayOpen] = useState(false)
 
   // Sample wellness stats - in production this would come from API
   useEffect(() => {
@@ -46,6 +49,12 @@ export default function WellnessStats() {
       environment: {
         mostUsedSound: 'forest',
         ambientPercentage: 75
+      },
+      sleepMetrics: {
+        averageSleepHours: 7.5,
+        sleepQuality: 8.2,
+        bedtimeConsistency: 85,
+        wakeUpConsistency: 78
       }
     }
     
@@ -58,13 +67,56 @@ export default function WellnessStats() {
 
   const statsCards = [
     {
+      id: 'sleep-metrics',
+      title: 'Sleep Metrics',
+      icon: <MoonIcon className="w-6 h-6 text-indigo-500" />,
+      render: () => (
+        <div className="space-y-3 w-full">
+          <div className="text-center">
+            <div className="text-2xl font-bold text-indigo-600 dark:text-indigo-400 mb-1">
+              {stats?.sleepMetrics.averageSleepHours}h
+            </div>
+            <div className="text-xs text-gray-600 dark:text-gray-400">
+              Average Sleep Hours
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4 w-full">
+            <div className="text-center flex-1">
+              <div className="text-lg font-bold text-purple-600 dark:text-purple-400">
+                {stats?.sleepMetrics.sleepQuality}/10
+              </div>
+              <div className="text-xs text-gray-600 dark:text-gray-400">
+                Sleep Quality
+              </div>
+            </div>
+            <div className="text-center flex-1">
+              <div className="text-lg font-bold text-blue-600 dark:text-blue-400">
+                {stats?.sleepMetrics.bedtimeConsistency}%
+              </div>
+              <div className="text-xs text-gray-600 dark:text-gray-400">
+                Bedtime Consistency
+              </div>
+            </div>
+          </div>
+          <div className="text-center w-full">
+            <div className="text-base font-semibold text-gray-700 dark:text-gray-300">
+              {stats?.sleepMetrics.wakeUpConsistency}% Wake-up Consistency
+            </div>
+            <div className="text-xs text-gray-500 dark:text-gray-400">
+              Sleep schedule adherence
+            </div>
+          </div>
+        </div>
+      )
+    },
+    {
       id: 'wellness-overview',
       title: 'Wellness Overview',
       icon: <HeartIcon className="w-6 h-6 text-pink-500" />,
       render: () => (
         <div className="space-y-3 w-full">
-          <div className="grid grid-cols-2 gap-3">
-            <div className="text-center">
+          <div className="grid grid-cols-2 gap-4 w-full">
+            <div className="text-center flex-1">
               <div className="text-xl font-bold text-pink-600 dark:text-pink-400">
                 {stats?.wellnessOverview.totalActivities}
               </div>
@@ -72,7 +124,7 @@ export default function WellnessStats() {
                 Total Activities
               </div>
             </div>
-            <div className="text-center">
+            <div className="text-center flex-1">
               <div className="text-xl font-bold text-green-600 dark:text-green-400">
                 {stats?.wellnessOverview.wellnessStreak}
               </div>
@@ -81,7 +133,7 @@ export default function WellnessStats() {
               </div>
             </div>
           </div>
-          <div className="text-center">
+          <div className="text-center w-full">
             <div className="text-base font-semibold text-gray-700 dark:text-gray-300">
               {stats?.wellnessOverview.averageDailyActivities} avg/day
             </div>
@@ -150,8 +202,8 @@ export default function WellnessStats() {
               Activity Completion Rate
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-3 text-center">
-            <div>
+          <div className="grid grid-cols-2 gap-4 text-center w-full">
+            <div className="flex-1">
               <div className="text-lg font-semibold text-blue-600 dark:text-blue-400">
                 {stats?.activityMetrics.activitiesCompleted}
               </div>
@@ -159,7 +211,7 @@ export default function WellnessStats() {
                 Completed
               </div>
             </div>
-            <div>
+            <div className="flex-1">
               <div className="text-lg font-semibold text-gray-600 dark:text-gray-400">
                 {stats?.activityMetrics.activitiesCreated}
               </div>
@@ -191,8 +243,8 @@ export default function WellnessStats() {
               Wellness Sessions
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-3 text-center">
-            <div>
+          <div className="grid grid-cols-2 gap-4 text-center w-full">
+            <div className="flex-1">
               <div className="text-base font-semibold text-gray-700 dark:text-gray-300">
                 {stats?.wellnessInsights.averageSessionTime}m
               </div>
@@ -200,7 +252,7 @@ export default function WellnessStats() {
                 Avg Session Time
               </div>
             </div>
-            <div>
+            <div className="flex-1">
               <div className="text-base font-semibold text-gray-700 dark:text-gray-300">
                 {stats?.wellnessInsights.wellnessEfficiency}%
               </div>
@@ -213,26 +265,44 @@ export default function WellnessStats() {
       )
     },
     {
-      id: 'environment',
-      title: 'Environment',
+      id: 'wearable-insights',
+      title: 'Wearable Insights',
       icon: <SpeakerWaveIcon className="w-6 h-6 text-purple-500" />,
       render: () => (
         <div className="space-y-3 w-full">
           <div className="text-center">
-            <div className="text-xl mb-1">🌲</div>
-            <div className="text-base font-semibold text-gray-700 dark:text-gray-300 capitalize">
-              {stats?.environment.mostUsedSound.toLowerCase()}
+            <div className="text-xl mb-1">⌚</div>
+            <div className="text-base font-semibold text-gray-700 dark:text-gray-300">
+              Smart Watch Connected
             </div>
             <div className="text-xs text-gray-500 dark:text-gray-400">
-              Most Used Sound
+              Device Status • Click for details
             </div>
           </div>
-          <div className="text-center">
-            <div className="text-lg font-bold text-purple-600 dark:text-purple-400">
-              {stats?.environment.ambientPercentage}%
+          <div className="grid grid-cols-2 gap-4 w-full">
+            <div className="text-center flex-1">
+              <div className="text-lg font-bold text-purple-600 dark:text-purple-400">
+                {stats?.environment.ambientPercentage}%
+              </div>
+              <div className="text-xs text-gray-600 dark:text-gray-400">
+                Heart Rate Variability
+              </div>
             </div>
-            <div className="text-xs text-gray-600 dark:text-gray-400">
-              Prefer Ambient Sounds
+            <div className="text-center flex-1">
+              <div className="text-lg font-bold text-blue-600 dark:text-blue-400">
+                8,500
+              </div>
+              <div className="text-xs text-gray-600 dark:text-gray-400">
+                Daily Steps
+              </div>
+            </div>
+          </div>
+          <div className="text-center w-full">
+            <div className="text-base font-semibold text-gray-700 dark:text-gray-300">
+              {stats?.environment.mostUsedSound} Environment
+            </div>
+            <div className="text-xs text-gray-500 dark:text-gray-400">
+              Optimal wellness setting
             </div>
           </div>
         </div>
@@ -246,6 +316,10 @@ export default function WellnessStats() {
 
   const prevCard = () => {
     setCurrentCard((prev) => (prev - 1 + statsCards.length) % statsCards.length)
+  }
+
+  const handleWearableCardClick = () => {
+    setWearableOverlayOpen(true)
   }
 
   if (loading) {
@@ -264,55 +338,63 @@ export default function WellnessStats() {
   const currentCardData = statsCards[currentCard]
 
   return (
-    <div className="w-full h-72 flex flex-col">
-      <div className="flex items-center justify-between mb-3">
-        <h1 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Wellness Stats</h1>
-        
-        {/* Navigation */}
-        <div className="flex items-center space-x-2">
-          <button
-            onClick={prevCard}
-            className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-            aria-label="Previous stat"
-          >
-            <ChevronLeftIcon className="w-4 h-4 text-gray-600 dark:text-gray-400" />
-          </button>
+    <>
+      <div className="w-full h-72 flex flex-col">
+        <div className="flex items-center justify-between mb-3">
+          <h1 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Wellness Stats</h1>
           
-          <div className="flex space-x-1">
-            {statsCards.map((_, index) => (
-              <div
-                key={index}
-                className={`w-2 h-2 rounded-full transition-colors ${
-                  index === currentCard 
-                    ? 'bg-teal-500' 
-                    : 'bg-gray-300 dark:bg-gray-600'
-                }`}
-              />
-            ))}
+          {/* Navigation */}
+          <div className="flex items-center space-x-2">
+            <button
+              onClick={prevCard}
+              className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              aria-label="Previous stat"
+            >
+              <ChevronLeftIcon className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+            </button>
+            
+            <div className="flex space-x-1">
+              {statsCards.map((_, index) => (
+                <div
+                  key={index}
+                  className={`w-2 h-2 rounded-full transition-colors ${
+                    index === currentCard 
+                      ? 'bg-teal-500' 
+                      : 'bg-gray-300 dark:bg-gray-600'
+                  }`}
+                />
+              ))}
+            </div>
+            
+            <button
+              onClick={nextCard}
+              className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              aria-label="Next stat"
+            >
+              <ChevronRightIcon className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+            </button>
           </div>
-          
-          <button
-            onClick={nextCard}
-            className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-            aria-label="Next stat"
-          >
-            <ChevronRightIcon className="w-4 h-4 text-gray-600 dark:text-gray-400" />
-          </button>
+        </div>
+
+        {/* Current Card Header */}
+        <div className="flex items-center space-x-2 mb-4">
+          {currentCardData.icon}
+          <span className="font-semibold text-gray-800 dark:text-gray-200">
+            {currentCardData.title}
+          </span>
+        </div>
+
+        {/* Card Content */}
+        <div className="flex-1 flex items-center justify-center">
+          {currentCardData.render()}
         </div>
       </div>
 
-      {/* Current Card Header */}
-      <div className="flex items-center space-x-2 mb-4">
-        {currentCardData.icon}
-        <span className="font-semibold text-gray-800 dark:text-gray-200">
-          {currentCardData.title}
-        </span>
-      </div>
-
-      {/* Card Content */}
-      <div className="flex-1 flex items-center justify-center">
-        {currentCardData.render()}
-      </div>
-    </div>
+      {/* Wearable Insights Overlay */}
+      <WearableInsightsOverlay 
+        isOpen={wearableOverlayOpen}
+        onClose={() => setWearableOverlayOpen(false)}
+      />
+    </>
   )
 }
