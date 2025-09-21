@@ -117,35 +117,37 @@ export default function SoundPlayer() {
     }
   }, [selectedSound, isPlaying]);
 
-  const currentTint = SOUND_TINTS[selectedSound] || SOUND_TINTS.forest;
+  // Get the dynamic card class based on selected sound
+  const getMusicCardClass = () => {
+    const baseClass = 'neumorphic-music-card';
+    const colorClass = `neumorphic-music-card-${selectedSound}`;
+    return `${baseClass} ${colorClass}`;
+  };
 
   return (
-    <div className="h-full rounded-2xl bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm relative overflow-hidden">
-      {/* Subtle tint overlay */}
-      <div className={`absolute inset-0 rounded-2xl transition-all duration-700 ${currentTint}`}></div>
-      
-      {/* Content */}
-      <div className="relative z-10 h-full p-6">
+    <div className="h-full rounded-2xl relative overflow-hidden">
+      {/* Neumorphic Music Card */}
+      <div className={`h-full ${getMusicCardClass()}`}>
+        {/* Content */}
+        <div className="h-full p-6">
       <div className="flex flex-col h-full">
         {/* Header */}
         <div className="text-center mb-6">
-          <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">
+          <h3 className="text-lg font-semibold text-white mb-2">
             Ambient & Focus
           </h3>
-          <p className="text-sm text-gray-600 dark:text-gray-300">
+          <p className="text-sm text-white/80">
             Choose your focus sound
           </p>
         </div>
 
         {/* Sound Type Navigation */}
         <div className="mb-6">
-          <div className="flex items-center justify-between bg-white/20 dark:bg-black/20 rounded-lg p-3 backdrop-blur-sm">
+          <div className="flex items-center justify-between bg-black/20 rounded-lg p-3 backdrop-blur-sm">
             <button 
               onClick={() => navigateSoundType('prev')}
-              className={`p-2 rounded-full transition-all duration-300 ${
-                isAmbient 
-                  ? 'bg-white/50 dark:bg-gray-700/50 text-gray-400 cursor-not-allowed' 
-                  : 'bg-white/80 dark:bg-gray-700/80 text-gray-700 dark:text-gray-200 hover:bg-white dark:hover:bg-gray-600 hover:scale-110'
+              className={`neumorphic-sound-button ${
+                isAmbient ? 'opacity-50' : ''
               }`}
               disabled={isAmbient}
             >
@@ -153,20 +155,18 @@ export default function SoundPlayer() {
             </button>
             
             <div className="text-center flex-1">
-              <p className="text-lg font-semibold text-gray-800 dark:text-white">
+              <p className="text-lg font-semibold text-white">
                 {isAmbient ? 'Ambient' : 'Noise'}
               </p>
-              <p className="text-xs text-gray-600 dark:text-gray-400">
+              <p className="text-xs text-white/60">
                 {isAmbient ? 'Natural Sounds' : 'Colored Noise'}
               </p>
             </div>
             
             <button 
               onClick={() => navigateSoundType('next')}
-              className={`p-2 rounded-full transition-all duration-300 ${
-                !isAmbient 
-                  ? 'bg-white/50 dark:bg-gray-700/50 text-gray-400 cursor-not-allowed' 
-                  : 'bg-white/80 dark:bg-gray-700/80 text-gray-700 dark:text-gray-200 hover:bg-white dark:hover:bg-gray-600 hover:scale-110'
+              className={`neumorphic-sound-button ${
+                !isAmbient ? 'opacity-50' : ''
               }`}
               disabled={!isAmbient}
             >
@@ -177,16 +177,16 @@ export default function SoundPlayer() {
 
         {/* Specific Sound Navigation */}
         <div className="mb-6 flex-1">
-          <div className="flex items-center justify-between bg-white/20 dark:bg-black/20 rounded-lg p-3 backdrop-blur-sm">
+          <div className="flex items-center justify-between bg-black/20 rounded-lg p-3 backdrop-blur-sm">
             <button 
               onClick={() => navigateSound('prev')}
-              className="p-2 rounded-full transition-all duration-300 bg-white/80 dark:bg-gray-700/80 text-gray-700 dark:text-gray-200 hover:bg-white dark:hover:bg-gray-600 hover:scale-110"
+              className="neumorphic-sound-button"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
             
             <div className="text-center flex-1">
-              <p className="text-lg font-semibold text-gray-800 dark:text-white">
+              <p className="text-lg font-semibold text-white">
                 {SOUND_LABELS[selectedSound]}
               </p>
               <div className="flex justify-center mt-2 space-x-1">
@@ -199,14 +199,14 @@ export default function SoundPlayer() {
                   ></div>
                 ))}
               </div>
-              <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+              <p className="text-xs text-white/60 mt-1">
                 {soundIndex + 1} of {currentSoundArray.length}
               </p>
             </div>
             
             <button 
               onClick={() => navigateSound('next')}
-              className="p-2 rounded-full transition-all duration-300 bg-white/80 dark:bg-gray-700/80 text-gray-700 dark:text-gray-200 hover:bg-white dark:hover:bg-gray-600 hover:scale-110"
+              className="neumorphic-sound-button"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
@@ -214,10 +214,10 @@ export default function SoundPlayer() {
         </div>
 
         {/* Play/Pause Button */}
-        <div className="text-center">
+        <div className="flex justify-center items-center flex-1">
           <button
             onClick={togglePlayPause}
-            className="bg-white/90 dark:bg-gray-800/90 hover:bg-white dark:hover:bg-gray-700 text-gray-800 dark:text-white rounded-full p-4 shadow-lg transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-white/30"
+            className="neumorphic-play-button"
           >
             {isPlaying ? (
               <Pause className="w-6 h-6" />
@@ -229,7 +229,8 @@ export default function SoundPlayer() {
 
         {/* Hidden audio element */}
         <audio ref={audioRef} loop />
-      </div>
+        </div>
+        </div>
       </div>
     </div>
   );

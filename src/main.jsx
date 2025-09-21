@@ -14,6 +14,7 @@ import Article3 from './pages/Article3'
 import Article4 from './pages/Article4'
 import EisenhowerMatrixPage from './pages/EisenhowerMatrixPage'
 import VoiceAIAgent from './pages/VoiceAIAgent'
+import StudyModeApp from './StudyModeApp'
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -36,6 +37,7 @@ createRoot(document.getElementById('root')).render(
             } 
           />
           <Route path="/voice-ai" element={<VoiceAIAgent />} />
+          <Route path="/study-mode" element={<StudyModeApp />} />
           <Route 
             path="/app/*" 
             element={

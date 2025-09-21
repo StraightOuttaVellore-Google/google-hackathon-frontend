@@ -10,13 +10,13 @@ export default function VoiceAICard() {
 
   return (
     <>
-      <div className="w-1/5 h-72">
+      <div className="w-full h-72">
         {/* Voice Agent Image - Clickable */}
         <div className="mb-3 relative cursor-pointer" onClick={handleTalkClick}>
           <img
             src="images/38dc7c1a-2e26-44b6-9c9b-97ca9ff38a60.png"
             alt="Voice Agent"
-            className="w-full h-48 object-cover rounded-lg transition-transform duration-200 hover:scale-105"
+            className="w-full h-48 object-contain rounded-lg transition-transform duration-200 hover:scale-105"
             style={{
               filter: 'drop-shadow(0 0 8px rgba(60, 90, 150, 0.7)) drop-shadow(0 0 16px rgba(40, 70, 120, 0.5)) drop-shadow(0 0 24px rgba(30, 50, 100, 0.4)) drop-shadow(0 0 32px rgba(20, 40, 80, 0.3))',
               borderRadius: '0.5rem'

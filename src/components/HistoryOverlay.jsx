@@ -48,64 +48,64 @@ const HistoryOverlay = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
+      <div className="neumorphic-timer-card-container max-w-4xl w-full max-h-[90vh] overflow-hidden rounded-2xl">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+        <div className="flex items-center justify-between p-6 border-b border-white/20 bg-black/20">
           <div>
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+            <h2 className="text-2xl font-bold text-white">
               Study History & Progress
             </h2>
-            <p className="text-gray-600 dark:text-gray-400">
+            <p className="text-white/80">
               Track your study patterns and progress
             </p>
           </div>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+            className="neumorphic-matrix-close-button"
           >
-            <X className="w-6 h-6" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Content */}
-        <div className="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
+        <div className="p-6 overflow-y-auto max-h-[calc(90vh-120px)] neumorphic-scrollbar">
           {/* Progress Overview */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 p-6 rounded-xl border border-blue-200 dark:border-blue-700">
+            <div className="neumorphic-matrix-card p-6 rounded-xl">
               <div className="flex items-center gap-3 mb-2">
-                <CheckCircle className="w-6 h-6 text-blue-600" />
-                <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-100">Task Completion</h3>
+                <CheckCircle className="w-6 h-6 text-blue-400" />
+                <h3 className="text-lg font-semibold text-white">Task Completion</h3>
               </div>
-              <div className="text-3xl font-bold text-blue-900 dark:text-blue-100 mb-1">
+              <div className="text-3xl font-bold text-white mb-1">
                 {completedTasks}/{totalTasks}
               </div>
-              <div className="text-sm text-blue-700 dark:text-blue-300">
+              <div className="text-sm text-white/80">
                 {completionRate}% completion rate
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/30 dark:to-green-800/30 p-6 rounded-xl border border-green-200 dark:border-green-700">
+            <div className="neumorphic-matrix-card p-6 rounded-xl">
               <div className="flex items-center gap-3 mb-2">
-                <TrendingUp className="w-6 h-6 text-green-600" />
-                <h3 className="text-lg font-semibold text-green-900 dark:text-green-100">Study Streak</h3>
+                <TrendingUp className="w-6 h-6 text-green-400" />
+                <h3 className="text-lg font-semibold text-white">Study Streak</h3>
               </div>
-              <div className="text-3xl font-bold text-green-900 dark:text-green-100 mb-1">
+              <div className="text-3xl font-bold text-white mb-1">
                 {recentDays.filter(day => day.data).length}
               </div>
-              <div className="text-sm text-green-700 dark:text-green-300">
+              <div className="text-sm text-white/80">
                 Days with journal entries
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/30 dark:to-purple-800/30 p-6 rounded-xl border border-purple-200 dark:border-purple-700">
+            <div className="neumorphic-matrix-card p-6 rounded-xl">
               <div className="flex items-center gap-3 mb-2">
-                <Calendar className="w-6 h-6 text-purple-600" />
-                <h3 className="text-lg font-semibold text-purple-900 dark:text-purple-100">Total Days</h3>
+                <Calendar className="w-6 h-6 text-purple-400" />
+                <h3 className="text-lg font-semibold text-white">Total Days</h3>
               </div>
-              <div className="text-3xl font-bold text-purple-900 dark:text-purple-100 mb-1">
+              <div className="text-3xl font-bold text-white mb-1">
                 {studyData.stress_jounral_data.length}
               </div>
-              <div className="text-sm text-purple-700 dark:text-purple-300">
+              <div className="text-sm text-white/80">
                 Journal entries recorded
               </div>
             </div>
@@ -113,7 +113,7 @@ const HistoryOverlay = ({ isOpen, onClose }) => {
 
           {/* Recent Days */}
           <div className="mb-8">
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+            <h3 className="text-xl font-semibold text-white mb-4">
               Last 7 Days
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -123,17 +123,17 @@ const HistoryOverlay = ({ isOpen, onClose }) => {
                 return (
                   <div
                     key={index}
-                    className={`p-4 rounded-xl border-2 transition-all duration-200 ${
+                    className={`p-4 rounded-xl transition-all duration-200 ${
                       data 
-                        ? `${emojiInfo.bg} border-gray-200 dark:border-gray-600` 
-                        : 'bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600'
+                        ? 'neumorphic-matrix-card' 
+                        : 'neumorphic-timer-card'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <div className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                      <div className="text-sm font-medium text-white/80">
                         {date.toLocaleDateString('en-US', { weekday: 'short' })}
                       </div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">
+                      <div className="text-sm text-white/60">
                         {date.getDate()}/{date.getMonth() + 1}
                       </div>
                     </div>
@@ -142,18 +142,18 @@ const HistoryOverlay = ({ isOpen, onClose }) => {
                       <div>
                         <div className="flex items-center gap-2 mb-2">
                           <span className="text-2xl">{data.emoji}</span>
-                          <span className={`text-sm font-medium ${emojiInfo.color}`}>
+                          <span className="text-sm font-medium text-white">
                             {emojiInfo.label}
                           </span>
                         </div>
-                        <p className="text-sm text-gray-700 dark:text-gray-300 line-clamp-2">
+                        <p className="text-sm text-white/80 line-clamp-2">
                           {data.summary}
                         </p>
                       </div>
                     ) : (
                       <div className="text-center py-4">
-                        <Clock className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                        <Clock className="w-8 h-8 text-white/40 mx-auto mb-2" />
+                        <p className="text-sm text-white/60">
                           No journal entry
                         </p>
                       </div>
@@ -167,7 +167,7 @@ const HistoryOverlay = ({ isOpen, onClose }) => {
           {/* All Journal Entries */}
           {studyData.stress_jounral_data.length > 0 && (
             <div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+              <h3 className="text-xl font-semibold text-white mb-4">
                 All Journal Entries
               </h3>
               <div className="space-y-4">
@@ -180,20 +180,20 @@ const HistoryOverlay = ({ isOpen, onClose }) => {
                     return (
                       <div
                         key={index}
-                        className={`p-4 rounded-xl border ${emojiInfo.bg} border-gray-200 dark:border-gray-600`}
+                        className="neumorphic-matrix-card p-4 rounded-xl"
                       >
                         <div className="flex items-center justify-between mb-2">
                           <div className="flex items-center gap-2">
                             <span className="text-2xl">{entry.emoji}</span>
-                            <span className={`font-medium ${emojiInfo.color}`}>
+                            <span className="font-medium text-white">
                               {emojiInfo.label}
                             </span>
                           </div>
-                          <div className="text-sm text-gray-600 dark:text-gray-400">
+                          <div className="text-sm text-white/80">
                             {entryDate.toLocaleDateString()}
                           </div>
                         </div>
-                        <p className="text-gray-700 dark:text-gray-300">
+                        <p className="text-white/80">
                           {entry.summary}
                         </p>
                       </div>
@@ -205,11 +205,11 @@ const HistoryOverlay = ({ isOpen, onClose }) => {
 
           {studyData.stress_jounral_data.length === 0 && (
             <div className="text-center py-12">
-              <AlertCircle className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-gray-600 dark:text-gray-400 mb-2">
+              <AlertCircle className="w-16 h-16 text-white/40 mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-white/80 mb-2">
                 No Journal Entries Yet
               </h3>
-              <p className="text-gray-500 dark:text-gray-500">
+              <p className="text-white/60">
                 Start journaling to track your study progress and mood!
               </p>
             </div>

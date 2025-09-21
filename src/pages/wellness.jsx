@@ -2,12 +2,17 @@ import WellnessMoodBoardWidget from "./wellness_moodboard";
 import Community from "../components/Community";
 import World from "../components/World";
 import Pathways from "../components/Pathways";
+import NeumorphicCard from "../components/NeumorphicCard";
+import { useTheme } from "../contexts/ThemeContext";
 
 export default function WellnessPage() {
+  const { isBlackMode } = useTheme();
+  
   return (
     <div className="text-white overflow-x-hidden relative bg-black">
       {/* Dark Green Starry Background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {!isBlackMode && (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Bright Stars - Very Prominent */}
         {[...Array(50)].map((_, i) => (
           <div
@@ -311,126 +316,34 @@ export default function WellnessPage() {
             }}
           />
         ))}
-      </div>
+        </div>
+      )}
 
       {/* Content */}
       <div className="relative z-10">
       <WellnessMoodBoardWidget />
-        <div className="px-6 pb-6 flex gap-6">
-          <div 
-            className="backdrop-blur-lg rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 w-1/5 h-96 relative overflow-hidden"
-            style={{
-              background: 'rgba(0, 0, 0, 0.2)',
-              border: '1px solid rgba(255, 255, 255, 0.15)',
-              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08), 0 0 20px rgba(100, 200, 100, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
-            }}
+        <div className="px-6 pb-6 flex gap-6 mt-8">
+          <NeumorphicCard 
+            className="w-1/5 h-96 p-6"
+            mode="wellness"
+            starCount={8}
           >
-            {/* Card Stars */}
-            {[...Array(8)].map((_, i) => (
-              <div
-                key={`card-star-1-${i}`}
-                className="absolute animate-pulse"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  width: `${Math.random() * 1 + 0.5}px`,
-                  height: `${Math.random() * 1 + 0.5}px`,
-                  background: 'rgba(100, 200, 100, 0.6)',
-                  borderRadius: '50%',
-                  boxShadow: '0 0 3px rgba(80, 150, 80, 0.4)',
-                  animationDelay: `${Math.random() * 4}s`,
-                  animationDuration: `${Math.random() * 3 + 2}s`,
-                  zIndex: 1
-                }}
-              />
-            ))}
-            <div className="relative z-10">
-          <Community />
-        </div>
-          </div>
-          <div 
-            className="backdrop-blur-lg rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 w-1/5 h-96 relative overflow-hidden"
-            style={{
-              background: 'rgba(0, 0, 0, 0.2)',
-              border: '1px solid rgba(255, 255, 255, 0.15)',
-              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08), 0 0 20px rgba(100, 200, 100, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
-            }}
+            <Community />
+          </NeumorphicCard>
+          <NeumorphicCard 
+            className="w-1/5 h-96"
+            mode="wellness"
+            starCount={8}
           >
-            {/* Card Stars */}
-            {[...Array(8)].map((_, i) => (
-              <div
-                key={`card-star-2-${i}`}
-                className="absolute animate-pulse"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  width: `${Math.random() * 1 + 0.5}px`,
-                  height: `${Math.random() * 1 + 0.5}px`,
-                  background: 'rgba(100, 200, 100, 0.6)',
-                  borderRadius: '50%',
-                  boxShadow: '0 0 3px rgba(80, 150, 80, 0.4)',
-                  animationDelay: `${Math.random() * 4}s`,
-                  animationDuration: `${Math.random() * 3 + 2}s`,
-                  zIndex: 1
-                }}
-              />
-            ))}
-            <div className="relative z-10">
-          <World />
-        </div>
-          </div>
-          <div 
-            className="backdrop-blur-lg rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 w-3/5 h-96 relative overflow-hidden"
-            style={{
-              background: 'rgba(0, 0, 0, 0.2)',
-              border: '1px solid rgba(255, 255, 255, 0.15)',
-              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08), 0 0 20px rgba(100, 200, 100, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
-            }}
+            <World />
+          </NeumorphicCard>
+          <NeumorphicCard 
+            className="w-3/5 h-96 p-6"
+            mode="wellness"
+            starCount={18}
           >
-            {/* Card Stars */}
-            {[...Array(12)].map((_, i) => (
-              <div
-                key={`card-star-3-${i}`}
-                className="absolute animate-pulse"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  width: `${Math.random() * 1 + 0.5}px`,
-                  height: `${Math.random() * 1 + 0.5}px`,
-                  background: 'rgba(100, 200, 100, 0.6)',
-                  borderRadius: '50%',
-                  boxShadow: '0 0 3px rgba(80, 150, 80, 0.4)',
-                  animationDelay: `${Math.random() * 4}s`,
-                  animationDuration: `${Math.random() * 3 + 2}s`,
-                  zIndex: 1
-                }}
-              />
-            ))}
-            
-            {/* Additional Stars - Top Part */}
-            {[...Array(6)].map((_, i) => (
-              <div
-                key={`pathways-top-star-${i}`}
-                className="absolute animate-pulse"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 30}%`,
-                  width: `${Math.random() * 1.2 + 0.6}px`,
-                  height: `${Math.random() * 1.2 + 0.6}px`,
-                  background: 'rgba(80, 160, 80, 0.7)',
-                  borderRadius: '50%',
-                  boxShadow: '0 0 4px rgba(60, 140, 60, 0.5)',
-                  animationDelay: `${Math.random() * 3.5}s`,
-                  animationDuration: `${Math.random() * 2.5 + 2}s`,
-                  zIndex: 1
-                }}
-              />
-            ))}
-            
-            <div className="relative z-10">
-          <Pathways />
-            </div>
-          </div>
+            <Pathways />
+          </NeumorphicCard>
         </div>
       </div>
     </div>

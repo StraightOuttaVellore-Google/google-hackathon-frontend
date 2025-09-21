@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { X, Plus, Check, Edit2, Trash2 } from 'lucide-react';
 import useStudyStore from '../stores/studyStore';
 import { TaskQuadrant, TaskStatus } from '../types/studyTypes';
@@ -18,6 +19,8 @@ const CalendarOverlay = ({ isOpen, onClose, selectedDate }) => {
     description: '',
     quadrant: TaskQuadrant.HUHI
   });
+  const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState({});
+  const [isQuadrantDropdownOpen, setIsQuadrantDropdownOpen] = useState(false);
 
   if (!isOpen) return null;
 
@@ -62,11 +65,22 @@ const CalendarOverlay = ({ isOpen, onClose, selectedDate }) => {
     deleteTask(taskId);
   };
 
+  const toggleStatusDropdown = (taskId) => {
+    setIsStatusDropdownOpen(prev => ({
+      ...prev,
+      [taskId]: !prev[taskId]
+    }));
+  };
+
+  const toggleQuadrantDropdown = () => {
+    setIsQuadrantDropdownOpen(!isQuadrantDropdownOpen);
+  };
+
   const quadrantConfig = {
-    [TaskQuadrant.HUHI]: { title: "Do First", color: "bg-red-50 border-red-200", textColor: "text-red-800" },
-    [TaskQuadrant.LUHI]: { title: "Schedule", color: "bg-yellow-50 border-yellow-200", textColor: "text-yellow-800" },
-    [TaskQuadrant.HULI]: { title: "Delegate", color: "bg-blue-50 border-blue-200", textColor: "text-blue-800" },
-    [TaskQuadrant.LULI]: { title: "Eliminate", color: "bg-gray-50 border-gray-200", textColor: "text-gray-800" }
+    [TaskQuadrant.HUHI]: { title: "Do First", color: "", textColor: "" },
+    [TaskQuadrant.LUHI]: { title: "Schedule", color: "", textColor: "" },
+    [TaskQuadrant.HULI]: { title: "Delegate", color: "", textColor: "" },
+    [TaskQuadrant.LULI]: { title: "Eliminate", color: "", textColor: "" }
   };
 
   const statusConfig = {
@@ -77,54 +91,57 @@ const CalendarOverlay = ({ isOpen, onClose, selectedDate }) => {
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
+      <div 
+        className="neumorphic-timer-card-container max-w-4xl w-full h-[80vh] overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+        <div className="flex items-center justify-between p-6 bg-black/20">
           <div>
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+            <h2 className="text-2xl font-bold text-white">
               {selectedDate ? `Tasks for ${selectedDate.toLocaleDateString()}` : 'Daily Tasks'}
             </h2>
-            <p className="text-gray-600 dark:text-gray-400">
+            <p className="text-white/80">
               Manage your tasks for this day
             </p>
           </div>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+            className="neumorphic-matrix-close-button"
           >
-            <X className="w-6 h-6" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Content */}
-        <div className="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
+        <div className="p-6 max-h-[calc(80vh-120px)] overflow-y-auto neumorphic-scrollbar" style={{ overflowX: 'visible' }}>
           {/* Daily Summary Section */}
-          <div className="mb-6 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg border border-blue-200 dark:border-blue-700">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <div className="mb-6 p-4 bg-black/20 rounded-lg">
+            <h3 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
               📊 Daily Summary
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="text-center">
-                <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+                <div className="text-2xl font-bold text-white">
                   {dayTasks.length}
                 </div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">Total Tasks</div>
+                <div className="text-sm text-white/60">Total Tasks</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-green-600 dark:text-green-400">
+                <div className="text-2xl font-bold text-white">
                   {dayTasks.filter(task => task.status === TaskStatus.COMPLETED).length}
                 </div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">Completed</div>
+                <div className="text-sm text-white/60">Completed</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">
+                <div className="text-2xl font-bold text-white">
                   {dayTasks.filter(task => task.status === TaskStatus.IN_PROGRESS).length}
                 </div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">In Progress</div>
+                <div className="text-sm text-white/60">In Progress</div>
               </div>
             </div>
             {selectedDate && (
-              <div className="mt-3 text-sm text-gray-600 dark:text-gray-400">
+              <div className="mt-3 text-sm text-white/60">
                 <strong>Date:</strong> {selectedDate.toLocaleDateString('en-US', { 
                   weekday: 'long', 
                   year: 'numeric', 
@@ -139,7 +156,7 @@ const CalendarOverlay = ({ isOpen, onClose, selectedDate }) => {
           <div className="mb-6">
             <button
               onClick={() => setIsAddingTask(true)}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+              className="neumorphic-matrix-button flex items-center gap-2"
             >
               <Plus className="w-4 h-4" />
               Add Task
@@ -148,57 +165,91 @@ const CalendarOverlay = ({ isOpen, onClose, selectedDate }) => {
 
           {/* Add Task Form */}
           {isAddingTask && (
-            <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
-              <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Add New Task</h3>
-              <div className="space-y-4">
+            <div className="mb-6 p-4 bg-black/20 rounded-lg">
+              <h3 className="text-lg font-semibold mb-4 text-white">Add New Task</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label className="block text-sm font-medium text-white/80 mb-1">
                     Title
                   </label>
                   <input
                     type="text"
                     value={newTask.title}
                     onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-800 dark:text-white"
+                    className="neumorphic-input w-full"
                     placeholder="Enter task title"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label className="block text-sm font-medium text-white/80 mb-1">
+                    Priority Quadrant
+                  </label>
+                  <div className="relative">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleQuadrantDropdown();
+                      }}
+                      className="neumorphic-dropdown-button w-full"
+                    >
+                      <span>{quadrantConfig[newTask.quadrant]?.title || 'Select Quadrant'}</span>
+                      <svg 
+                        className={`w-4 h-4 text-white/60 transition-transform duration-200 ${isQuadrantDropdownOpen ? 'rotate-180' : ''}`} 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                    
+                    {isQuadrantDropdownOpen && (
+                      <div className="neumorphic-dropdown-options-scrollable neumorphic-scrollbar">
+                        {Object.entries(quadrantConfig).map(([key, config]) => (
+                          <button
+                            key={key}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setNewTask({ ...newTask, quadrant: key });
+                              toggleQuadrantDropdown();
+                            }}
+                            className="neumorphic-dropdown-option"
+                          >
+                            {config.title}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium text-white/80 mb-1">
                     Description
                   </label>
                   <textarea
                     value={newTask.description}
                     onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-800 dark:text-white"
+                    className="neumorphic-input w-full"
                     rows="3"
                     placeholder="Enter task description"
                   />
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    Priority Quadrant
-                  </label>
-                  <select
-                    value={newTask.quadrant}
-                    onChange={(e) => setNewTask({ ...newTask, quadrant: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-800 dark:text-white"
-                  >
-                    {Object.entries(quadrantConfig).map(([key, config]) => (
-                      <option key={key} value={key}>{config.title}</option>
-                    ))}
-                  </select>
-                </div>
-                <div className="flex gap-2">
+                <div className="md:col-span-2 flex gap-2">
                   <button
-                    onClick={handleAddTask}
-                    className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleAddTask();
+                    }}
+                    className="neumorphic-matrix-button"
                   >
                     Add Task
                   </button>
                   <button
-                    onClick={() => setIsAddingTask(false)}
-                    className="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsAddingTask(false);
+                    }}
+                    className="neumorphic-matrix-button"
                   >
                     Cancel
                   </button>
@@ -208,9 +259,9 @@ const CalendarOverlay = ({ isOpen, onClose, selectedDate }) => {
           )}
 
           {/* Tasks List */}
-          <div className="space-y-4">
+            <div className="space-y-4" style={{ overflow: 'visible' }}>
             {dayTasks.length === 0 ? (
-              <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+              <div className="text-center py-8 text-white/60">
                 No tasks for this day. Add one above!
               </div>
             ) : (
@@ -221,40 +272,71 @@ const CalendarOverlay = ({ isOpen, onClose, selectedDate }) => {
                 return (
                   <div
                     key={task.id}
-                    className={`p-4 rounded-lg border-2 ${quadrantInfo.color} ${quadrantInfo.textColor}`}
+                    className={`neumorphic-matrix-card p-4 rounded-lg relative transition-all duration-300 ${isStatusDropdownOpen[task.id] || isQuadrantDropdownOpen[task.id] ? 'overflow-y-auto neumorphic-scrollbar max-h-48' : 'overflow-visible'}`}
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-2">
-                          <h3 className={`font-semibold ${task.status === TaskStatus.COMPLETED ? 'line-through opacity-60' : ''}`}>
+                          <h3 className={`font-semibold text-white ${task.status === TaskStatus.COMPLETED ? 'line-through opacity-60' : ''}`}>
                             {task.title}
                           </h3>
-                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${statusInfo.color}`}>
+                          <span className="px-2 py-1 rounded-full text-xs font-medium bg-black/20 text-white/80 border border-white/10">
                             {statusInfo.label}
                           </span>
                         </div>
                         {task.description && (
-                          <p className="text-sm opacity-80 mb-2">{task.description}</p>
+                          <p className="text-sm text-white/80 mb-2">{task.description}</p>
                         )}
-                        <p className="text-xs opacity-60">
+                        <p className="text-xs text-white/60">
                           {quadrantInfo.title} • Created {new Date(task.created_at).toLocaleDateString()}
                         </p>
                       </div>
                       <div className="flex items-center gap-2 ml-4">
-                        <select
-                          value={task.status}
-                          onChange={(e) => handleUpdateTaskStatus(task.id, e.target.value)}
-                          className="text-xs px-2 py-1 rounded border-0 bg-white/50 focus:ring-1 focus:ring-blue-500"
-                        >
-                          {Object.entries(statusConfig).map(([key, config]) => (
-                            <option key={key} value={key}>{config.label}</option>
-                          ))}
-                        </select>
+                        <div className="relative">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              toggleStatusDropdown(task.id);
+                            }}
+                            className="neumorphic-dropdown-button text-xs px-2 py-1"
+                          >
+                            <span>{statusInfo.label}</span>
+                            <svg 
+                              className={`w-3 h-3 text-white/60 transition-transform duration-200 ${isStatusDropdownOpen[task.id] ? 'rotate-180' : ''}`} 
+                              fill="none" 
+                              stroke="currentColor" 
+                              viewBox="0 0 24 24"
+                            >
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                            </svg>
+                          </button>
+                          
+                          {isStatusDropdownOpen[task.id] && (
+                            <div className="neumorphic-dropdown-options-scrollable neumorphic-scrollbar">
+                              {Object.entries(statusConfig).map(([key, config]) => (
+                                <button
+                                  key={key}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleUpdateTaskStatus(task.id, key);
+                                    toggleStatusDropdown(task.id);
+                                  }}
+                                  className="neumorphic-dropdown-option"
+                                >
+                                  {config.label}
+                                </button>
+                              ))}
+                            </div>
+                          )}
+                        </div>
                         <button
-                          onClick={() => handleDeleteTask(task.id)}
-                          className="p-1 hover:bg-red-100 dark:hover:bg-red-900/30 rounded transition-colors"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDeleteTask(task.id);
+                          }}
+                          className="p-1 hover:bg-red-500/20 rounded transition-colors"
                         >
-                          <Trash2 className="w-4 h-4 text-red-500" />
+                          <Trash2 className="w-4 h-4 text-red-400" />
                         </button>
                       </div>
                     </div>

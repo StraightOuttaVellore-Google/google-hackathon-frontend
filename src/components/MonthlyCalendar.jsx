@@ -107,7 +107,7 @@ export default function MonthlyCalendar({ onDayClick }) {
   }
 
   return (
-    <div className="w-2/5 h-72 flex flex-col">
+    <div className="w-full h-72 flex flex-col">
       {/* Calendar Header */}
       <div className="flex items-center justify-between mb-2">
         <button
@@ -140,30 +140,36 @@ export default function MonthlyCalendar({ onDayClick }) {
 
       {/* Calendar Grid */}
       <div className="grid grid-cols-7 gap-0.5 flex-1 min-h-0">
-        {calendarDays.map((day, index) => (
-          <div
-            key={index}
-            onClick={() => handleDayClick(day)}
-            className={`
-              relative flex flex-col items-center justify-center text-xs rounded transition-all duration-200 min-h-0 h-full
-              ${day ? 'cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700' : ''}
-              ${isToday(day) ? 'bg-blue-100 dark:bg-blue-900 border border-blue-500' : ''}
-              ${selectedDay === day ? 'bg-gray-200 dark:bg-gray-600' : ''}
-              ${hasData(day) ? 'border border-gray-300 dark:border-gray-500' : ''}
-            `}
-          >
-            {day && (
-              <>
-                <span className={`text-xs leading-none ${isToday(day) ? 'font-bold text-blue-600 dark:text-blue-400' : 'text-gray-700 dark:text-gray-300'}`}>
-                  {day}
-                </span>
-                {getDayEmoji(day) && (
-                  <span className="text-sm leading-none mt-0.5">{getDayEmoji(day)}</span>
-                )}
-              </>
-            )}
-          </div>
-        ))}
+        {calendarDays.map((day, index) => {
+          if (!day) {
+            return <div key={index} className="min-h-0 h-full" />
+          }
+
+          // Determine button class based on state
+          let buttonClass = 'neumorphic-calendar-button'
+          if (isToday(day)) {
+            buttonClass = 'neumorphic-calendar-button-today'
+          } else if (selectedDay === day) {
+            buttonClass = 'neumorphic-calendar-button-selected'
+          } else if (hasData(day)) {
+            buttonClass = 'neumorphic-calendar-button-data'
+          }
+
+          return (
+            <button
+              key={index}
+              onClick={() => handleDayClick(day)}
+              className={`${buttonClass} w-full h-full`}
+            >
+              <span className="text-xs leading-none">
+                {day}
+              </span>
+              {getDayEmoji(day) && (
+                <span className="text-sm leading-none mt-0.5">{getDayEmoji(day)}</span>
+              )}
+            </button>
+          )
+        })}
       </div>
     </div>
   )

@@ -250,7 +250,7 @@ export default function WellnessStats() {
 
   if (loading) {
     return (
-      <div className="w-2/5 h-72 flex flex-col">
+      <div className="w-full h-72 flex flex-col">
         <h1 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">Wellness Stats</h1>
         <div className="flex-1 flex items-center justify-center">
           <div className="animate-pulse text-gray-500 dark:text-gray-400">
@@ -264,7 +264,7 @@ export default function WellnessStats() {
   const currentCardData = statsCards[currentCard]
 
   return (
-    <div className="w-2/5 h-72 flex flex-col">
+    <div className="w-full h-72 flex flex-col">
       <div className="flex items-center justify-between mb-3">
         <h1 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Wellness Stats</h1>
         

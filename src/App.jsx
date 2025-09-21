@@ -3,11 +3,12 @@ import { useState } from 'react'
 import { useTheme } from './contexts/ThemeContext'
 import StudyPage from './pages/study'
 import WellnessPage from './pages/wellness'
-import DarkModeToggle from './components/DarkModeToggle'
+import ThemeDropdown from './components/ThemeDropdown'
 import UserDropdown from './components/UserDropdown'
+import NeumorphicButton from './components/NeumorphicButton'
 
 export default function App() {
-  const { isDarkMode } = useTheme()
+  const { isDarkMode, isBlackMode } = useTheme()
   const [isStudyMode, setIsStudyMode] = useState(true)
 
   const toggleMode = () => {
@@ -16,13 +17,13 @@ export default function App() {
 
   return (
     <div 
-      className={`${isDarkMode ? 'dark' : ''} min-h-screen transition-all duration-500`}
+      className={`${isDarkMode ? 'dark' : ''} ${isBlackMode ? 'black' : ''} min-h-screen transition-all duration-500`}
       style={{
         background: '#000000'
       }}
     >
       {/* Galaxy Background Effects */}
-      {(
+      {!isBlackMode && (
         <>
           {/* Enhanced Dark Hues */}
           <div 
@@ -401,9 +402,9 @@ export default function App() {
         </>
       )}
 
-      {/* Dark Mode Toggle - Top Left */}
+      {/* Theme Dropdown - Top Left */}
       <div className="fixed top-6 left-6 z-50">
-        <DarkModeToggle />
+        <ThemeDropdown />
       </div>
 
       {/* User Dropdown - Top Right */}
@@ -412,7 +413,7 @@ export default function App() {
       </div>
 
       {/* Floating Toggle Switch */}
-      <div className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50">
+      <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50">
         <div 
           className="backdrop-blur-lg rounded-full p-1 shadow-xl relative overflow-hidden"
           style={{
@@ -447,27 +448,20 @@ export default function App() {
             />
           ))}
           
-          <div className="flex items-center relative z-10">
-            <button
+          {/* Toggle Buttons */}
+          <div className="flex items-center gap-2 relative z-10">
+            <NeumorphicButton
               onClick={toggleMode}
-              className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-500 transform ${
-                isStudyMode 
-                  ? 'bg-gradient-to-r from-sky-500 to-sky-600 text-white shadow-lg scale-105' 
-                  : 'text-white/70 hover:text-white hover:bg-white/20'
-              }`}
+              isSelected={isStudyMode}
             >
               📚 Study
-            </button>
-            <button
+            </NeumorphicButton>
+            <NeumorphicButton
               onClick={toggleMode}
-              className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-500 transform ${
-                !isStudyMode 
-                  ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-white shadow-lg scale-105' 
-                  : 'text-white/70 hover:text-white hover:bg-white/20'
-              }`}
+              isSelected={!isStudyMode}
             >
               🌿 Wellness
-            </button>
+            </NeumorphicButton>
           </div>
         </div>
       </div>

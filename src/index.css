@@ -1,7 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap');
 @import "tailwindcss";
+@import "./styles/neumorphic.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
+@custom-variant black (&:where(.black, .black *));
 
 /* CSS Variables for Hero Section Spacing */
 :root {
@@ -357,4 +359,17 @@
 /* Extra brightness for AI/ML image */
 .tech-architecture-swiper .swiper-slide img[src*="img1.png"] {
   filter: brightness(2.5) contrast(1.5) saturate(1.2) !important;
+}
+
+/* Black Mode Styles */
+.black body {
+  background: #000000 !important;
+}
+
+.black .starry-background {
+  display: none !important;
+}
+
+.black .fixed.inset-0 {
+  background: #000000 !important;
 }

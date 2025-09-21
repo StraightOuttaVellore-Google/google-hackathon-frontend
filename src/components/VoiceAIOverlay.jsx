@@ -183,13 +183,7 @@ export default function VoiceAIOverlay({ isOpen, onClose }) {
       ></div>
       
       {/* Modal */}
-      <div className={`${isDarkMode ? 'dark' : ''} relative w-full max-w-4xl max-h-[90vh] rounded-2xl shadow-2xl overflow-hidden backdrop-blur-lg`}
-        style={{
-          background: 'rgba(0, 0, 0, 0.2)',
-          border: '1px solid rgba(255, 255, 255, 0.15)',
-          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08), 0 0 20px rgba(100, 150, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
-        }}
-      >
+      <div className="neumorphic-timer-card w-full max-w-4xl max-h-[90vh] rounded-2xl overflow-hidden">
         {/* Stars Background */}
         {[...Array(20)].map((_, i) => (
           <div
@@ -223,22 +217,24 @@ export default function VoiceAIOverlay({ isOpen, onClose }) {
               }}
             />
             <h2 className="text-2xl font-bold text-white">
-              🎙️ Voice AI Assistant
+              <span style={{ fontFamily: 'Samarkan' }}>आवाज़</span>AI
             </h2>
           </div>
           <div className="flex items-center gap-3">
             <button
               onClick={() => setShowSummary(!showSummary)}
-              className="px-4 py-2 bg-white/20 hover:bg-white/30 text-white rounded-lg transition-colors duration-200 flex items-center gap-2 backdrop-blur-sm border border-white/20"
+              className="neumorphic-matrix-button flex items-center gap-2"
             >
               <span className="text-lg">📚</span>
               <span>{showSummary ? 'Hide' : 'Show'} Summary</span>
             </button>
             <button
               onClick={onClose}
-              className="p-2 text-white/70 hover:text-white hover:bg-white/20 rounded-lg transition-colors"
+              className="neumorphic-matrix-close-button"
             >
-              ✖️
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
             </button>
           </div>
         </div>
@@ -313,7 +309,7 @@ export default function VoiceAIOverlay({ isOpen, onClose }) {
 
               {/* Live Transcript */}
               {transcript && (
-                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 mb-4 border border-white/20">
+                <div className="neumorphic-matrix-card rounded-lg p-4 mb-4">
                   <p className="text-white italic">
                     "{transcript}"
                   </p>
@@ -323,7 +319,7 @@ export default function VoiceAIOverlay({ isOpen, onClose }) {
             </div>
 
             {/* Conversation History */}
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 h-64 overflow-y-auto border border-white/20">
+            <div className="neumorphic-timer-card rounded-xl p-4 h-64 overflow-y-auto neumorphic-scrollbar">
               <h3 className="text-lg font-semibold text-white mb-3">
                 💬 Conversation
               </h3>
@@ -342,12 +338,12 @@ export default function VoiceAIOverlay({ isOpen, onClose }) {
                       <div
                         className={`max-w-xs px-3 py-2 rounded-2xl ${
                           message.type === 'user'
-                            ? 'bg-white/20 text-white backdrop-blur-sm border border-white/30'
-                            : 'bg-white/10 text-white backdrop-blur-sm border border-white/20'
+                            ? 'neumorphic-matrix-card'
+                            : 'neumorphic-timer-card'
                         }`}
                       >
-                        <p className="text-sm">{message.text}</p>
-                        <p className="text-xs opacity-70 mt-1">
+                        <p className="text-sm text-white">{message.text}</p>
+                        <p className="text-xs text-white/70 mt-1">
                           {message.timestamp.toLocaleTimeString()}
                         </p>
                       </div>
@@ -360,7 +356,7 @@ export default function VoiceAIOverlay({ isOpen, onClose }) {
 
           {/* Summary Panel */}
           {showSummary && (
-            <div className="relative z-10 w-96 p-6 bg-white/10 backdrop-blur-sm border-l border-white/20">
+            <div className="relative z-10 w-96 p-6 neumorphic-timer-card border-l border-white/20">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-semibold text-white">
                   📚 Conversation History
@@ -374,7 +370,7 @@ export default function VoiceAIOverlay({ isOpen, onClose }) {
                 </button>
               </div>
               
-              <div className="space-y-3 max-h-96 overflow-y-auto">
+              <div className="space-y-3 max-h-96 overflow-y-auto neumorphic-scrollbar">
                 {displaySummaries.length === 0 ? (
                   <div className="text-center py-8">
                     <p className="text-white/70 text-sm mb-2">
@@ -388,7 +384,7 @@ export default function VoiceAIOverlay({ isOpen, onClose }) {
                   displaySummaries.map((summary) => (
                     <div
                       key={summary.id}
-                      className="bg-white/10 backdrop-blur-sm rounded-lg p-3 border border-white/20 hover:bg-white/20 transition-all duration-200"
+                      className="neumorphic-matrix-card rounded-lg p-3 hover:opacity-80 transition-all duration-200"
                     >
                       {/* Header */}
                       <div className="flex items-start justify-between mb-2">

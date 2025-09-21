@@ -19,6 +19,8 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
     description: '',
     quadrant: TaskQuadrant.HUHI
   });
+  const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState({});
+  const [isQuadrantDropdownOpen, setIsQuadrantDropdownOpen] = useState(false);
 
   if (!isOpen) return null;
 
@@ -26,34 +28,34 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
     [TaskQuadrant.HUHI]: {
       title: "Do First",
       subtitle: "Urgent & Important",
-      color: "bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-700",
-      textColor: "text-red-800 dark:text-red-200",
+      color: "",
+      textColor: "",
       icon: AlertCircle,
-      iconColor: "text-red-600 dark:text-red-400"
+      iconColor: "text-white/80"
     },
     [TaskQuadrant.LUHI]: {
       title: "Schedule",
       subtitle: "Important, Not Urgent",
-      color: "bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-700",
-      textColor: "text-yellow-800 dark:text-yellow-200",
+      color: "",
+      textColor: "",
       icon: Clock,
-      iconColor: "text-yellow-600 dark:text-yellow-400"
+      iconColor: "text-white/80"
     },
     [TaskQuadrant.HULI]: {
       title: "Delegate",
       subtitle: "Urgent, Not Important",
-      color: "bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-700",
-      textColor: "text-blue-800 dark:text-blue-200",
+      color: "",
+      textColor: "",
       icon: Edit2,
-      iconColor: "text-blue-600 dark:text-blue-400"
+      iconColor: "text-white/80"
     },
     [TaskQuadrant.LULI]: {
       title: "Eliminate",
       subtitle: "Neither Urgent nor Important",
-      color: "bg-gray-50 dark:bg-gray-900/20 border-gray-200 dark:border-gray-700",
-      textColor: "text-gray-800 dark:text-gray-200",
+      color: "",
+      textColor: "",
       icon: Archive,
-      iconColor: "text-gray-600 dark:text-gray-400"
+      iconColor: "text-white/80"
     }
   };
 
@@ -61,6 +63,17 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
     [TaskStatus.CREATED]: { label: "To Do", color: "bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300" },
     [TaskStatus.IN_PROGRESS]: { label: "In Progress", color: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300" },
     [TaskStatus.COMPLETED]: { label: "Completed", color: "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300" }
+  };
+
+  const toggleStatusDropdown = (taskId) => {
+    setIsStatusDropdownOpen(prev => ({
+      ...prev,
+      [taskId]: !prev[taskId]
+    }));
+  };
+
+  const toggleQuadrantDropdown = () => {
+    setIsQuadrantDropdownOpen(!isQuadrantDropdownOpen);
   };
 
   const handleAddTask = () => {
@@ -108,11 +121,11 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
     const statusInfo = statusConfig[task.status] || statusConfig[TaskStatus.CREATED];
     
     return (
-      <div className="group p-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 hover:shadow-md transition-all duration-200">
+      <div className="group p-3 bg-black/20 rounded-lg hover:bg-black/30 transition-all duration-200 mb-2">
         <div className="flex items-start justify-between">
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
-              <h4 className={`font-medium text-sm truncate ${task.status === TaskStatus.COMPLETED ? 'line-through opacity-60' : ''}`}>
+              <h4 className={`font-medium text-sm truncate text-white ${task.status === TaskStatus.COMPLETED ? 'line-through opacity-60' : ''}`}>
                 {task.title}
               </h4>
               <span className={`px-2 py-1 rounded-full text-xs font-medium ${statusInfo.color}`}>
@@ -120,35 +133,69 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
               </span>
             </div>
             {task.description && (
-              <p className="text-xs text-gray-600 dark:text-gray-400 line-clamp-2 mb-2">
+              <p className="text-xs text-white/60 line-clamp-2 mb-2">
                 {task.description}
               </p>
             )}
-            <div className="text-xs text-gray-500 dark:text-gray-400">
+            <div className="text-xs text-white/40">
               Created {new Date(task.created_at).toLocaleDateString()}
             </div>
           </div>
           <div className="flex items-center gap-1 ml-2">
-            <select
-              value={task.status}
-              onChange={(e) => handleUpdateTaskStatus(task.id, e.target.value)}
-              className="text-xs px-2 py-1 rounded border-0 bg-gray-100 dark:bg-gray-700 focus:ring-1 focus:ring-blue-500"
-            >
-              {Object.entries(statusConfig).map(([key, config]) => (
-                <option key={key} value={key}>{config.label}</option>
-              ))}
-            </select>
+            <div className="relative">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleStatusDropdown(task.id);
+                }}
+                className="neumorphic-dropdown-button text-xs px-2 py-1"
+              >
+                <span>{statusConfig[task.status]?.label || 'Select Status'}</span>
+                <svg 
+                  className={`w-3 h-3 text-white/60 transition-transform duration-200 ${isStatusDropdownOpen[task.id] ? 'rotate-180' : ''}`} 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              
+              {isStatusDropdownOpen[task.id] && (
+                <div className="neumorphic-dropdown-options-scrollable neumorphic-scrollbar">
+                  {Object.entries(statusConfig).map(([key, config]) => (
+                    <button
+                      key={key}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleUpdateTaskStatus(task.id, key);
+                        toggleStatusDropdown(task.id);
+                      }}
+                      className="neumorphic-dropdown-option"
+                    >
+                      {config.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
             <button
-              onClick={() => handleEditTask(task)}
-              className="p-1 hover:bg-blue-100 dark:hover:bg-blue-900/30 rounded transition-colors opacity-0 group-hover:opacity-100"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleEditTask(task);
+              }}
+              className="p-1 hover:bg-white/10 rounded transition-colors opacity-0 group-hover:opacity-100"
             >
-              <Edit2 className="w-3 h-3 text-blue-500" />
+              <Edit2 className="w-3 h-3 text-white/80" />
             </button>
             <button
-              onClick={() => handleDeleteTask(task.id)}
-              className="p-1 hover:bg-red-100 dark:hover:bg-red-900/30 rounded transition-colors opacity-0 group-hover:opacity-100"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleDeleteTask(task.id);
+              }}
+              className="p-1 hover:bg-red-500/20 rounded transition-colors opacity-0 group-hover:opacity-100"
             >
-              <Trash2 className="w-3 h-3 text-red-500" />
+              <Trash2 className="w-3 h-3 text-red-400" />
             </button>
           </div>
         </div>
@@ -161,54 +208,95 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
     const tasks = getTasksByQuadrant(quadrant);
     const Icon = config.icon;
 
+    // Get the dynamic card class based on quadrant
+    const getMatrixCardClass = () => {
+      const baseClass = 'neumorphic-matrix-card';
+      let colorClass = '';
+      
+      switch (quadrant) {
+        case TaskQuadrant.HUHI: // Do First - Red
+          colorClass = 'neumorphic-matrix-card-red';
+          break;
+        case TaskQuadrant.LUHI: // Schedule - Yellow
+          colorClass = 'neumorphic-matrix-card-yellow';
+          break;
+        case TaskQuadrant.HULI: // Delegate - Blue
+          colorClass = 'neumorphic-matrix-card-blue';
+          break;
+        case TaskQuadrant.LULI: // Eliminate - Gray
+          colorClass = 'neumorphic-matrix-card-gray';
+          break;
+        default:
+          colorClass = 'neumorphic-matrix-card-gray';
+      }
+      
+      return `${baseClass} ${colorClass}`;
+    };
+
     return (
-      <div className={`p-4 rounded-xl border-2 ${config.color} h-full`}>
-        <div className="flex items-center gap-2 mb-4">
-          <Icon className={`w-5 h-5 ${config.iconColor}`} />
-          <div>
-            <h3 className={`font-semibold ${config.textColor}`}>{config.title}</h3>
-            <p className={`text-sm ${config.textColor} opacity-70`}>{config.subtitle}</p>
+      <div className={`${getMatrixCardClass()} h-full flex flex-col`}>
+        <div className="p-4 rounded-t-xl bg-black/20">
+          <div className="flex items-center gap-2">
+            <Icon size={18} className="text-white/80" />
+            <div>
+              <h3 className="font-semibold text-base text-white">{config.title}</h3>
+              <p className="text-sm text-white/60">{config.subtitle}</p>
+            </div>
           </div>
         </div>
-        
-        <div className="space-y-2 max-h-80 overflow-y-auto">
-          {tasks.map(task => (
-            <TaskItem key={task.id} task={task} />
-          ))}
-          {tasks.length === 0 && (
-            <div className="text-center py-4 text-gray-500 dark:text-gray-400">
+        <div className="flex-1 p-4 overflow-y-auto neumorphic-scrollbar">
+          {tasks.length === 0 ? (
+            <div className="text-center text-white/60 py-8">
               <p className="text-sm">No tasks in this quadrant</p>
             </div>
+          ) : (
+            tasks.map(task => (
+              <TaskItem key={task.id} task={task} />
+            ))
           )}
         </div>
       </div>
     );
   };
 
+  const handleContainerClick = (e) => {
+    // Prevent the container from getting click effects when children are clicked
+    e.stopPropagation();
+  };
+
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-7xl w-full max-h-[90vh] overflow-hidden">
+      <div 
+        className="neumorphic-timer-card-container max-w-7xl w-full max-h-[90vh] overflow-hidden"
+        onClick={handleContainerClick}
+      >
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+        <div className="flex items-center justify-between p-6">
           <div>
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+            <h2 className="text-2xl font-bold text-white">
               Eisenhower Matrix
             </h2>
-            <p className="text-gray-600 dark:text-gray-400">
+            <p className="text-white/80">
               Organize your tasks by urgency and importance
             </p>
           </div>
           <div className="flex items-center gap-2">
             <button
-              onClick={() => setIsAddingTask(true)}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsAddingTask(true);
+              }}
+              className="neumorphic-matrix-button"
             >
               <Plus className="w-4 h-4" />
               Add Task
             </button>
             <button
-              onClick={onClose}
-              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+              onClick={(e) => {
+                e.stopPropagation();
+                onClose();
+              }}
+              className="neumorphic-matrix-close-button"
             >
               <X className="w-6 h-6" />
             </button>
@@ -216,62 +304,96 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
         </div>
 
         {/* Content */}
-        <div className="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
+        <div className="p-6 overflow-y-auto max-h-[calc(90vh-120px)] neumorphic-scrollbar">
           {/* Add/Edit Task Form */}
           {isAddingTask && (
-            <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
-              <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
+            <div className="mb-6 p-4 bg-black/20 rounded-lg">
+              <h3 className="text-lg font-semibold mb-4 text-white">
                 {editingTask ? 'Edit Task' : 'Add New Task'}
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label className="block text-sm font-medium text-white/80 mb-1">
                     Title
                   </label>
                   <input
                     type="text"
                     value={newTask.title}
                     onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-800 dark:text-white"
+                    className="neumorphic-input w-full"
                     placeholder="Enter task title"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label className="block text-sm font-medium text-white/80 mb-1">
                     Priority Quadrant
                   </label>
-                  <select
-                    value={newTask.quadrant}
-                    onChange={(e) => setNewTask({ ...newTask, quadrant: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-800 dark:text-white"
-                  >
-                    {Object.entries(quadrantConfig).map(([key, config]) => (
-                      <option key={key} value={key}>{config.title}</option>
-                    ))}
-                  </select>
+                  <div className="relative">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleQuadrantDropdown();
+                      }}
+                      className="neumorphic-dropdown-button w-full"
+                    >
+                      <span>{quadrantConfig[newTask.quadrant]?.title || 'Select Quadrant'}</span>
+                      <svg 
+                        className={`w-4 h-4 text-white/60 transition-transform duration-200 ${isQuadrantDropdownOpen ? 'rotate-180' : ''}`} 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                    
+                    {isQuadrantDropdownOpen && (
+                      <div className="neumorphic-dropdown-options-scrollable neumorphic-scrollbar">
+                        {Object.entries(quadrantConfig).map(([key, config]) => (
+                          <button
+                            key={key}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setNewTask({ ...newTask, quadrant: key });
+                              toggleQuadrantDropdown();
+                            }}
+                            className="neumorphic-dropdown-option"
+                          >
+                            {config.title}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label className="block text-sm font-medium text-white/80 mb-1">
                     Description
                   </label>
                   <textarea
                     value={newTask.description}
                     onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-800 dark:text-white"
+                    className="neumorphic-input w-full"
                     rows="3"
                     placeholder="Enter task description"
                   />
                 </div>
                 <div className="md:col-span-2 flex gap-2">
                   <button
-                    onClick={editingTask ? handleUpdateTask : handleAddTask}
-                    className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      editingTask ? handleUpdateTask() : handleAddTask();
+                    }}
+                    className="neumorphic-matrix-button"
                   >
                     {editingTask ? 'Update Task' : 'Add Task'}
                   </button>
                   <button
-                    onClick={handleCancelEdit}
-                    className="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleCancelEdit();
+                    }}
+                    className="neumorphic-matrix-button"
                   >
                     Cancel
                   </button>
@@ -281,7 +403,7 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
           )}
 
           {/* Matrix Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 neumorphic-scrollbar">
             {Object.values(TaskQuadrant).map(quadrant => (
               <QuadrantView key={quadrant} quadrant={quadrant} />
             ))}

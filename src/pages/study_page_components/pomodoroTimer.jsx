@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import useStudyStore from "../../stores/studyStore";
 
 export default function PomodoroTimer(){
@@ -10,6 +11,8 @@ export default function PomodoroTimer(){
     const [isBreak, setIsBreak] = useState(false);
     const [currentIteration, setCurrentIteration] = useState(1);
     const [selectedPreset, setSelectedPreset] = useState("none");
+    const [isOverlayOpen, setIsOverlayOpen] = useState(false);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     
     const intervalRef = useRef(null);
   
@@ -107,6 +110,19 @@ export default function PomodoroTimer(){
         setSelectedPreset("none");
       }
     };
+
+    const toggleOverlay = () => {
+      setIsOverlayOpen(!isOverlayOpen);
+    };
+
+    const toggleDropdown = () => {
+      setIsDropdownOpen(!isDropdownOpen);
+    };
+
+    const selectPreset = (preset) => {
+      handlePresetChange(preset);
+      setIsDropdownOpen(false);
+    };
   
     return (
       <div className="h-full flex flex-col relative">
@@ -130,58 +146,161 @@ export default function PomodoroTimer(){
           />
         ))}
 
-        {/* Timer Display - Now at Top */}
-        <div className="relative z-10 text-center mb-1">
-          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2 mb-3 border border-white/20"
-            style={{
-              background: 'rgba(0, 0, 0, 0.2)',
-              border: '1px solid rgba(255, 255, 255, 0.15)',
-              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08), 0 0 20px rgba(100, 150, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
-            }}
+        {/* Timer Display Card */}
+        <div className="relative z-10 text-center mb-6">
+          <div 
+            className="neumorphic-timer-card p-8 min-h-[160px] flex flex-col justify-center"
+            onClick={toggleOverlay}
           >
-            <div className="text-3xl font-mono font-bold text-white mb-1">
+            <div className="text-5xl font-mono font-bold text-white mb-3">
               {formatTime(currentTime)}
             </div>
-            <div className="text-sm font-medium text-white/80">
+            <div className="text-xl font-medium text-white/80 mb-2">
               {isBreak ? 'Break' : 'Study'} {isBreak ? pomodoro.break_time : pomodoro.work_time} min
             </div>
-            <div className="text-xs text-white/60 mt-1">
+            <div className="text-base text-white/60">
+              Cycle {currentIteration} of {pomodoro.no_of_iterations}
+            </div>
+          </div>
+        </div>
+
+        {/* Control Buttons */}
+        <div className="relative z-10 flex gap-3 mt-2">
+          <button
+            onClick={handleStart}
+            className={`flex-1 ${isRunning ? 'neumorphic-pomodoro-button-pause' : 'neumorphic-pomodoro-button-start'}`}
+          >
+            {isRunning ? (
+              <>
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M5.75 3a.75.75 0 00-.75.75v12.5c0 .414.336.75.75.75h1.5a.75.75 0 00.75-.75V3.75A.75.75 0 007.25 3h-1.5zM12.75 3a.75.75 0 00-.75.75v12.5c0 .414.336.75.75.75h1.5a.75.75 0 00.75-.75V3.75a.75.75 0 00-.75-.75h-1.5z"/>
+                </svg>
+                Pause
+              </>
+            ) : (
+              <>
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/>
+                </svg>
+                Start
+              </>
+            )}
+          </button>
+          <button
+            onClick={handleReset}
+            className="flex-1 neumorphic-pomodoro-button-reset"
+          >
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd"/>
+            </svg>
+            Reset
+          </button>
+        </div>
+
+        {/* Timer Overlay */}
+        {isOverlayOpen && createPortal(
+          <div 
+            className="fixed inset-0 flex items-center justify-center p-2"
+            onClick={toggleOverlay}
+            style={{
+              zIndex: 9999,
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0
+            }}
+          >
+            <div 
+              className="neumorphic-overlay-card p-6 w-full max-w-lg h-[52vh] overflow-y-auto relative"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close Button - Top Right */}
+              <div className="absolute top-4 right-4 z-10">
+                <button
+                  onClick={toggleOverlay}
+                  className="neumorphic-close-button"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              {/* Timer Display Card in Overlay */}
+              <div className="text-center mb-6 mt-2">
+                <div className="neumorphic-timer-card p-6 min-h-[140px] flex flex-col justify-center">
+                  <div className="text-4xl font-mono font-bold text-white mb-2">
+                    {formatTime(currentTime)}
+                  </div>
+                  <div className="text-lg font-medium text-white/80 mb-1">
+                    {isBreak ? 'Break' : 'Study'} {isBreak ? pomodoro.break_time : pomodoro.work_time} min
+                  </div>
+                  <div className="text-sm text-white/60">
               Cycle {currentIteration} of {pomodoro.no_of_iterations}
             </div>
           </div>
         </div>
   
         {/* Preset Selection */}
-        <div className="relative z-10 mb-4">
+              <div className="mb-6">
           <label className="block text-xs font-semibold text-white/80 mb-2 tracking-wide uppercase">
             Load Preset
           </label>
           <div className="relative">
-            <select 
-              value={selectedPreset}
-              onChange={(e) => handlePresetChange(e.target.value)}
-              className="w-full p-3 pr-8 rounded-xl text-white text-sm font-medium appearance-none cursor-pointer backdrop-blur-sm transition-all duration-200"
-              style={{
-                background: 'rgba(0, 0, 0, 0.2)',
-                border: '1px solid rgba(255, 255, 255, 0.15)',
-                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08), 0 0 20px rgba(100, 150, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
-              }}
-            >
-              <option value="none" className="bg-gray-800 text-white">🎯 None</option>
-              <option value="preset1" className="bg-gray-800 text-white">🎯 Preset 1 ({pomodoro.work_time_preset1 || 45}/{pomodoro.break_time_preset1 || 10})</option>
-              <option value="preset2" className="bg-gray-800 text-white">⚡ Preset 2 ({pomodoro.work_time_preset2 || 15}/{pomodoro.break_time_preset2 || 3})</option>
-              <option value="preset3" className="bg-gray-800 text-white">🧠 Preset 3 ({pomodoro.work_time_preset3 || 90}/{pomodoro.break_time_preset3 || 20})</option>
-            </select>
-            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-              <svg className="w-4 h-4 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <button
+                    onClick={toggleDropdown}
+                    className="neumorphic-dropdown-button"
+                  >
+                    <span>
+                      {selectedPreset === "none" && "None"}
+                      {selectedPreset === "preset1" && `Preset 1 (${pomodoro.work_time_preset1 || 45}/${pomodoro.break_time_preset1 || 10})`}
+                      {selectedPreset === "preset2" && `Preset 2 (${pomodoro.work_time_preset2 || 15}/${pomodoro.break_time_preset2 || 3})`}
+                      {selectedPreset === "preset3" && `Preset 3 (${pomodoro.work_time_preset3 || 90}/${pomodoro.break_time_preset3 || 20})`}
+                    </span>
+                    <svg 
+                      className={`w-4 h-4 text-white/60 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} 
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24"
+                    >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
+                  </button>
+                  
+                  {isDropdownOpen && (
+                    <div className="neumorphic-dropdown-options">
+                      <button
+                        onClick={() => selectPreset("none")}
+                        className="neumorphic-dropdown-option"
+                      >
+                        None
+                      </button>
+                      <button
+                        onClick={() => selectPreset("preset1")}
+                        className="neumorphic-dropdown-option"
+                      >
+                        Preset 1 ({pomodoro.work_time_preset1 || 45}/{pomodoro.break_time_preset1 || 10})
+                      </button>
+                      <button
+                        onClick={() => selectPreset("preset2")}
+                        className="neumorphic-dropdown-option"
+                      >
+                        Preset 2 ({pomodoro.work_time_preset2 || 15}/{pomodoro.break_time_preset2 || 3})
+                      </button>
+                      <button
+                        onClick={() => selectPreset("preset3")}
+                        className="neumorphic-dropdown-option"
+                      >
+                        Preset 3 ({pomodoro.work_time_preset3 || 90}/{pomodoro.break_time_preset3 || 20})
+                      </button>
             </div>
+                  )}
           </div>
         </div>
   
         {/* Custom Settings */}
-        <div className="relative z-10 grid grid-cols-3 gap-3 mb-6">
+              <div className="grid grid-cols-3 gap-3 mb-6">
           <div className="group">
             <label className="block text-xs font-semibold text-white/80 mb-2">Study (min)</label>
             <div className="relative">
@@ -193,12 +312,7 @@ export default function PomodoroTimer(){
                 }}
                 min="1"
                 max="120"
-                className="w-full p-2 rounded-lg text-white text-sm font-medium text-center backdrop-blur-sm transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                style={{
-                  background: 'rgba(0, 0, 0, 0.2)',
-                  border: '1px solid rgba(255, 255, 255, 0.15)',
-                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08), 0 0 20px rgba(100, 150, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
-                }}
+                      className="neumorphic-input"
                 disabled={isRunning}
               />
             </div>
@@ -212,12 +326,7 @@ export default function PomodoroTimer(){
                 onChange={(e) => handleCustomTimeChange('break_time', Number(e.target.value))}
                 min="1"
                 max="60"
-                className="w-full p-2 rounded-lg text-white text-sm font-medium text-center backdrop-blur-sm transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                style={{
-                  background: 'rgba(0, 0, 0, 0.2)',
-                  border: '1px solid rgba(255, 255, 255, 0.15)',
-                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08), 0 0 20px rgba(100, 150, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
-                }}
+                      className="neumorphic-input"
                 disabled={isRunning}
               />
             </div>
@@ -231,12 +340,7 @@ export default function PomodoroTimer(){
                 onChange={(e) => handleCustomTimeChange('no_of_iterations', Number(e.target.value))}
                 min="1"
                 max="10"
-                className="w-full p-2 rounded-lg text-white text-sm font-medium text-center backdrop-blur-sm transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                style={{
-                  background: 'rgba(0, 0, 0, 0.2)',
-                  border: '1px solid rgba(255, 255, 255, 0.15)',
-                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08), 0 0 20px rgba(100, 150, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
-                }}
+                      className="neumorphic-input"
                 disabled={isRunning}
               />
             </div>
@@ -244,13 +348,11 @@ export default function PomodoroTimer(){
         </div>
   
         {/* Control Buttons */}
-        <div className="relative z-10 flex gap-3 mt-auto">
+              <div className="flex gap-3">
           <button
             onClick={handleStart}
-            className={`flex-1 font-semibold py-3 px-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 transform hover:scale-105 active:scale-95 backdrop-blur-sm ${
-              isRunning 
-                ? 'bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white shadow-yellow-200 dark:shadow-yellow-900' 
-                : 'bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white shadow-green-200 dark:shadow-green-900'
+                  className={`flex-1 neumorphic-pomodoro-button ${
+                    isRunning ? 'neumorphic-pomodoro-button-pause' : 'neumorphic-pomodoro-button-start'
             }`}
           >
             {isRunning ? (
@@ -271,7 +373,7 @@ export default function PomodoroTimer(){
           </button>
           <button
             onClick={handleReset}
-            className="flex-1 bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 transform hover:scale-105 active:scale-95 shadow-lg shadow-red-200 dark:shadow-red-900"
+                  className="flex-1 neumorphic-pomodoro-button-reset"
           >
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd"/>
@@ -279,6 +381,10 @@ export default function PomodoroTimer(){
             Reset
           </button>
         </div>
+            </div>
+          </div>,
+          document.body
+        )}
       </div>
     );
   };

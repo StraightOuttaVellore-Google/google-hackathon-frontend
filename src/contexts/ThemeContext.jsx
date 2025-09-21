@@ -11,30 +11,41 @@ export const useTheme = () => {
 }
 
 export const ThemeProvider = ({ children }) => {
-  const [isDarkMode, setIsDarkMode] = useState(() => {
+  const [theme, setTheme] = useState(() => {
     const savedTheme = localStorage.getItem('theme')
     if (savedTheme !== null) {
-      return savedTheme === 'dark'
+      return savedTheme
     }
-    return window.matchMedia('(prefers-color-scheme: dark)').matches
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
   })
 
-  useEffect(() => {
-    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light')
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-    }
-  }, [isDarkMode])
+  const isDarkMode = theme === 'dark' || theme === 'black'
+  const isBlackMode = theme === 'black'
 
-  const toggleDarkMode = () => {
-    setIsDarkMode(prev => !prev)
+  useEffect(() => {
+    localStorage.setItem('theme', theme)
+    
+    // Remove all theme classes
+    document.documentElement.classList.remove('dark', 'black')
+    
+    // Add appropriate theme class
+    if (theme === 'dark' || theme === 'black') {
+      document.documentElement.classList.add('dark')
+    }
+    if (theme === 'black') {
+      document.documentElement.classList.add('black')
+    }
+  }, [theme])
+
+  const setThemeMode = (newTheme) => {
+    setTheme(newTheme)
   }
 
   const value = {
     isDarkMode,
-    toggleDarkMode,
+    isBlackMode,
+    theme,
+    setThemeMode,
   }
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>

@@ -21,34 +21,34 @@ const quadrantConfig = {
   [TaskQuadrant.HUHI]: {
     title: "Do First",
     subtitle: "Urgent & Important",
-    color: "bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800",
-    headerColor: "bg-red-100 dark:bg-red-900/40 text-red-800 dark:text-red-200",
+    color: "",
+    headerColor: "bg-black/20",
     icon: AlertCircle,
-    iconColor: "text-red-600 dark:text-red-400"
+    iconColor: "text-white/80"
   },
   [TaskQuadrant.LUHI]: {
     title: "Schedule",
     subtitle: "Important, Not Urgent",
-    color: "bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800",
-    headerColor: "bg-yellow-100 dark:bg-yellow-900/40 text-yellow-800 dark:text-yellow-200",
+    color: "",
+    headerColor: "bg-black/20",
     icon: Clock,
-    iconColor: "text-yellow-600 dark:text-yellow-400"
+    iconColor: "text-white/80"
   },
   [TaskQuadrant.HULI]: {
     title: "Delegate",
     subtitle: "Urgent, Not Important",
-    color: "bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800",
-    headerColor: "bg-blue-100 dark:bg-blue-900/40 text-blue-800 dark:text-blue-200",
+    color: "",
+    headerColor: "bg-black/20",
     icon: Edit2,
-    iconColor: "text-blue-600 dark:text-blue-400"
+    iconColor: "text-white/80"
   },
   [TaskQuadrant.LULI]: {
     title: "Eliminate",
     subtitle: "Neither Urgent nor Important",
-    color: "bg-gray-50 dark:bg-gray-900/20 border-gray-200 dark:border-gray-800",
-    headerColor: "bg-gray-100 dark:bg-gray-900/40 text-gray-800 dark:text-gray-200",
+    color: "",
+    headerColor: "bg-black/20",
     icon: Trash2,
-    iconColor: "text-gray-600 dark:text-gray-400"
+    iconColor: "text-white/80"
   }
 };
 
@@ -137,28 +137,33 @@ function TaskItem({ task, onEdit, onDelete, onUpdateStatus, onUpdateQuadrant }) 
     );
   }
 
+  const getStatusBadgeClass = () => {
+    switch (task.status) {
+      case TaskStatus.CREATED:
+        return 'bg-gray-500/20 text-gray-300 border-gray-400/30';
+      case TaskStatus.IN_PROGRESS:
+        return 'bg-blue-500/20 text-blue-300 border-blue-400/30';
+      case TaskStatus.COMPLETED:
+        return 'bg-green-500/20 text-green-300 border-green-400/30';
+      default:
+        return 'bg-gray-500/20 text-gray-300 border-gray-400/30';
+    }
+  };
+
   return (
-    <div className="group p-4 border border-gray-200 dark:border-gray-700 rounded-xl mb-3 hover:shadow-lg hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-200 bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-800/50 hover:from-gray-50 hover:to-white dark:hover:from-gray-800/80 dark:hover:to-gray-700/50">
+    <div className="neumorphic-matrix-card p-4 rounded-lg mb-3">
       <div className="flex items-start justify-between">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-3 mb-3">
-            <select
-              value={task.status}
-              onChange={(e) => handleStatusChange(e.target.value)}
-              className={`text-sm px-3 py-1.5 rounded-lg border-0 outline-none cursor-pointer font-medium shadow-sm transition-all duration-200 hover:shadow-md ${statusColors[task.status]}`}
-            >
-              {Object.entries(statusLabels).map(([status, label]) => (
-                <option key={status} value={status} className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">
-                  {label}
-                </option>
-              ))}
-            </select>
-            <h4 className={`text-sm font-semibold ${task.status === TaskStatus.COMPLETED ? 'line-through opacity-60' : ''} dark:text-white flex-1 truncate`}>
+            <div className={`text-sm px-3 py-1.5 rounded-lg border font-medium ${getStatusBadgeClass()}`}>
+              {statusLabels[task.status]}
+            </div>
+            <h4 className={`text-sm font-semibold ${task.status === TaskStatus.COMPLETED ? 'line-through opacity-60' : ''} text-white flex-1 truncate`}>
               {task.title}
             </h4>
           </div>
           {task.description && (
-            <p className="text-xs text-gray-600 dark:text-gray-400 ml-0 leading-relaxed">
+            <p className="text-xs text-white/60 ml-0 leading-relaxed">
               {task.description}
             </p>
           )}
@@ -200,24 +205,49 @@ function QuadrantView({ quadrant, tasks, onEdit, onDelete, onUpdateStatus, onDro
     }
   };
 
+  // Get the dynamic card class based on quadrant
+  const getMatrixCardClass = () => {
+    const baseClass = 'neumorphic-matrix-card';
+    let colorClass = '';
+    
+    switch (quadrant) {
+      case TaskQuadrant.HUHI: // Do First - Red
+        colorClass = 'neumorphic-matrix-card-red';
+        break;
+      case TaskQuadrant.LUHI: // Schedule - Yellow
+        colorClass = 'neumorphic-matrix-card-yellow';
+        break;
+      case TaskQuadrant.HULI: // Delegate - Blue
+        colorClass = 'neumorphic-matrix-card-blue';
+        break;
+      case TaskQuadrant.LULI: // Eliminate - Gray
+        colorClass = 'neumorphic-matrix-card-gray';
+        break;
+      default:
+        colorClass = 'neumorphic-matrix-card-gray';
+    }
+    
+    return `${baseClass} ${colorClass}`;
+  };
+
   return (
     <div 
-      className={`border-2 rounded-xl ${config.color} h-full flex flex-col`}
+      className={`${getMatrixCardClass()} h-full flex flex-col`}
       onDragOver={handleDragOver}
       onDrop={handleDrop}
     >
-      <div className={`p-4 rounded-t-xl ${config.headerColor}`}>
+      <div className="p-4 rounded-t-xl bg-black/20">
         <div className="flex items-center gap-2">
-          <Icon size={18} className={config.iconColor} />
+          <Icon size={18} className="text-white/80" />
           <div>
-            <h3 className="font-semibold text-base">{config.title}</h3>
-            <p className="text-sm opacity-80">{config.subtitle}</p>
+            <h3 className="font-semibold text-base text-white">{config.title}</h3>
+            <p className="text-sm text-white/60">{config.subtitle}</p>
           </div>
         </div>
       </div>
-      <div className="flex-1 p-4 overflow-y-auto">
+      <div className="flex-1 p-4 overflow-y-auto neumorphic-scrollbar">
         {tasks.length === 0 ? (
-          <div className="text-center text-gray-500 dark:text-gray-400 py-8">
+          <div className="text-center text-white/60 py-8">
             <p className="text-sm">No tasks in this quadrant</p>
           </div>
         ) : (
@@ -358,7 +388,7 @@ function TaskSidebar({ onAddTask, onSaveAndExit, hasUnsavedChanges }) {
         </div>
       )}
 
-      <div className="flex-1 p-6 overflow-y-auto">
+      <div className="flex-1 p-6 overflow-y-auto neumorphic-scrollbar">
         <div className="space-y-6">
           <div className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-200 dark:border-gray-700">
             <h3 className="font-semibold text-gray-800 dark:text-white mb-3 flex items-center gap-2">

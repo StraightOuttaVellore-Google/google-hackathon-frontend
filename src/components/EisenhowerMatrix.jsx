@@ -9,30 +9,30 @@ const quadrantConfig = {
   [TaskQuadrant.HUHI]: {
     title: "Do First",
     subtitle: "Urgent & Important",
-    color: "bg-red-100 dark:bg-red-900/30 border-red-300 dark:border-red-600",
+    color: "",
     icon: AlertCircle,
-    iconColor: "text-red-600 dark:text-red-400"
+    iconColor: "text-white/80"
   },
   [TaskQuadrant.LUHI]: {
     title: "Schedule",
     subtitle: "Important, Not Urgent",
-    color: "bg-yellow-100 dark:bg-yellow-900/30 border-yellow-300 dark:border-yellow-600",
+    color: "",
     icon: Clock,
-    iconColor: "text-yellow-600 dark:text-yellow-400"
+    iconColor: "text-white/80"
   },
   [TaskQuadrant.HULI]: {
     title: "Delegate",
     subtitle: "Urgent, Not Important",
-    color: "bg-blue-100 dark:bg-blue-900/30 border-blue-300 dark:border-blue-600",
+    color: "",
     icon: Edit2,
-    iconColor: "text-blue-600 dark:text-blue-400"
+    iconColor: "text-white/80"
   },
   [TaskQuadrant.LULI]: {
     title: "Eliminate",
     subtitle: "Neither Urgent nor Important",
-    color: "bg-gray-100 dark:bg-gray-900/30 border-gray-300 dark:border-gray-600",
+    color: "",
     icon: Trash2,
-    iconColor: "text-gray-600 dark:text-gray-400"
+    iconColor: "text-white/80"
   }
 };
 
@@ -51,28 +51,26 @@ const statusColors = {
 // Remove taskService - now using Zustand store
 
 function TaskItem({ task, onUpdateStatus, isWidget = false }) {
-  const handleStatusChange = (newStatus) => {
-    if (onUpdateStatus) {
-      onUpdateStatus(task.id, newStatus);
+  const getStatusBadgeClass = () => {
+    switch (task.status) {
+      case TaskStatus.CREATED:
+        return 'bg-gray-500/20 text-gray-300 border-gray-400/30';
+      case TaskStatus.IN_PROGRESS:
+        return 'bg-blue-500/20 text-blue-300 border-blue-400/30';
+      case TaskStatus.COMPLETED:
+        return 'bg-green-500/20 text-green-300 border-green-400/30';
+      default:
+        return 'bg-gray-500/20 text-gray-300 border-gray-400/30';
     }
   };
 
   return (
-    <div className="group p-2 border border-gray-200 dark:border-gray-700 rounded-lg bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-800/50 hover:shadow-md hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-200 flex-shrink-0">
+    <div className="neumorphic-matrix-card p-3 rounded-lg relative flex-shrink-0">
       <div className="flex items-center gap-2 min-w-0">
-        <select
-          value={task.status}
-          onChange={(e) => handleStatusChange(e.target.value)}
-          className={`text-xs px-1.5 py-0.5 rounded-md border-0 outline-none cursor-pointer font-medium shadow-sm transition-all duration-200 hover:shadow-md flex-shrink-0 ${statusColors[task.status]}`}
-          disabled={!onUpdateStatus}
-        >
-          {Object.entries(statusLabels).map(([status, label]) => (
-            <option key={status} value={status} className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">
-              {label}
-            </option>
-          ))}
-        </select>
-        <h4 className={`text-xs font-semibold truncate ${task.status === TaskStatus.COMPLETED ? 'line-through opacity-60' : ''} dark:text-white flex-1 min-w-0`}>
+        <div className={`text-xs px-2 py-1 rounded-md border font-medium flex-shrink-0 ${getStatusBadgeClass()}`}>
+          {statusLabels[task.status]}
+        </div>
+        <h4 className={`text-xs font-semibold truncate ${task.status === TaskStatus.COMPLETED ? 'line-through opacity-60' : ''} text-white flex-1 min-w-0`}>
           {task.title}
         </h4>
       </div>
@@ -84,16 +82,43 @@ function QuadrantView({ quadrant, tasks, onUpdateStatus }) {
   const config = quadrantConfig[quadrant];
   const Icon = config.icon;
 
+  // Get the dynamic card class based on quadrant
+  const getMatrixCardClass = () => {
+    const baseClass = 'neumorphic-matrix-card';
+    let colorClass = '';
+    
+    switch (quadrant) {
+      case TaskQuadrant.HUHI: // Do First - Red
+        colorClass = 'neumorphic-matrix-card-red';
+        break;
+      case TaskQuadrant.LUHI: // Schedule - Yellow
+        colorClass = 'neumorphic-matrix-card-yellow';
+        break;
+      case TaskQuadrant.HULI: // Delegate - Blue
+        colorClass = 'neumorphic-matrix-card-blue';
+        break;
+      case TaskQuadrant.LULI: // Eliminate - Gray
+        colorClass = 'neumorphic-matrix-card-gray';
+        break;
+      default:
+        colorClass = 'neumorphic-matrix-card-gray';
+    }
+    
+    return `${baseClass} ${colorClass}`;
+  };
+
   return (
-    <div className={`p-2 border-2 rounded-lg ${config.color} flex flex-col`} style={{ height: '140px' }}>
-      <div className="flex items-center gap-2 mb-2 flex-shrink-0">
-        <Icon size={14} className={config.iconColor} />
-        <div className="min-w-0 flex-1">
-          <h3 className="font-semibold text-xs text-gray-800 dark:text-white truncate">{config.title}</h3>
-          <p className="text-xs opacity-70 text-gray-600 dark:text-gray-300 truncate">{config.subtitle}</p>
+    <div className={`${getMatrixCardClass()} flex flex-col`} style={{ height: '140px' }}>
+      <div className="p-2 rounded-t-xl bg-black/20">
+        <div className="flex items-center gap-2">
+          <Icon size={14} className={config.iconColor} />
+          <div className="min-w-0 flex-1">
+            <h3 className="font-semibold text-xs text-white truncate">{config.title}</h3>
+            <p className="text-xs text-white/60 truncate">{config.subtitle}</p>
+          </div>
         </div>
       </div>
-      <div className="flex-1 overflow-y-auto min-h-0">
+      <div className="flex-1 overflow-y-auto min-h-0 p-2 neumorphic-scrollbar">
         <div className="space-y-1">
           {tasks.map(task => (
             <TaskItem 
@@ -104,7 +129,7 @@ function QuadrantView({ quadrant, tasks, onUpdateStatus }) {
             />
           ))}
           {tasks.length === 0 && (
-            <div className="text-xs text-gray-400 dark:text-gray-500 text-center py-2">
+            <div className="text-xs text-white/60 text-center py-2">
               No tasks
             </div>
           )}

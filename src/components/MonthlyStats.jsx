@@ -244,7 +244,7 @@ export default function MonthlyStats({ onHistoryClick }) {
 
     if (loading) {
         return (
-            <div className="w-2/5 h-72 flex flex-col">
+            <div className="w-full h-72 flex flex-col">
                 <h1 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">Monthly Stats</h1>
                 <div className="flex-1 flex items-center justify-center">
                     <div className="animate-pulse text-gray-500 dark:text-gray-400">
@@ -257,7 +257,7 @@ export default function MonthlyStats({ onHistoryClick }) {
 
     if (error) {
         return (
-            <div className="w-2/5 h-72 flex flex-col">
+            <div className="w-full h-72 flex flex-col">
                 <h1 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">Monthly Stats</h1>
                 <div className="flex-1 flex items-center justify-center">
                     <div className="text-red-500 dark:text-red-400 text-center">
@@ -272,7 +272,7 @@ export default function MonthlyStats({ onHistoryClick }) {
     const currentCardData = statsCards[currentCard];
 
     return (
-        <div className="w-2/5 h-72 flex flex-col">
+        <div className="w-full h-72 flex flex-col">
             <div className="flex items-center justify-between mb-3">
                 <h1 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Monthly Stats</h1>
                 
