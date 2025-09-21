@@ -5,11 +5,6 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
-// Debug logging
-console.log('Environment variables loaded:')
-console.log('VITE_SUPABASE_URL:', supabaseUrl ? 'Found' : 'Missing')
-console.log('VITE_SUPABASE_ANON_KEY:', supabaseAnonKey ? 'Found' : 'Missing')
-
 // Only create the client if we have real credentials
 let supabase = null
 
