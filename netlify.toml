@@ -1,0 +1,14 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+# Omit public client-side keys from Netlify Secrets Scanning
+# These Supabase values are safe to expose on the client (anon key + URL),
+# but Netlify will still flag them unless we exclude them here.
+  SECRETS_SCAN_OMIT_KEYS = "VITE_SUPABASE_ANON_KEY,VITE_SUPABASE_URL"
+
+# If you prefer to disable scanning entirely (not recommended), uncomment:
+#  SECRETS_SCAN_ENABLED = "false"
+
+

@@ -17,12 +17,6 @@ if (supabaseUrl && supabaseAnonKey && supabaseUrl.startsWith('https://') && supa
     supabase = createMockClient()
   }
 } else {
-  // Create a mock client for development
-  console.warn('Supabase credentials not found or using placeholder values. Using mock client for development.')
-  console.warn('To set up Supabase:')
-  console.warn('1. Create a .env file in the root directory')
-  console.warn('2. Add VITE_SUPABASE_URL=your_actual_url')
-  console.warn('3. Add VITE_SUPABASE_ANON_KEY=your_actual_key')
   supabase = createMockClient()
 }
 
