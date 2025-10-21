@@ -44,28 +44,30 @@ export default function StudyPage() {
           onMatrixClick={handleMatrixClick}
         />
         <div className="px-6 pb-6 flex gap-6 mt-8">
-        <NeumorphicCard 
-          className="w-1/5 h-96 p-6"
-          mode="study"
-          starCount={8}
-        >
-          <PomodoroTimer />
-        </NeumorphicCard>
-        <NeumorphicCard 
-          className="w-1/5 h-96"
-          mode="study"
-          starCount={8}
-        >
-          <SoundPlayer />
-        </NeumorphicCard>
-        <NeumorphicCard 
-          className="w-3/5 h-96 p-6 cursor-pointer"
-          onClick={handleMatrixClick}
-          mode="study"
-          starCount={18}
-        >
-          <EisenhowerMatrix />
-        </NeumorphicCard>
+         <NeumorphicCard 
+           className="w-1/5 h-96 p-6"
+           mode="study"
+           starCount={8}
+         >
+           <PomodoroTimer />
+         </NeumorphicCard>
+         <NeumorphicCard 
+           className="w-1/5 h-96"
+           mode="study"
+           starCount={8}
+         >
+           <SoundPlayer />
+         </NeumorphicCard>
+         <NeumorphicCard 
+           className="w-3/5 h-96 cursor-pointer"
+           onClick={handleMatrixClick}
+           mode="study"
+           starCount={18}
+         >
+           <div className="p-6">
+             <EisenhowerMatrix />
+           </div>
+         </NeumorphicCard>
       </div>
 
       {/* Overlays */}

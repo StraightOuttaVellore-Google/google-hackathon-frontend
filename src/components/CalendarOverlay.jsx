@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { X, Plus, Check, Edit2, Trash2 } from 'lucide-react';
 import useStudyStore from '../stores/studyStore';
@@ -13,7 +13,8 @@ const CalendarOverlay = ({ isOpen, onClose, selectedDate }) => {
     syncUpdateTask,
     deleteTask,
     syncDeleteTask,
-    getTasksByQuadrant 
+    getTasksByQuadrant,
+    fetchPriorityMatrixTasks
   } = useStudyStore();
   
   const [isAddingTask, setIsAddingTask] = useState(false);
@@ -25,10 +26,29 @@ const CalendarOverlay = ({ isOpen, onClose, selectedDate }) => {
   const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState({});
   const [isQuadrantDropdownOpen, setIsQuadrantDropdownOpen] = useState(false);
 
+  // Fetch latest tasks when overlay opens or date changes
+  useEffect(() => {
+    if (!isOpen) return; // avoid fetching when overlay is closed
+    // Always fetch all tasks to keep the store complete; we filter client-side per date
+    fetchPriorityMatrixTasks();
+  }, [isOpen, selectedDate, fetchPriorityMatrixTasks]);
+
   if (!isOpen) return null;
 
-  // TEMPORARY: Show all tasks for debugging
-  const dayTasks = studyData.eisenhower_matrix.list_of_tasks;
+  // Filter by selected date using due_date (fallback to task_date or created_at)
+  const toYmd = (d) => {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+  };
+
+  const dayTasks = studyData.eisenhower_matrix.list_of_tasks.filter(task => {
+    if (!selectedDate) return true;
+    const selectedDateStr = toYmd(selectedDate); // avoid timezone shifts
+    const taskDue = task.due_date || task.task_date || (task.created_at ? toYmd(new Date(task.created_at)) : null);
+    return taskDue === selectedDateStr;
+  }).filter(Boolean);
   
   // Original filtering logic (commented out for debugging)
   // const dayTasks = studyData.eisenhower_matrix.list_of_tasks.filter(task => {
@@ -61,7 +81,7 @@ const CalendarOverlay = ({ isOpen, onClose, selectedDate }) => {
       } catch (error) {
         console.error('Failed to add task:', error);
         // Fallback to local add
-        addTask(newTask, selectedDate);
+        addTask({ ...newTask, due_date: selectedDate?.toISOString().split('T')[0] }, selectedDate);
         setNewTask({ title: '', description: '', quadrant: TaskQuadrant.HUHI });
         setIsAddingTask(false);
       }
@@ -289,7 +309,8 @@ const CalendarOverlay = ({ isOpen, onClose, selectedDate }) => {
               </div>
             ) : (
               dayTasks.map((task) => {
-                const quadrantInfo = quadrantConfig[task.quadrant];
+                if (!task) return null;
+                const quadrantInfo = quadrantConfig[task.quadrant] || { title: 'Task', subtitle: '' };
                 const statusInfo = statusConfig[task.status] || statusConfig[TaskStatus.CREATED];
                 
                 return (
@@ -301,7 +322,7 @@ const CalendarOverlay = ({ isOpen, onClose, selectedDate }) => {
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-2">
                           <h3 className={`font-semibold text-white ${task.status === TaskStatus.COMPLETED ? 'line-through opacity-60' : ''}`}>
-                            {task.title}
+                            {task.title || 'Untitled task'}
                           </h3>
                           <span className="px-2 py-1 rounded-full text-xs font-medium bg-black/20 text-white/80 border border-white/10">
                             {statusInfo.label}

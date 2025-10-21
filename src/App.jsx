@@ -8,7 +8,7 @@ import UserDropdown from './components/UserDropdown'
 import NeumorphicButton from './components/NeumorphicButton'
 
 export default function App() {
-  const { isDarkMode, isBlackMode } = useTheme()
+  const { isDarkMode, isBlackMode, theme } = useTheme()
   const [isStudyMode, setIsStudyMode] = useState(true)
 
   const toggleMode = () => {
@@ -17,9 +17,9 @@ export default function App() {
 
   return (
     <div 
-      className={`${isDarkMode ? 'dark' : ''} ${isBlackMode ? 'black' : ''} min-h-screen transition-all duration-500`}
+      className={`${isDarkMode ? 'dark' : ''} ${isBlackMode ? 'black' : ''} ${theme === 'light' ? 'light' : ''} min-h-screen transition-all duration-500`}
       style={{
-        background: '#000000'
+        background: isDarkMode ? '#000000' : 'var(--bg)'
       }}
     >
       {/* Galaxy Background Effects */}
@@ -29,9 +29,11 @@ export default function App() {
           <div 
             className="absolute inset-0 pointer-events-none"
             style={{
-              background: isStudyMode 
-                ? 'radial-gradient(ellipse 80% 60% at 50% 50%, transparent 0%, rgba(30, 15, 50, 0.12) 30%, rgba(20, 10, 35, 0.08) 60%, transparent 100%)'
-                : 'radial-gradient(ellipse 80% 60% at 50% 50%, transparent 0%, rgba(15, 30, 20, 0.12) 30%, rgba(10, 20, 15, 0.08) 60%, transparent 100%)',
+              background: theme === 'light'
+                ? 'radial-gradient(ellipse 80% 60% at 50% 50%, transparent 0%, rgba(116, 200, 163, 0.10) 30%, rgba(56, 178, 163, 0.08) 60%, transparent 100%)'
+                : (isStudyMode 
+                  ? 'radial-gradient(ellipse 80% 60% at 50% 50%, transparent 0%, rgba(30, 15, 50, 0.12) 30%, rgba(20, 10, 35, 0.08) 60%, transparent 100%)'
+                  : 'radial-gradient(ellipse 80% 60% at 50% 50%, transparent 0%, rgba(15, 30, 20, 0.12) 30%, rgba(10, 20, 15, 0.08) 60%, transparent 100%)'),
               filter: 'blur(3px)'
             }}
           />
@@ -40,9 +42,11 @@ export default function App() {
           <div 
             className="absolute inset-0 pointer-events-none"
             style={{
-              background: isStudyMode 
-                ? 'radial-gradient(ellipse 60% 40% at 30% 70%, transparent 0%, rgba(40, 20, 70, 0.10) 40%, transparent 80%)'
-                : 'radial-gradient(ellipse 60% 40% at 30% 70%, transparent 0%, rgba(20, 40, 30, 0.10) 40%, transparent 80%)',
+              background: theme === 'light'
+                ? 'radial-gradient(ellipse 60% 40% at 30% 70%, transparent 0%, rgba(255, 217, 168, 0.30) 40%, transparent 80%)'
+                : (isStudyMode 
+                  ? 'radial-gradient(ellipse 60% 40% at 30% 70%, transparent 0%, rgba(40, 20, 70, 0.10) 40%, transparent 80%)'
+                  : 'radial-gradient(ellipse 60% 40% at 30% 70%, transparent 0%, rgba(20, 40, 30, 0.10) 40%, transparent 80%)'),
               filter: 'blur(4px)'
             }}
           />
@@ -51,9 +55,11 @@ export default function App() {
           <div 
             className="absolute inset-0 pointer-events-none"
             style={{
-              background: isStudyMode 
-                ? 'radial-gradient(ellipse 70% 50% at 60% 40%, transparent 0%, rgba(35, 15, 60, 0.08) 50%, transparent 100%)'
-                : 'radial-gradient(ellipse 70% 50% at 60% 40%, transparent 0%, rgba(15, 35, 25, 0.08) 50%, transparent 100%)',
+              background: theme === 'light'
+                ? 'radial-gradient(ellipse 70% 50% at 60% 40%, transparent 0%, rgba(230, 223, 246, 0.25) 50%, transparent 100%)'
+                : (isStudyMode 
+                  ? 'radial-gradient(ellipse 70% 50% at 60% 40%, transparent 0%, rgba(35, 15, 60, 0.08) 50%, transparent 100%)'
+                  : 'radial-gradient(ellipse 70% 50% at 60% 40%, transparent 0%, rgba(15, 35, 25, 0.08) 50%, transparent 100%)'),
               filter: 'blur(5px)'
             }}
           />
@@ -417,11 +423,13 @@ export default function App() {
         <div 
           className="backdrop-blur-lg rounded-full p-1 shadow-xl relative overflow-hidden"
           style={{
-            background: 'rgba(0, 0, 0, 0.2)',
-            border: '1px solid rgba(255, 255, 255, 0.15)',
-            boxShadow: isStudyMode 
-              ? '0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08), 0 0 20px rgba(100, 150, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
-              : '0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08), 0 0 20px rgba(100, 200, 100, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
+            background: theme === 'light' ? 'rgba(255, 255, 255, 0.6)' : 'rgba(0, 0, 0, 0.2)',
+            border: theme === 'light' ? '1px solid var(--border-subtle)' : '1px solid rgba(255, 255, 255, 0.15)',
+            boxShadow: theme === 'light'
+              ? '0 8px 24px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.8)'
+              : (isStudyMode 
+                ? '0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08), 0 0 20px rgba(100, 150, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
+                : '0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08), 0 0 20px rgba(100, 200, 100, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1)')
           }}
         >
           {/* Toggle Stars */}

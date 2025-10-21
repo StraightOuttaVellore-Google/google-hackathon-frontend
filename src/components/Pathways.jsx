@@ -10,92 +10,64 @@ export default function Pathways() {
       name: 'Mindfulness Master',
       icon: Brain,
       color: 'from-purple-500 to-pink-500',
-      bgColor: 'bg-purple-100 dark:bg-purple-900/30',
-      borderColor: 'border-purple-300 dark:border-purple-600',
+      hue: '#a855f7',
       progress: 75,
       level: 3,
-      xp: 750,
-      nextLevelXp: 1000,
-      achievements: [
-        { id: 1, name: 'First Meditation', description: 'Complete your first meditation session', completed: true, xp: 50 },
-        { id: 2, name: '7-Day Streak', description: 'Meditate for 7 consecutive days', completed: true, xp: 100 },
-        { id: 3, name: 'Mindful Moments', description: 'Practice mindfulness 50 times', completed: true, xp: 150 },
-        { id: 4, name: 'Zen Master', description: 'Complete 100 meditation sessions', completed: false, xp: 200 },
-        { id: 5, name: 'Deep Focus', description: 'Complete a 60-minute meditation', completed: false, xp: 250 }
-      ]
+      steps: 6,
     },
     fitness: {
       name: 'Fitness Warrior',
       icon: Zap,
       color: 'from-orange-500 to-red-500',
-      bgColor: 'bg-orange-100 dark:bg-orange-900/30',
-      borderColor: 'border-orange-300 dark:border-orange-600',
+      hue: '#f97316',
       progress: 60,
       level: 2,
-      xp: 600,
-      nextLevelXp: 800,
-      achievements: [
-        { id: 1, name: 'First Workout', description: 'Complete your first workout', completed: true, xp: 50 },
-        { id: 2, name: 'Cardio King', description: 'Complete 20 cardio sessions', completed: true, xp: 100 },
-        { id: 3, name: 'Strength Builder', description: 'Complete 30 strength training sessions', completed: false, xp: 150 },
-        { id: 4, name: 'Marathon Runner', description: 'Run 100 miles total', completed: false, xp: 200 },
-        { id: 5, name: 'Iron Warrior', description: 'Complete 100 workouts', completed: false, xp: 250 }
-      ]
+      steps: 6,
     },
     nutrition: {
       name: 'Nutrition Ninja',
       icon: Heart,
       color: 'from-green-500 to-teal-500',
-      bgColor: 'bg-green-100 dark:bg-green-900/30',
-      borderColor: 'border-green-300 dark:border-green-600',
+      hue: '#22c55e',
       progress: 40,
       level: 2,
-      xp: 400,
-      nextLevelXp: 600,
-      achievements: [
-        { id: 1, name: 'Healthy Start', description: 'Log meals for 7 days', completed: true, xp: 50 },
-        { id: 2, name: 'Hydration Hero', description: 'Drink 8 glasses of water for 14 days', completed: true, xp: 100 },
-        { id: 3, name: 'Veggie Lover', description: 'Eat 5 servings of vegetables for 30 days', completed: false, xp: 150 },
-        { id: 4, name: 'Meal Prep Master', description: 'Meal prep for 4 weeks', completed: false, xp: 200 },
-        { id: 5, name: 'Nutrition Expert', description: 'Maintain healthy eating for 90 days', completed: false, xp: 250 }
-      ]
+      steps: 6,
     },
     sleep: {
       name: 'Sleep Sage',
       icon: Shield,
       color: 'from-indigo-500 to-purple-500',
-      bgColor: 'bg-indigo-100 dark:bg-indigo-900/30',
-      borderColor: 'border-indigo-300 dark:border-indigo-600',
+      hue: '#6366f1',
       progress: 85,
       level: 4,
-      xp: 850,
-      nextLevelXp: 1000,
-      achievements: [
-        { id: 1, name: 'Early Bird', description: 'Wake up before 7 AM for 7 days', completed: true, xp: 50 },
-        { id: 2, name: 'Sleep Schedule', description: 'Maintain consistent sleep schedule for 14 days', completed: true, xp: 100 },
-        { id: 3, name: 'Deep Sleep', description: 'Get 8+ hours of sleep for 30 days', completed: true, xp: 150 },
-        { id: 4, name: 'Sleep Ritual', description: 'Follow bedtime routine for 60 days', completed: true, xp: 200 },
-        { id: 5, name: 'Sleep Master', description: 'Perfect sleep score for 90 days', completed: false, xp: 250 }
-      ]
-    }
+      steps: 6,
+    },
+    resilience: {
+      name: 'Resilience Ranger',
+      icon: Shield,
+      color: 'from-sky-500 to-cyan-500',
+      hue: '#0ea5e9',
+      progress: 30,
+      level: 1,
+      steps: 6,
+    },
+    creativity: {
+      name: 'Creativity Spark',
+      icon: Star,
+      color: 'from-fuchsia-500 to-rose-500',
+      hue: '#d946ef',
+      progress: 50,
+      level: 2,
+      steps: 6,
+    },
   }
 
   const currentPath = pathways[selectedPath]
   const Icon = currentPath.icon
 
-  const getLevelColor = (level) => {
-    if (level >= 5) return 'text-yellow-500'
-    if (level >= 3) return 'text-purple-500'
-    if (level >= 2) return 'text-blue-500'
-    return 'text-gray-500'
-  }
-
-  const getLevelIcon = (level) => {
-    if (level >= 5) return '👑'
-    if (level >= 3) return '🏆'
-    if (level >= 2) return '⭐'
-    return '🌟'
-  }
+  const totalSteps = currentPath.steps || 6
+  const clampedLevel = Math.min(Math.max(currentPath.level || 1, 1), totalSteps)
+  const levelPercent = ((clampedLevel - 1) / (totalSteps - 1)) * 100
 
   return (
     <div className="h-full flex flex-col">
@@ -112,24 +84,27 @@ export default function Pathways() {
         </p>
       </div>
 
-      {/* Pathway Selector */}
-      <div className="mb-1 flex-shrink-0">
-        <div className="grid grid-cols-2 gap-0.5">
+      {/* Pathway Buttons (Neumorphic) */}
+      <div className="mb-2 flex-shrink-0">
+        <div className="grid grid-cols-3 gap-1">
           {Object.entries(pathways).map(([key, path]) => {
             const PathIcon = path.icon
+            const selected = selectedPath === key
             return (
               <button
                 key={key}
                 onClick={() => setSelectedPath(key)}
-                className={`p-1 rounded-lg text-xs font-medium transition-all duration-200 ${
-                  selectedPath === key
-                    ? `${path.bgColor} ${path.borderColor} border-2 shadow-md`
-                    : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600'
+                className={`neuro-surface-inset rounded-2xl p-2.5 text-xs transition-all duration-200 border ${
+                  selected
+                    ? 'border-white/20 shadow-[inset_2px_2px_4px_rgba(0,0,0,0.6),inset_-2px_-2px_4px_rgba(255,255,255,0.06)]'
+                    : 'border-white/10 hover:shadow-[inset_1px_1px_2px_rgba(0,0,0,0.6),inset_-1px_-1px_2px_rgba(255,255,255,0.06)]'
                 }`}
               >
-                <div className="flex items-center gap-0.5">
-                  <PathIcon className="w-2.5 h-2.5" />
-                  <span className="truncate text-xs">{path.name}</span>
+                <div className="flex items-center gap-1">
+                  <div className={`w-5 h-5 rounded-lg bg-gradient-to-r ${path.color} flex items-center justify-center text-white`}>
+                    <PathIcon className="w-3 h-3" />
+                  </div>
+                  <span className="truncate text-[11px] font-medium">{path.name}</span>
                 </div>
               </button>
             )
@@ -137,94 +112,48 @@ export default function Pathways() {
         </div>
       </div>
 
-      {/* Current Pathway Progress */}
-      <div className={`${currentPath.bgColor} ${currentPath.borderColor} border-2 rounded-lg p-1.5 mb-1 flex-shrink-0`}>
-        <div className="flex items-center gap-1 mb-0.5">
-          <div className={`p-0.5 bg-gradient-to-r ${currentPath.color} rounded-lg`}>
-            <Icon className="w-2.5 h-2.5 text-white" />
-          </div>
-          <div className="flex-1">
-            <h4 className="font-semibold text-gray-800 dark:text-white text-xs">
-              {currentPath.name}
-            </h4>
-            <div className="flex items-center gap-0.5">
-              <span className="text-xs text-gray-600 dark:text-gray-400">
-                Level {currentPath.level}
-              </span>
-              <span className={`text-xs ${getLevelColor(currentPath.level)}`}>
-                {getLevelIcon(currentPath.level)}
-              </span>
+      {/* Tube Progress with Level Marker */}
+      <div className="relative flex-1 min-h-0 flex items-center justify-center">
+        <div className="w-full px-2">
+          <div className="relative h-4 rounded-full bg-black/30 border border-white/10 shadow-inner">
+            {/* Tube fill */}
+            <div
+              className={`absolute left-0 top-0 h-full rounded-full bg-gradient-to-r ${currentPath.color}`}
+              style={{ width: `${levelPercent}%` }}
+            />
+
+            {/* Step markers */}
+            <div className="absolute inset-0 flex items-center justify-between px-1">
+              {Array.from({ length: totalSteps }).map((_, idx) => {
+                const isActive = idx + 1 <= clampedLevel
+                const isCurrent = idx + 1 === clampedLevel
+                return (
+                  <div key={idx} className="relative">
+                    <div
+                      className={`w-3 h-3 rounded-full border ${
+                        isActive
+                          ? 'bg-white/90 border-white/80'
+                          : 'bg-white/20 border-white/30'
+                      }`}
+                    />
+                    {isCurrent && (
+                      <div className="absolute -inset-1 rounded-full ring-2 ring-cyan-400/60 animate-pulse" />
+                    )}
+                  </div>
+                )
+              })}
             </div>
           </div>
-        </div>
 
-        {/* XP Progress */}
-        <div className="mb-0.5">
-          <div className="flex justify-between text-xs text-gray-600 dark:text-gray-400 mb-0.5">
-            <span>{currentPath.xp} XP</span>
-            <span>{currentPath.nextLevelXp} XP</span>
-          </div>
-          <div className="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-0.5">
-            <div
-              className={`h-0.5 bg-gradient-to-r ${currentPath.color} rounded-full transition-all duration-500`}
-              style={{ width: `${(currentPath.xp / currentPath.nextLevelXp) * 100}%` }}
-            ></div>
-          </div>
-        </div>
-
-        {/* Progress Percentage */}
-        <div className="text-center">
-          <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">
-            {currentPath.progress}% Complete
-          </span>
-        </div>
-      </div>
-
-      {/* Achievements */}
-      <div className="flex-1 overflow-y-auto">
-        <h5 className="font-semibold text-gray-800 dark:text-white text-xs mb-0.5">
-          Achievements
-        </h5>
-        <div className="space-y-0.5">
-          {currentPath.achievements.slice(0, 3).map(achievement => (
-            <div
-              key={achievement.id}
-              className={`p-1 rounded-lg border transition-all duration-200 ${
-                achievement.completed
-                  ? 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-700'
-                  : 'bg-gray-50 dark:bg-gray-700/50 border-gray-200 dark:border-gray-600'
-              }`}
-            >
-              <div className="flex items-center gap-1">
-                <div className={`w-4 h-4 rounded-full flex items-center justify-center ${
-                  achievement.completed
-                    ? 'bg-green-500 text-white'
-                    : 'bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400'
-                }`}>
-                  {achievement.completed ? '✓' : '○'}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h6 className={`font-medium text-xs ${
-                    achievement.completed
-                      ? 'text-green-800 dark:text-green-200'
-                      : 'text-gray-700 dark:text-gray-300'
-                  }`}>
-                    {achievement.name}
-                  </h6>
-                  <p className={`text-xs ${
-                    achievement.completed
-                      ? 'text-green-600 dark:text-green-400'
-                      : 'text-gray-500 dark:text-gray-400'
-                  }`}>
-                    {achievement.description}
-                  </p>
-                </div>
-                <div className="text-xs font-semibold text-teal-600 dark:text-teal-400">
-                  +{achievement.xp}
-                </div>
+          <div className="mt-2 text-center text-[11px] text-gray-400">
+            <div className="inline-flex items-center gap-1">
+              <div className={`w-4 h-4 rounded-md bg-gradient-to-r ${currentPath.color} flex items-center justify-center text-white`}>
+                <Icon className="w-3 h-3" />
               </div>
+              <span className="font-medium text-gray-200">Level {clampedLevel}</span>
+              <span className="text-gray-400">/ {totalSteps}</span>
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </div>

@@ -34,8 +34,10 @@ const NeumorphicCard = ({
       <div className="neumorphic-card-stars">
         {generateStars()}
       </div>
-      <div className="neumorphic-card-content">
-        {children}
+      <div className="neumorphic-card-content relative z-10 h-full flex flex-col">
+        <div className="flex-1 min-h-0 overflow-auto neumorphic-scrollbar-compact">
+          {children}
+        </div>
       </div>
     </div>
   );

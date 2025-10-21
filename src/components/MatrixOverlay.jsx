@@ -20,7 +20,8 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
   const [newTask, setNewTask] = useState({
     title: '',
     description: '',
-    quadrant: TaskQuadrant.HIHU
+    quadrant: TaskQuadrant.HIHU,
+    due_date: '' // YYYY-MM-DD
   });
   const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState({});
   const [isQuadrantDropdownOpen, setIsQuadrantDropdownOpen] = useState(false);
@@ -82,14 +83,16 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
   const handleAddTask = async () => {
     if (newTask.title.trim()) {
       try {
-        await syncAddTask(newTask, new Date()); // Use current date for matrix tasks
-        setNewTask({ title: '', description: '', quadrant: TaskQuadrant.HIHU });
+        const selectedDate = newTask.due_date ? new Date(newTask.due_date) : new Date();
+        await syncAddTask(newTask, selectedDate);
+        setNewTask({ title: '', description: '', quadrant: TaskQuadrant.HIHU, due_date: '' });
         setIsAddingTask(false);
       } catch (error) {
         console.error('Failed to add task:', error);
         // Fallback to local add
-        addTask(newTask, new Date());
-        setNewTask({ title: '', description: '', quadrant: TaskQuadrant.HIHU });
+        const selectedDate = newTask.due_date ? new Date(newTask.due_date) : new Date();
+        addTask(newTask, selectedDate);
+        setNewTask({ title: '', description: '', quadrant: TaskQuadrant.HIHU, due_date: '' });
         setIsAddingTask(false);
       }
     }
@@ -100,7 +103,8 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
     setNewTask({
       title: task.title,
       description: task.description,
-      quadrant: task.quadrant
+      quadrant: task.quadrant,
+      due_date: task.due_date || ''
     });
     setIsAddingTask(true);
   };
@@ -109,14 +113,14 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
     if (newTask.title.trim() && editingTask) {
       try {
         await syncUpdateTask(editingTask.id, newTask);
-        setNewTask({ title: '', description: '', quadrant: TaskQuadrant.HIHU });
+        setNewTask({ title: '', description: '', quadrant: TaskQuadrant.HIHU, due_date: '' });
         setIsAddingTask(false);
         setEditingTask(null);
       } catch (error) {
         console.error('Failed to update task:', error);
         // Fallback to local update
         updateTask(editingTask.id, newTask);
-        setNewTask({ title: '', description: '', quadrant: TaskQuadrant.HIHU });
+        setNewTask({ title: '', description: '', quadrant: TaskQuadrant.HIHU, due_date: '' });
         setIsAddingTask(false);
         setEditingTask(null);
       }
@@ -124,7 +128,7 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
   };
 
   const handleCancelEdit = () => {
-    setNewTask({ title: '', description: '', quadrant: TaskQuadrant.HIHU });
+    setNewTask({ title: '', description: '', quadrant: TaskQuadrant.HIHU, due_date: '' });
     setIsAddingTask(false);
     setEditingTask(null);
   };
@@ -170,7 +174,7 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
               </p>
             )}
             <div className="text-xs text-white/40">
-              Created {new Date(task.created_at).toLocaleDateString()}
+              {task.due_date ? `Due ${new Date(task.due_date).toLocaleDateString()}` : `Created ${new Date(task.created_at).toLocaleDateString()}`}
             </div>
           </div>
           <div className="flex items-center gap-1 ml-2">
@@ -267,18 +271,18 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
 
     return (
       <div className={`${getMatrixCardClass()} h-full flex flex-col`}>
-        <div className="p-4 rounded-t-xl bg-black/20">
+        <div className="p-4 rounded-t-xl bg-black/20 dark:bg-black/20 light:bg-white/20">
           <div className="flex items-center gap-2">
-            <Icon size={18} className="text-white/80" />
+            <Icon size={18} className="text-white/80 dark:text-white/80 light:text-black/80" />
             <div>
-              <h3 className="font-semibold text-base text-white">{config.title}</h3>
-              <p className="text-sm text-white/60">{config.subtitle}</p>
+              <h3 className="font-semibold text-base text-white dark:text-white light:text-black">{config.title}</h3>
+              <p className="text-sm text-white/60 dark:text-white/60 light:text-black/60">{config.subtitle}</p>
             </div>
           </div>
         </div>
         <div className="flex-1 p-4 overflow-y-auto neumorphic-scrollbar">
           {tasks.length === 0 ? (
-            <div className="text-center text-white/60 py-8">
+            <div className="text-center text-white/60 dark:text-white/60 light:text-black/60 py-8">
               <p className="text-sm">No tasks in this quadrant</p>
             </div>
           ) : (
@@ -305,10 +309,10 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
         {/* Header */}
         <div className="flex items-center justify-between p-6">
           <div>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-white dark:text-white light:text-black">
               Eisenhower Matrix
             </h2>
-            <p className="text-white/80">
+            <p className="text-white/80 dark:text-white/80 light:text-black/70">
               Organize your tasks by urgency and importance
             </p>
           </div>
@@ -408,6 +412,17 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
                     className="neumorphic-input w-full"
                     rows="3"
                     placeholder="Enter task description"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-white/80 mb-1">
+                    Deadline (optional)
+                  </label>
+                  <input
+                    type="date"
+                    value={newTask.due_date}
+                    onChange={(e) => setNewTask({ ...newTask, due_date: e.target.value })}
+                    className="neumorphic-input w-full"
                   />
                 </div>
                 <div className="md:col-span-2 flex gap-2">

@@ -26,7 +26,7 @@ export const ThemeProvider = ({ children }) => {
     localStorage.setItem('theme', theme)
     
     // Remove all theme classes
-    document.documentElement.classList.remove('dark', 'black')
+    document.documentElement.classList.remove('dark', 'black', 'light')
     
     // Add appropriate theme class
     if (theme === 'dark' || theme === 'black') {
@@ -34,6 +34,9 @@ export const ThemeProvider = ({ children }) => {
     }
     if (theme === 'black') {
       document.documentElement.classList.add('black')
+    }
+    if (theme === 'light') {
+      document.documentElement.classList.add('light')
     }
   }, [theme])
 

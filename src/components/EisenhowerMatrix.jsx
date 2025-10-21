@@ -70,10 +70,15 @@ function TaskItem({ task, onUpdateStatus, isWidget = false }) {
         <div className={`text-xs px-2 py-1 rounded-md border font-medium flex-shrink-0 ${getStatusBadgeClass()}`}>
           {statusLabels[task.status]}
         </div>
-        <h4 className={`text-xs font-semibold truncate ${task.status === TaskStatus.COMPLETED ? 'line-through opacity-60' : ''} text-white flex-1 min-w-0`}>
+        <h4 className={`text-xs font-semibold truncate ${task.status === TaskStatus.COMPLETED ? 'line-through opacity-60' : ''} text-white dark:text-white light:text-black flex-1 min-w-0`}>
           {task.title}
         </h4>
       </div>
+      {task.due_date && (
+        <div className="mt-1 text-[10px] text-white/60 dark:text-white/60 light:text-black/60">
+          Due {new Date(task.due_date).toLocaleDateString()}
+        </div>
+      )}
     </div>
   );
 }
@@ -109,12 +114,12 @@ function QuadrantView({ quadrant, tasks, onUpdateStatus }) {
 
   return (
     <div className={`${getMatrixCardClass()} flex flex-col`} style={{ height: '140px' }}>
-      <div className="p-2 rounded-t-xl bg-black/20">
+      <div className="p-2 rounded-t-xl bg-black/20 dark:bg-black/20 light:bg-white/20">
         <div className="flex items-center gap-2">
           <Icon size={14} className={config.iconColor} />
           <div className="min-w-0 flex-1">
-            <h3 className="font-semibold text-xs text-white truncate">{config.title}</h3>
-            <p className="text-xs text-white/60 truncate">{config.subtitle}</p>
+            <h3 className="font-semibold text-xs text-white dark:text-white light:text-black truncate">{config.title}</h3>
+            <p className="text-xs text-white/60 dark:text-white/60 light:text-black/60 truncate">{config.subtitle}</p>
           </div>
         </div>
       </div>
@@ -129,7 +134,7 @@ function QuadrantView({ quadrant, tasks, onUpdateStatus }) {
             />
           ))}
           {tasks.length === 0 && (
-            <div className="text-xs text-white/60 text-center py-2">
+            <div className="text-xs text-white/60 dark:text-white/60 light:text-black/60 text-center py-2">
               No tasks
             </div>
           )}

@@ -6,8 +6,13 @@ import { apiRequest, handleApiError, ApiError } from './utilApi';
 // Priority Matrix API
 export const priorityMatrixApi = {
   // Get all tasks or tasks for a specific day
-  async getTasks(day = null) {
-    const params = day ? `?day=${day}` : '';
+  async getTasks(day = null, due = null) {
+    let params = '';
+    if (due) {
+      params = `?due=${due}`;
+    } else if (day) {
+      params = `?day=${day}`;
+    }
     return apiRequest(`/priority_matrix${params}`);
   },
 

@@ -181,17 +181,17 @@ export default function SoundPlayer() {
       <div className="flex flex-col h-full">
         {/* Header */}
         <div className="text-center mb-6">
-          <h3 className="text-lg font-semibold text-white mb-2">
+          <h3 className="text-lg font-semibold text-white dark:text-white light:text-black mb-2">
             Ambient & Focus
           </h3>
-          <p className="text-sm text-white/80">
+          <p className="text-sm text-white/80 dark:text-white/80 light:text-black/70">
             Choose your focus sound
           </p>
         </div>
 
         {/* Sound Type Navigation */}
         <div className="mb-6">
-          <div className="flex items-center justify-between bg-black/20 rounded-lg p-3 backdrop-blur-sm">
+          <div className="flex items-center justify-between bg-black/20 dark:bg-black/20 light:bg-white/20 rounded-lg p-3 backdrop-blur-sm">
             <button 
               onClick={() => navigateSoundType('prev')}
               className={`neumorphic-sound-button ${
@@ -203,10 +203,10 @@ export default function SoundPlayer() {
             </button>
             
             <div className="text-center flex-1">
-              <p className="text-lg font-semibold text-white">
+              <p className="text-lg font-semibold text-white dark:text-white light:text-black">
                 {isAmbient ? 'Ambient' : 'Noise'}
               </p>
-              <p className="text-xs text-white/60">
+              <p className="text-xs text-white/60 dark:text-white/60 light:text-black/60">
                 {isAmbient ? 'Natural Sounds' : 'Colored Noise'}
               </p>
             </div>
@@ -225,7 +225,7 @@ export default function SoundPlayer() {
 
         {/* Specific Sound Navigation */}
         <div className="mb-6 flex-1">
-          <div className="flex items-center justify-between bg-black/20 rounded-lg p-3 backdrop-blur-sm">
+          <div className="flex items-center justify-between bg-black/20 dark:bg-black/20 light:bg-white/20 rounded-lg p-3 backdrop-blur-sm">
             <button 
               onClick={() => navigateSound('prev')}
               className="neumorphic-sound-button"
@@ -234,7 +234,7 @@ export default function SoundPlayer() {
             </button>
             
             <div className="text-center flex-1">
-              <p className="text-lg font-semibold text-white">
+              <p className="text-lg font-semibold text-white dark:text-white light:text-black">
                 {SOUND_LABELS[selectedSound]}
               </p>
               <div className="flex justify-center mt-2 space-x-1">
@@ -242,12 +242,12 @@ export default function SoundPlayer() {
                   <div 
                     key={index}
                     className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      soundIndex === index ? 'bg-white shadow-lg scale-125' : 'bg-white/50'
+                      soundIndex === index ? 'bg-white dark:bg-white light:bg-black shadow-lg scale-125' : 'bg-white/50 dark:bg-white/50 light:bg-black/50'
                     }`}
                   ></div>
                 ))}
               </div>
-              <p className="text-xs text-white/60 mt-1">
+              <p className="text-xs text-white/60 dark:text-white/60 light:text-black/60 mt-1">
                 {soundIndex + 1} of {currentSoundArray.length}
               </p>
             </div>

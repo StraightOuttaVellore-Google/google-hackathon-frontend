@@ -193,12 +193,12 @@ function TaskItem({ task, onEdit, onDelete, onUpdateStatus, onUpdateQuadrant }) 
             <div className={`text-sm px-3 py-1.5 rounded-lg border font-medium ${getStatusBadgeClass()}`}>
               {statusLabels[task.status]}
             </div>
-            <h4 className={`text-sm font-semibold ${task.status === TaskStatus.COMPLETED ? 'line-through opacity-60' : ''} text-white flex-1 truncate`}>
+            <h4 className={`text-sm font-semibold ${task.status === TaskStatus.COMPLETED ? 'line-through opacity-60' : ''} text-white dark:text-white light:text-black flex-1 truncate`}>
               {task.title}
             </h4>
           </div>
           {task.description && (
-            <p className="text-xs text-white/60 ml-0 leading-relaxed">
+            <p className="text-xs text-white/60 dark:text-white/60 light:text-black/60 ml-0 leading-relaxed">
               {task.description}
             </p>
           )}
@@ -271,18 +271,18 @@ function QuadrantView({ quadrant, tasks, onEdit, onDelete, onUpdateStatus, onDro
       onDragOver={handleDragOver}
       onDrop={handleDrop}
     >
-      <div className="p-4 rounded-t-xl bg-black/20">
+      <div className="p-4 rounded-t-xl bg-black/20 dark:bg-black/20 light:bg-white/20">
         <div className="flex items-center gap-2">
-          <Icon size={18} className="text-white/80" />
+          <Icon size={18} className="text-white/80 dark:text-white/80 light:text-black/80" />
           <div>
-            <h3 className="font-semibold text-base text-white">{config.title}</h3>
-            <p className="text-sm text-white/60">{config.subtitle}</p>
+            <h3 className="font-semibold text-base text-white dark:text-white light:text-black">{config.title}</h3>
+            <p className="text-sm text-white/60 dark:text-white/60 light:text-black/60">{config.subtitle}</p>
           </div>
         </div>
       </div>
       <div className="flex-1 p-4 overflow-y-auto neumorphic-scrollbar">
         {tasks.length === 0 ? (
-          <div className="text-center text-white/60 py-8">
+          <div className="text-center text-white/60 dark:text-white/60 light:text-black/60 py-8">
             <p className="text-sm">No tasks in this quadrant</p>
           </div>
         ) : (

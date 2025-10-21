@@ -4,6 +4,7 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 @custom-variant black (&:where(.black, .black *));
+@custom-variant light (&:where(.light, .light *));
 
 /* CSS Variables for Hero Section Spacing */
 :root {
@@ -20,6 +21,53 @@
   --surfaces-surface-container-bright: #121212;
 }
 
+/* Aurora Daylight — Light mode color system */
+.light:root,
+:root.light,
+.light :root,
+:root {
+  /* Core palette */
+  --sky-0: #F8FBF6; /* page bg */
+  --sky-1: #F1F7F2; /* panel bg */
+  --sky-2: #E8F2EC; /* surface */
+  --mist: #DDE7E0; /* subtle border */
+  --stone: #25323B; /* neutral text */
+  --stone-muted: #5B6A73; /* neutral text muted */
+  --aurora: #74C8A3; /* primary mint */
+  --teal: #38B2A3; /* primary strong */
+  --forest: #1D806F; /* primary dark */
+  --dawn: #FFD9A8; /* warm highlight */
+  --peach: #F7B9A2; /* accent */
+  --lilac: #E6DFF6; /* soft secondary */
+  --info-sky: #6CC4FF;
+  --success-leaf: #60C38C;
+  --warn-sun: #F2C94C;
+  --danger-coral: #EF7D72;
+
+  /* Semantic aliases for light mode */
+  --bg: var(--sky-0);
+  --panel: var(--sky-1);
+  --surface: var(--sky-2);
+  --border-subtle: var(--mist);
+  --text-color: var(--stone);
+  --text-muted: var(--stone-muted);
+  --primary: var(--aurora);
+  --primary-strong: var(--teal);
+  --primary-dark: var(--forest);
+  --accent-warm: var(--dawn);
+  --accent-peach: var(--peach);
+  --accent-lilac: var(--lilac);
+  --info: var(--info-sky);
+  --success: var(--success-leaf);
+  --warning: var(--warn-sun);
+  --danger: var(--danger-coral);
+}
+
+/* Default background/text for light scope */
+.light body {
+  background: var(--bg) !important;
+  color: var(--text-color);
+}
 
 /* Gemini Action Card Styles */
 .gemini-action-card {
