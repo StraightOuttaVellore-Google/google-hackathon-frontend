@@ -24,8 +24,7 @@
 /* Aurora Daylight — Light mode color system */
 .light:root,
 :root.light,
-.light :root,
-:root {
+.light :root {
   /* Core palette */
   --sky-0: #F8FBF6; /* page bg */
   --sky-1: #F1F7F2; /* panel bg */

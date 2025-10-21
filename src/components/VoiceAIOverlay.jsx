@@ -216,7 +216,7 @@ export default function VoiceAIOverlay({ isOpen, onClose }) {
                 borderRadius: '0.5rem'
               }}
             />
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-white dark:text-white light:text-black">
               <span style={{ fontFamily: 'Samarkan' }}>आवाज़</span>AI
             </h2>
           </div>
@@ -282,7 +282,7 @@ export default function VoiceAIOverlay({ isOpen, onClose }) {
                   {/* Processing Overlay */}
                   {isProcessing && (
                     <div className="absolute inset-0 bg-black/50 rounded-lg flex items-center justify-center">
-                      <div className="text-white text-2xl animate-spin">🧠</div>
+                      <div className="text-white dark:text-white light:text-black text-2xl animate-spin">🧠</div>
                     </div>
                   )}
                 </button>
@@ -291,17 +291,17 @@ export default function VoiceAIOverlay({ isOpen, onClose }) {
               {/* Status */}
               <div className="mb-4">
                 {isListening && (
-                  <p className="text-white font-medium animate-pulse">
+                  <p className="text-white dark:text-white light:text-black font-medium animate-pulse">
                     🎙️ Listening...
                   </p>
                 )}
                 {isProcessing && (
-                  <p className="text-white font-medium">
+                  <p className="text-white dark:text-white light:text-black font-medium">
                     🧠 Processing...
                   </p>
                 )}
                 {!isListening && !isProcessing && (
-                  <p className="text-white/70">
+                  <p className="text-white/70 dark:text-white/70 light:text-black/70">
                     Click the AI agent to start talking
                   </p>
                 )}
@@ -310,7 +310,7 @@ export default function VoiceAIOverlay({ isOpen, onClose }) {
               {/* Live Transcript */}
               {transcript && (
                 <div className="neumorphic-matrix-card rounded-lg p-4 mb-4">
-                  <p className="text-white italic">
+                  <p className="text-white dark:text-white light:text-black italic">
                     "{transcript}"
                   </p>
                 </div>
@@ -320,13 +320,13 @@ export default function VoiceAIOverlay({ isOpen, onClose }) {
 
             {/* Conversation History */}
             <div className="neumorphic-timer-card rounded-xl p-4 h-64 overflow-y-auto neumorphic-scrollbar">
-              <h3 className="text-lg font-semibold text-white mb-3">
+              <h3 className="text-lg font-semibold text-white dark:text-white light:text-black mb-3">
                 💬 Conversation
               </h3>
               
               <div className="space-y-3">
                 {conversation.length === 0 ? (
-                  <p className="text-white/70 text-center py-8">
+                  <p className="text-white/70 dark:text-white/70 light:text-black/70 text-center py-8">
                     No conversation yet. Start by clicking the AI agent!
                   </p>
                 ) : (
@@ -342,8 +342,8 @@ export default function VoiceAIOverlay({ isOpen, onClose }) {
                             : 'neumorphic-timer-card'
                         }`}
                       >
-                        <p className="text-sm text-white">{message.text}</p>
-                        <p className="text-xs text-white/70 mt-1">
+                        <p className="text-sm text-white dark:text-white light:text-black">{message.text}</p>
+                        <p className="text-xs text-white/70 dark:text-white/70 light:text-black/70 mt-1">
                           {message.timestamp.toLocaleTimeString()}
                         </p>
                       </div>
@@ -358,13 +358,13 @@ export default function VoiceAIOverlay({ isOpen, onClose }) {
           {showSummary && (
             <div className="relative z-10 w-96 p-6 neumorphic-timer-card border-l border-white/20">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-white">
+                <h3 className="text-lg font-semibold text-white dark:text-white light:text-black">
                   📚 Conversation History
                 </h3>
                 <button
                   onClick={clearHistory}
                   disabled={displaySummaries.length === 0}
-                  className="px-3 py-1 text-white/70 hover:text-white disabled:text-white/40 disabled:cursor-not-allowed hover:bg-white/20 rounded transition-colors text-sm backdrop-blur-sm border border-white/20"
+                  className="px-3 py-1 text-white/70 dark:text-white/70 light:text-black/70 hover:text-white dark:hover:text-white light:hover:text-black disabled:text-white/40 dark:disabled:text-white/40 light:disabled:text-black/40 disabled:cursor-not-allowed hover:bg-white/20 dark:hover:bg-white/20 light:hover:bg-black/10 rounded transition-colors text-sm backdrop-blur-sm border border-white/20 dark:border-white/20 light:border-black/20"
                 >
                   🗑️ Clear All
                 </button>
@@ -373,10 +373,10 @@ export default function VoiceAIOverlay({ isOpen, onClose }) {
               <div className="space-y-3 max-h-96 overflow-y-auto neumorphic-scrollbar">
                 {displaySummaries.length === 0 ? (
                   <div className="text-center py-8">
-                    <p className="text-white/70 text-sm mb-2">
+                    <p className="text-white/70 dark:text-white/70 light:text-black/70 text-sm mb-2">
                       📝 No conversation history yet
                     </p>
-                    <p className="text-white/50 text-xs">
+                    <p className="text-white/50 dark:text-white/50 light:text-black/50 text-xs">
                       Start talking with the Voice AI agent to see summaries here
                     </p>
                   </div>
@@ -389,10 +389,10 @@ export default function VoiceAIOverlay({ isOpen, onClose }) {
                       {/* Header */}
                       <div className="flex items-start justify-between mb-2">
                         <div>
-                          <h4 className="font-semibold text-white text-sm">
+                          <h4 className="font-semibold text-white dark:text-white light:text-black text-sm">
                             {summary.title}
                           </h4>
-                          <div className="flex items-center gap-2 text-xs text-white/70 mt-1">
+                          <div className="flex items-center gap-2 text-xs text-white/70 dark:text-white/70 light:text-black/70 mt-1">
                             <span>📅 {summary.date}</span>
                             <span>🕐 {summary.time}</span>
                             <span>⏱️ {summary.duration}</span>
@@ -400,7 +400,7 @@ export default function VoiceAIOverlay({ isOpen, onClose }) {
                         </div>
                         <button
                           onClick={() => deleteSummary(summary.id)}
-                          className="p-1 text-white/70 hover:text-white hover:bg-white/20 rounded transition-colors text-xs"
+                          className="p-1 text-white/70 dark:text-white/70 light:text-black/70 hover:text-white dark:hover:text-white light:hover:text-black hover:bg-white/20 dark:hover:bg-white/20 light:hover:bg-black/10 rounded transition-colors text-xs"
                           title="Delete summary"
                         >
                           🗑️
@@ -408,7 +408,7 @@ export default function VoiceAIOverlay({ isOpen, onClose }) {
                       </div>
 
                       {/* Summary */}
-                      <p className="text-white/80 text-xs leading-relaxed">
+                      <p className="text-white/80 dark:text-white/80 light:text-black/80 text-xs leading-relaxed">
                         {summary.summary}
                       </p>
                     </div>
@@ -421,7 +421,7 @@ export default function VoiceAIOverlay({ isOpen, onClose }) {
 
         {/* Speech Recognition Support Check */}
         {!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) && (
-          <div className="absolute bottom-4 right-4 bg-yellow-500 text-white p-3 rounded-lg shadow-lg">
+          <div className="absolute bottom-4 right-4 bg-yellow-500 text-white dark:text-white light:text-black p-3 rounded-lg shadow-lg">
             <p className="text-sm">
               ⚠️ Speech recognition not supported in this browser
             </p>

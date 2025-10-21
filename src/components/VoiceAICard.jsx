@@ -16,16 +16,15 @@ export default function VoiceAICard() {
           <img
             src="images/38dc7c1a-2e26-44b6-9c9b-97ca9ff38a60.png"
             alt="Voice Agent"
-            className="w-full h-48 object-contain rounded-lg transition-transform duration-200 hover:scale-105"
+            className="w-full h-48 object-contain rounded-lg transition-transform duration-200 hover:scale-105 voice-ai-image"
             style={{
-              filter: 'drop-shadow(0 0 8px rgba(60, 90, 150, 0.7)) drop-shadow(0 0 16px rgba(40, 70, 120, 0.5)) drop-shadow(0 0 24px rgba(30, 50, 100, 0.4)) drop-shadow(0 0 32px rgba(20, 40, 80, 0.3))',
               borderRadius: '0.5rem'
             }}
           />
           {/* Overlay effect on hover */}
-          <div className="absolute inset-0 bg-black/0 hover:bg-black/10 rounded-lg transition-colors duration-200 flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/0 hover:bg-black/10 dark:hover:bg-black/10 light:hover:bg-white/10 rounded-lg transition-colors duration-200 flex items-center justify-center">
             <div className="opacity-0 hover:opacity-100 transition-opacity duration-200">
-              <div className="bg-white/90 dark:bg-gray-800/90 rounded-full p-3 shadow-lg">
+              <div className="bg-white/90 dark:bg-gray-800/90 light:bg-white/90 rounded-full p-3 shadow-lg">
                 <span className="text-2xl">🎤</span>
               </div>
             </div>
@@ -36,11 +35,8 @@ export default function VoiceAICard() {
         <div className="flex justify-center mt-6">
           <button
             onClick={handleTalkClick}
-            className="relative backdrop-blur-lg rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
+            className="relative backdrop-blur-lg rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden neumorphic-button"
             style={{
-              background: 'rgba(0, 0, 0, 0.2)',
-              border: '0.5px solid rgba(0, 0, 0, 0.3)',
-              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0, 0, 0, 0.1), 0 0 20px rgba(100, 150, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
               width: 'fit-content',
               padding: '8px 16px'
             }}
@@ -64,7 +60,7 @@ export default function VoiceAICard() {
                 }}
               />
             ))}
-            <span className="relative z-10 font-medium text-sm text-white">
+            <span className="relative z-10 font-medium text-sm text-white dark:text-white light:text-black">
               Aawaaz Journal
             </span>
           </button>

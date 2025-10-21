@@ -201,13 +201,13 @@ export default function PomodoroTimer(){
             className="neumorphic-timer-card p-8 min-h-[160px] flex flex-col justify-center"
             onClick={toggleOverlay}
           >
-            <div className="text-5xl font-mono font-bold text-white mb-3">
+            <div className="text-5xl font-mono font-bold text-white dark:text-white light:text-black mb-3">
               {formatTime(currentTime)}
             </div>
-            <div className="text-xl font-medium text-white/80 mb-2">
+            <div className="text-xl font-medium text-white/80 dark:text-white/80 light:text-black/80 mb-2">
               {isBreak ? 'Break' : 'Study'} {isBreak ? pomodoro.break_time : pomodoro.work_time} min
             </div>
-            <div className="text-base text-white/60">
+            <div className="text-base text-white/60 dark:text-white/60 light:text-black/60">
               Cycle {currentIteration} of {pomodoro.no_of_iterations}
             </div>
           </div>
@@ -279,13 +279,13 @@ export default function PomodoroTimer(){
               {/* Timer Display Card in Overlay */}
               <div className="text-center mb-6 mt-2">
                 <div className="neumorphic-timer-card p-6 min-h-[140px] flex flex-col justify-center">
-                  <div className="text-4xl font-mono font-bold text-white mb-2">
+                  <div className="text-4xl font-mono font-bold text-white dark:text-white light:text-black mb-2">
                     {formatTime(currentTime)}
                   </div>
-                  <div className="text-lg font-medium text-white/80 mb-1">
+                  <div className="text-lg font-medium text-white/80 dark:text-white/80 light:text-black/80 mb-1">
                     {isBreak ? 'Break' : 'Study'} {isBreak ? pomodoro.break_time : pomodoro.work_time} min
                   </div>
-                  <div className="text-sm text-white/60">
+                  <div className="text-sm text-white/60 dark:text-white/60 light:text-black/60">
               Cycle {currentIteration} of {pomodoro.no_of_iterations}
             </div>
           </div>
@@ -293,7 +293,7 @@ export default function PomodoroTimer(){
   
         {/* Preset Selection */}
               <div className="mb-6">
-          <label className="block text-xs font-semibold text-white/80 mb-2 tracking-wide uppercase">
+          <label className="block text-xs font-semibold text-white/80 dark:text-white/80 light:text-black/80 mb-2 tracking-wide uppercase">
             Load Preset
           </label>
           <div className="relative">
@@ -308,7 +308,7 @@ export default function PomodoroTimer(){
                       {selectedPreset === "preset3" && `Preset 3 (${pomodoro.work_time_preset3 || 90}/${pomodoro.break_time_preset3 || 20})`}
                     </span>
                     <svg 
-                      className={`w-4 h-4 text-white/60 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} 
+                      className={`w-4 h-4 text-white/60 dark:text-white/60 light:text-black/60 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} 
                       fill="none" 
                       stroke="currentColor" 
                       viewBox="0 0 24 24"
@@ -351,7 +351,7 @@ export default function PomodoroTimer(){
         {/* Custom Settings */}
               <div className="grid grid-cols-3 gap-3 mb-6">
           <div className="group">
-            <label className="block text-xs font-semibold text-white/80 mb-2">Study (min)</label>
+            <label className="block text-xs font-semibold text-white/80 dark:text-white/80 light:text-black/80 mb-2">Study (min)</label>
             <div className="relative">
               <input
                 type="number"
@@ -367,7 +367,7 @@ export default function PomodoroTimer(){
             </div>
           </div>
           <div className="group">
-            <label className="block text-xs font-semibold text-white/80 mb-2">Break (min)</label>
+            <label className="block text-xs font-semibold text-white/80 dark:text-white/80 light:text-black/80 mb-2">Break (min)</label>
             <div className="relative">
               <input
                 type="number"
@@ -381,7 +381,7 @@ export default function PomodoroTimer(){
             </div>
           </div>
           <div className="group">
-            <label className="block text-xs font-semibold text-white/80 mb-2">Cycles (times)</label>
+            <label className="block text-xs font-semibold text-white/80 dark:text-white/80 light:text-black/80 mb-2">Cycles (times)</label>
             <div className="relative">
               <input
                 type="number"

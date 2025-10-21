@@ -16,10 +16,6 @@ export default function MoodBoardWidget({ onCalendarDayClick, onHistoryClick, on
       <div 
         className="neumorphic-card-with-stars neumorphic-study flex p-6"
         style={{
-          background: 'rgba(0, 0, 0, 0.3)',
-          borderRadius: '16px',
-          boxShadow: 'inset 2px 2px 4px #000000, inset -2px -2px 4px #1a1a1a',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
           width: '100%'
         }}
       >

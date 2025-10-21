@@ -6,10 +6,10 @@ import NeumorphicCard from "../components/NeumorphicCard";
 import { useTheme } from "../contexts/ThemeContext";
 
 export default function WellnessPage() {
-  const { isBlackMode } = useTheme();
+  const { isBlackMode, theme } = useTheme();
   
   return (
-    <div className="text-white overflow-x-hidden relative bg-black">
+    <div className="text-white dark:text-white light:text-black overflow-x-hidden relative">
       {/* Dark Green Starry Background */}
       {!isBlackMode && (
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -17,15 +17,12 @@ export default function WellnessPage() {
         {[...Array(50)].map((_, i) => (
           <div
             key={`bright-star-${i}`}
-            className="absolute animate-pulse"
+            className="absolute animate-pulse wellness-star"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
               width: `${Math.random() * 3 + 2}px`,
               height: `${Math.random() * 3 + 2}px`,
-              background: 'rgba(255, 255, 255, 0.9)',
-              borderRadius: '50%',
-              boxShadow: '0 0 8px rgba(100, 200, 100, 0.8), 0 0 16px rgba(80, 180, 80, 0.6), 0 0 24px rgba(60, 160, 60, 0.4)',
               animationDelay: `${Math.random() * 3}s`,
               animationDuration: `${Math.random() * 2 + 1.5}s`
             }}
@@ -36,15 +33,12 @@ export default function WellnessPage() {
         {[...Array(80)].map((_, i) => (
           <div
             key={`medium-star-${i}`}
-            className="absolute animate-pulse"
+            className="absolute animate-pulse wellness-star-medium"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
               width: `${Math.random() * 2 + 1}px`,
               height: `${Math.random() * 2 + 1}px`,
-              background: 'rgba(120, 220, 120, 0.9)',
-              borderRadius: '50%',
-              boxShadow: '0 0 8px rgba(100, 200, 100, 0.8), 0 0 16px rgba(80, 180, 80, 0.6), 0 0 24px rgba(60, 160, 60, 0.4)',
               animationDelay: `${Math.random() * 4}s`,
               animationDuration: `${Math.random() * 3 + 2}s`
             }}
@@ -55,15 +49,12 @@ export default function WellnessPage() {
         {[...Array(60)].map((_, i) => (
           <div
             key={`green-star-${i}`}
-            className="absolute animate-pulse"
+            className="absolute animate-pulse wellness-star-green"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
               width: `${Math.random() * 1.5 + 0.8}px`,
               height: `${Math.random() * 1.5 + 0.8}px`,
-              background: 'rgba(100, 180, 100, 0.8)',
-              borderRadius: '50%',
-              boxShadow: '0 0 6px rgba(80, 160, 80, 0.7), 0 0 12px rgba(60, 140, 60, 0.5), 0 0 18px rgba(40, 120, 40, 0.3)',
               animationDelay: `${Math.random() * 5}s`,
               animationDuration: `${Math.random() * 4 + 3}s`
             }}

@@ -242,7 +242,7 @@ export default function SoundPlayer() {
                   <div 
                     key={index}
                     className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      soundIndex === index ? 'bg-white dark:bg-white light:bg-black shadow-lg scale-125' : 'bg-white/50 dark:bg-white/50 light:bg-black/50'
+                      soundIndex === index ? 'bg-white dark:bg-white light:bg-[#DDE7E0] shadow-lg scale-125' : 'bg-white/50 dark:bg-white/50 light:bg-black/50'
                     }`}
                   ></div>
                 ))}

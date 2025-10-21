@@ -141,10 +141,10 @@ const CalendarOverlay = ({ isOpen, onClose, selectedDate }) => {
         {/* Header */}
         <div className="flex items-center justify-between p-6 bg-black/20">
           <div>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-white dark:text-white light:text-black">
               {selectedDate ? `Tasks for ${selectedDate.toLocaleDateString()}` : 'Daily Tasks'}
             </h2>
-            <p className="text-white/80">
+            <p className="text-white/80 dark:text-white/80 light:text-black/80">
               Manage your tasks for this day
             </p>
           </div>
@@ -160,31 +160,31 @@ const CalendarOverlay = ({ isOpen, onClose, selectedDate }) => {
         <div className="p-6 max-h-[calc(80vh-120px)] overflow-y-auto neumorphic-scrollbar" style={{ overflowX: 'visible' }}>
           {/* Daily Summary Section */}
           <div className="mb-6 p-4 bg-black/20 rounded-lg">
-            <h3 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
+            <h3 className="text-lg font-semibold text-white dark:text-white light:text-black mb-3 flex items-center gap-2">
               📊 Daily Summary
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="text-center">
-                <div className="text-2xl font-bold text-white">
+                <div className="text-2xl font-bold text-white dark:text-white light:text-black">
                   {dayTasks.length}
                 </div>
-                <div className="text-sm text-white/60">Total Tasks</div>
+                <div className="text-sm text-white/60 dark:text-white/60 light:text-black/60">Total Tasks</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-white">
+                <div className="text-2xl font-bold text-white dark:text-white light:text-black">
                   {dayTasks.filter(task => task.status === TaskStatus.COMPLETED).length}
                 </div>
-                <div className="text-sm text-white/60">Completed</div>
+                <div className="text-sm text-white/60 dark:text-white/60 light:text-black/60">Completed</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-white">
+                <div className="text-2xl font-bold text-white dark:text-white light:text-black">
                   {dayTasks.filter(task => task.status === TaskStatus.IN_PROGRESS).length}
                 </div>
-                <div className="text-sm text-white/60">In Progress</div>
+                <div className="text-sm text-white/60 dark:text-white/60 light:text-black/60">In Progress</div>
               </div>
             </div>
             {selectedDate && (
-              <div className="mt-3 text-sm text-white/60">
+              <div className="mt-3 text-sm text-white/60 dark:text-white/60 light:text-black/60">
                 <strong>Date:</strong> {selectedDate.toLocaleDateString('en-US', { 
                   weekday: 'long', 
                   year: 'numeric', 
@@ -209,10 +209,10 @@ const CalendarOverlay = ({ isOpen, onClose, selectedDate }) => {
           {/* Add Task Form */}
           {isAddingTask && (
             <div className="mb-6 p-4 bg-black/20 rounded-lg">
-              <h3 className="text-lg font-semibold mb-4 text-white">Add New Task</h3>
+              <h3 className="text-lg font-semibold mb-4 text-white dark:text-white light:text-black">Add New Task</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-white/80 dark:text-white/80 light:text-black/80 mb-1">
                     Title
                   </label>
                   <input
@@ -224,7 +224,7 @@ const CalendarOverlay = ({ isOpen, onClose, selectedDate }) => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-white/80 dark:text-white/80 light:text-black/80 mb-1">
                     Priority Quadrant
                   </label>
                   <div className="relative">
@@ -237,7 +237,7 @@ const CalendarOverlay = ({ isOpen, onClose, selectedDate }) => {
                     >
                       <span>{quadrantConfig[newTask.quadrant]?.title || 'Select Quadrant'}</span>
                       <svg 
-                        className={`w-4 h-4 text-white/60 transition-transform duration-200 ${isQuadrantDropdownOpen ? 'rotate-180' : ''}`} 
+                        className={`w-4 h-4 text-white/60 dark:text-white/60 light:text-black/60 transition-transform duration-200 ${isQuadrantDropdownOpen ? 'rotate-180' : ''}`} 
                         fill="none" 
                         stroke="currentColor" 
                         viewBox="0 0 24 24"
@@ -266,7 +266,7 @@ const CalendarOverlay = ({ isOpen, onClose, selectedDate }) => {
                   </div>
                 </div>
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-white/80 dark:text-white/80 light:text-black/80 mb-1">
                     Description
                   </label>
                   <textarea
@@ -304,7 +304,7 @@ const CalendarOverlay = ({ isOpen, onClose, selectedDate }) => {
           {/* Tasks List */}
             <div className="space-y-4" style={{ overflow: 'visible' }}>
             {dayTasks.length === 0 ? (
-              <div className="text-center py-8 text-white/60">
+              <div className="text-center py-8 text-white/60 dark:text-white/60 light:text-black/60">
                 No tasks for this day. Add one above!
               </div>
             ) : (
@@ -321,17 +321,17 @@ const CalendarOverlay = ({ isOpen, onClose, selectedDate }) => {
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-2">
-                          <h3 className={`font-semibold text-white ${task.status === TaskStatus.COMPLETED ? 'line-through opacity-60' : ''}`}>
+                          <h3 className={`font-semibold text-white dark:text-white light:text-black ${task.status === TaskStatus.COMPLETED ? 'line-through opacity-60' : ''}`}>
                             {task.title || 'Untitled task'}
                           </h3>
-                          <span className="px-2 py-1 rounded-full text-xs font-medium bg-black/20 text-white/80 border border-white/10">
+                          <span className="px-2 py-1 rounded-full text-xs font-medium bg-black/20 dark:bg-black/20 light:bg-white/20 text-white/80 dark:text-white/80 light:text-black/80 border border-white/10 dark:border-white/10 light:border-black/10">
                             {statusInfo.label}
                           </span>
                         </div>
                         {task.description && (
-                          <p className="text-sm text-white/80 mb-2">{task.description}</p>
+                          <p className="text-sm text-white/80 dark:text-white/80 light:text-black/80 mb-2">{task.description}</p>
                         )}
-                        <p className="text-xs text-white/60">
+                        <p className="text-xs text-white/60 dark:text-white/60 light:text-black/60">
                           {quadrantInfo.title} • Created {new Date(task.created_at).toLocaleDateString()}
                         </p>
                       </div>
@@ -346,7 +346,7 @@ const CalendarOverlay = ({ isOpen, onClose, selectedDate }) => {
                           >
                             <span>{statusInfo.label}</span>
                             <svg 
-                              className={`w-3 h-3 text-white/60 transition-transform duration-200 ${isStatusDropdownOpen[task.id] ? 'rotate-180' : ''}`} 
+                              className={`w-3 h-3 text-white/60 dark:text-white/60 light:text-black/60 transition-transform duration-200 ${isStatusDropdownOpen[task.id] ? 'rotate-180' : ''}`} 
                               fill="none" 
                               stroke="currentColor" 
                               viewBox="0 0 24 24"

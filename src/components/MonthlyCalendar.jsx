@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useTheme } from '../contexts/ThemeContext'
 
 // Study Emoji mapping based on backend enum
 const STUDY_EMOJIS = {
@@ -14,6 +15,7 @@ export default function MonthlyCalendar({ onDayClick }) {
   const [currentDate, setCurrentDate] = useState(new Date())
   const [dailyData, setDailyData] = useState({})
   const [selectedDay, setSelectedDay] = useState(null)
+  const { theme } = useTheme()
 
   // Mock data for demonstration - will be replaced with API calls
   useEffect(() => {
@@ -112,27 +114,27 @@ export default function MonthlyCalendar({ onDayClick }) {
       <div className="flex items-center justify-between mb-2">
         <button
           onClick={() => navigateMonth(-1)}
-          className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors"
+          className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 light:hover:bg-white/20 rounded transition-colors"
         >
-          <span className="text-gray-600 dark:text-gray-400 text-sm">←</span>
+          <span className="text-gray-600 dark:text-gray-400 light:text-black/60 text-sm">←</span>
         </button>
         
-        <h2 className="text-sm font-semibold text-gray-800 dark:text-gray-200">
+        <h2 className="text-sm font-semibold text-gray-800 dark:text-gray-200 light:text-black">
           {monthNames[month]} {year}
         </h2>
         
         <button
           onClick={() => navigateMonth(1)}
-          className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors"
+          className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 light:hover:bg-white/20 rounded transition-colors"
         >
-          <span className="text-gray-600 dark:text-gray-400 text-sm">→</span>
+          <span className="text-gray-600 dark:text-gray-400 light:text-black/60 text-sm">→</span>
         </button>
       </div>
 
       {/* Days of week header */}
       <div className="grid grid-cols-7 gap-0.5 mb-1">
         {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map(day => (
-          <div key={day} className="text-center text-xs font-medium text-gray-500 dark:text-gray-400 py-1">
+          <div key={day} className="text-center text-xs font-medium text-gray-500 dark:text-gray-400 light:text-black/50 py-1">
             {day}
           </div>
         ))}

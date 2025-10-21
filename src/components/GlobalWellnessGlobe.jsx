@@ -1,10 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import Globe from 'globe.gl'
+import * as THREE from 'three'
+import { useTheme } from '../contexts/ThemeContext'
 
 export default function GlobalWellnessGlobe({ isOverlay = false, selectedRegion, onRegionChange }) {
   const globeContainerRef = useRef()
   const globeInstance = useRef()
   const [hoveredRegion, setHoveredRegion] = useState(null)
+  const { theme } = useTheme()
 
   const size = isOverlay ? 700 : 180
 
@@ -17,15 +20,23 @@ export default function GlobalWellnessGlobe({ isOverlay = false, selectedRegion,
       .height(size)
       .backgroundColor('rgba(0,0,0,0)')
       
-      // Globe appearance - pure black with no texture
+      // Globe appearance - theme-based colors
       .globeImageUrl(null)
       .showGlobe(true)
       .showAtmosphere(true)
-      .atmosphereColor('#22d3ee')
+      .atmosphereColor(theme === 'light' ? '#74C8A3' : '#22d3ee')
       .atmosphereAltitude(0.15)
       
       // Show graticules (grid lines)
       .showGraticules(true)
+      
+      // Custom globe material - realistic Earth colors only in light mode
+      .globeMaterial(new THREE.MeshBasicMaterial({
+        color: theme === 'light' ? '#4A90E2' : '#1a1a1a', // Light: Ocean blue, Dark/Black: Original dark gray
+        wireframe: true,
+        wireframeLinewidth: 1,
+        wireframeColor: theme === 'light' ? '#87CEEB' : '#333333' // Light: Sky blue, Dark/Black: Original dark gray
+      }))
       
       // Camera controls
       .enablePointerInteraction(isOverlay)
@@ -54,12 +65,12 @@ export default function GlobalWellnessGlobe({ isOverlay = false, selectedRegion,
           .then(({ feature }) => {
             const countries = feature(topology, topology.objects.countries).features
 
-            // Configure polygon layer for countries (gray landmasses)
+            // Configure polygon layer for countries - realistic Earth colors only in light mode
             globe
               .polygonsData(countries)
-              .polygonCapColor(() => 'rgba(70, 80, 95, 0.7)') // Gray landmass
-              .polygonSideColor(() => 'rgba(50, 60, 75, 0.6)')
-              .polygonStrokeColor(() => 'rgba(148, 163, 184, 0.6)') // Gray/white outlines
+              .polygonCapColor(() => theme === 'light' ? 'rgba(34, 139, 34, 0.8)' : 'rgba(70, 80, 95, 0.7)') // Light: Forest green, Dark/Black: Original gray
+              .polygonSideColor(() => theme === 'light' ? 'rgba(50, 205, 50, 0.6)' : 'rgba(50, 60, 75, 0.6)')
+              .polygonStrokeColor(() => theme === 'light' ? 'rgba(0, 128, 0, 0.6)' : 'rgba(148, 163, 184, 0.6)') // Light: Green borders, Dark/Black: Original gray borders
               .polygonAltitude(0.005)
               .polygonCapCurvatureResolution(isOverlay ? 3 : 5)
               .onPolygonHover((polygon) => {
@@ -93,7 +104,7 @@ export default function GlobalWellnessGlobe({ isOverlay = false, selectedRegion,
 
             globe
               .pointsData(activityPoints)
-              .pointColor(() => '#ffffff')
+              .pointColor(() => theme === 'light' ? '#74C8A3' : '#ffffff') // Light: Aurora green, Dark: White
               .pointAltitude(0.01)
               .pointRadius('size')
               .pointsMerge(true)
@@ -112,7 +123,7 @@ export default function GlobalWellnessGlobe({ isOverlay = false, selectedRegion,
         globeInstance.current._destructor?.()
       }
     }
-  }, [isOverlay, size, onRegionChange])
+  }, [isOverlay, size, onRegionChange, theme])
 
   return (
     <div style={{ position: 'relative', width: `${size}px`, height: `${size}px` }}>
