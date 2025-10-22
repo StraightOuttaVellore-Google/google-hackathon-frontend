@@ -63,7 +63,7 @@ const ThemeDropdown = () => {
                   <div className="text-xs opacity-70">{themeOption.description}</div>
                 </div>
                 {theme === themeOption.id && (
-                  <div className="ml-auto w-2 h-2 bg-white rounded-full"></div>
+                  <div className="ml-auto w-2 h-2 bg-current rounded-full opacity-70"></div>
                 )}
               </button>
             );

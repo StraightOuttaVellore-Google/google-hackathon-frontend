@@ -21,70 +21,171 @@ const CalendarOverlay = ({ isOpen, onClose, selectedDate }) => {
   const [newTask, setNewTask] = useState({
     title: '',
     description: '',
-    quadrant: TaskQuadrant.HUHI
+    quadrant: TaskQuadrant.HIHU,
+    due_date: selectedDate ? (() => {
+      const year = selectedDate.getFullYear();
+      const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+      const day = String(selectedDate.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    })() : ''
   });
   const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState({});
   const [isQuadrantDropdownOpen, setIsQuadrantDropdownOpen] = useState(false);
+  const [dayTasks, setDayTasks] = useState([]); // Local state for tasks of selected date
 
   // Fetch latest tasks when overlay opens or date changes
   useEffect(() => {
     if (!isOpen) return; // avoid fetching when overlay is closed
-    // Always fetch all tasks to keep the store complete; we filter client-side per date
-    fetchPriorityMatrixTasks();
+    
+    // Always fetch ALL tasks to keep the store complete
+    fetchPriorityMatrixTasks().then(() => {
+      // After fetching all tasks, filter locally for the selected date
+      if (selectedDate) {
+        // Use timezone-safe date conversion to avoid timezone issues
+        const year = selectedDate.getFullYear();
+        const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+        const day = String(selectedDate.getDate()).padStart(2, '0');
+        const selectedDateStr = `${year}-${month}-${day}`;
+        
+        const allTasks = studyData.eisenhower_matrix.list_of_tasks;
+        const filteredTasks = allTasks.filter(task => {
+          // Get task date in YYYY-MM-DD format
+          let taskDateStr = null;
+          if (task.due_date) {
+            taskDateStr = task.due_date; // Already in YYYY-MM-DD format
+          } else if (task.task_date) {
+            taskDateStr = task.task_date; // Already in YYYY-MM-DD format
+          } else if (task.created_at) {
+            taskDateStr = task.created_at; // Already in YYYY-MM-DD format
+          }
+          return taskDateStr === selectedDateStr;
+        });
+        setDayTasks(filteredTasks);
+      } else {
+        setDayTasks(studyData.eisenhower_matrix.list_of_tasks);
+      }
+    });
   }, [isOpen, selectedDate, fetchPriorityMatrixTasks]);
+
+  // Update dayTasks when studyData changes
+  useEffect(() => {
+    if (selectedDate) {
+      // Use timezone-safe date conversion to avoid timezone issues
+      const year = selectedDate.getFullYear();
+      const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+      const day = String(selectedDate.getDate()).padStart(2, '0');
+      const selectedDateStr = `${year}-${month}-${day}`;
+      
+      const allTasks = studyData.eisenhower_matrix.list_of_tasks;
+      const filteredTasks = allTasks.filter(task => {
+        // Get task date in YYYY-MM-DD format
+        let taskDateStr = null;
+        if (task.due_date) {
+          taskDateStr = task.due_date; // Already in YYYY-MM-DD format
+        } else if (task.task_date) {
+          taskDateStr = task.task_date; // Already in YYYY-MM-DD format
+        } else if (task.created_at) {
+          taskDateStr = task.created_at; // Already in YYYY-MM-DD format
+        }
+        
+        console.log('Date comparison:', {
+          selectedDate: selectedDateStr,
+          taskDate: taskDateStr,
+          taskTitle: task.title,
+          taskDueDate: task.due_date,
+          taskCreatedAt: task.created_at,
+          taskTaskDate: task.task_date,
+          matches: taskDateStr === selectedDateStr,
+          taskObject: task
+        });
+        
+        return taskDateStr === selectedDateStr;
+      });
+      setDayTasks(filteredTasks);
+    } else {
+      setDayTasks(studyData.eisenhower_matrix.list_of_tasks);
+    }
+  }, [studyData.eisenhower_matrix.list_of_tasks, selectedDate]);
+
+  // Update newTask due_date when selectedDate changes
+  useEffect(() => {
+    if (selectedDate) {
+      // Use timezone-safe date conversion
+      const year = selectedDate.getFullYear();
+      const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+      const day = String(selectedDate.getDate()).padStart(2, '0');
+      const dateStr = `${year}-${month}-${day}`;
+      
+      setNewTask(prev => ({
+        ...prev,
+        due_date: dateStr
+      }));
+    }
+  }, [selectedDate]);
 
   if (!isOpen) return null;
 
-  // Filter by selected date using due_date (fallback to task_date or created_at)
-  const toYmd = (d) => {
-    const y = d.getFullYear();
-    const m = String(d.getMonth() + 1).padStart(2, '0');
-    const day = String(d.getDate()).padStart(2, '0');
-    return `${y}-${m}-${day}`;
-  };
-
-  const dayTasks = studyData.eisenhower_matrix.list_of_tasks.filter(task => {
-    if (!selectedDate) return true;
-    const selectedDateStr = toYmd(selectedDate); // avoid timezone shifts
-    const taskDue = task.due_date || task.task_date || (task.created_at ? toYmd(new Date(task.created_at)) : null);
-    return taskDue === selectedDateStr;
-  }).filter(Boolean);
-  
-  // Original filtering logic (commented out for debugging)
-  // const dayTasks = studyData.eisenhower_matrix.list_of_tasks.filter(task => {
-  //   if (!selectedDate) return true;
-  //   
-  //   // Filter tasks by task_date field or creation date
-  //   const selectedDateStr = selectedDate.toISOString().split('T')[0];
-  //   const taskDateStr = task.task_date || new Date(task.created_at).toISOString().split('T')[0];
-  //   
-  //   console.log('Calendar filtering:', {
-  //     selectedDate: selectedDateStr,
-  //     taskDate: taskDateStr,
-  //     taskTitle: task.title,
-  //     matches: taskDateStr === selectedDateStr
-  //   });
-  //   
-  //   return taskDateStr === selectedDateStr;
-  // });
 
   // Debug: Show all tasks in console
   console.log('All tasks in store:', studyData.eisenhower_matrix.list_of_tasks);
   console.log('Filtered tasks for selected date:', dayTasks);
 
   const handleAddTask = async () => {
-    if (newTask.title.trim()) {
+    if (newTask.title.trim() && newTask.due_date) {
       try {
-        await syncAddTask(newTask, selectedDate);
-        setNewTask({ title: '', description: '', quadrant: TaskQuadrant.HUHI });
+        // Ensure due_date is in YYYY-MM-DD format
+        const dueDateStr = newTask.due_date;
+        const taskData = {
+          ...newTask,
+          due_date: dueDateStr
+        };
+        
+        console.log('CalendarOverlay - Adding task:', {
+          taskData,
+          dueDateStr,
+          selectedDate: selectedDate ? (() => {
+            const year = selectedDate.getFullYear();
+            const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+            const day = String(selectedDate.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+          })() : null,
+          newTask
+        });
+        
+        await syncAddTask(taskData, null); // Don't pass selectedDate to avoid timezone issues
+        setNewTask({ 
+          title: '', 
+          description: '', 
+          quadrant: TaskQuadrant.HIHU,
+          due_date: selectedDate ? (() => {
+            const year = selectedDate.getFullYear();
+            const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+            const day = String(selectedDate.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+          })() : ''
+        });
         setIsAddingTask(false);
+        // Refresh ALL tasks to keep store complete
+        fetchPriorityMatrixTasks();
       } catch (error) {
         console.error('Failed to add task:', error);
         // Fallback to local add
-        addTask({ ...newTask, due_date: selectedDate?.toISOString().split('T')[0] }, selectedDate);
-        setNewTask({ title: '', description: '', quadrant: TaskQuadrant.HUHI });
+        addTask({ ...newTask, due_date: newTask.due_date }, null);
+        setNewTask({ 
+          title: '', 
+          description: '', 
+          quadrant: TaskQuadrant.HIHU,
+          due_date: selectedDate ? (() => {
+            const year = selectedDate.getFullYear();
+            const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+            const day = String(selectedDate.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+          })() : ''
+        });
         setIsAddingTask(false);
       }
+    } else {
+      alert('Please fill in both title and due date');
     }
   };
 
@@ -120,14 +221,14 @@ const CalendarOverlay = ({ isOpen, onClose, selectedDate }) => {
   };
 
   const quadrantConfig = {
-    [TaskQuadrant.HUHI]: { title: "Do First", color: "", textColor: "" },
-    [TaskQuadrant.LUHI]: { title: "Schedule", color: "", textColor: "" },
-    [TaskQuadrant.HULI]: { title: "Delegate", color: "", textColor: "" },
-    [TaskQuadrant.LULI]: { title: "Eliminate", color: "", textColor: "" }
+    [TaskQuadrant.HIHU]: { title: "Do First", color: "", textColor: "" },
+    [TaskQuadrant.HILU]: { title: "Schedule", color: "", textColor: "" },
+    [TaskQuadrant.LIHU]: { title: "Delegate", color: "", textColor: "" },
+    [TaskQuadrant.LILU]: { title: "Eliminate", color: "", textColor: "" }
   };
 
   const statusConfig = {
-    [TaskStatus.CREATED]: { label: "To Do", color: "bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300" },
+    [TaskStatus.TODO]: { label: "To Do", color: "bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300" },
     [TaskStatus.IN_PROGRESS]: { label: "In Progress", color: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300" },
     [TaskStatus.COMPLETED]: { label: "Completed", color: "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300" }
   };
@@ -265,6 +366,18 @@ const CalendarOverlay = ({ isOpen, onClose, selectedDate }) => {
                     )}
                   </div>
                 </div>
+                <div>
+                  <label className="block text-sm font-medium text-white/80 dark:text-white/80 light:text-black/80 mb-1">
+                    Due Date *
+                  </label>
+                  <input
+                    type="date"
+                    value={newTask.due_date}
+                    onChange={(e) => setNewTask({ ...newTask, due_date: e.target.value })}
+                    className="neumorphic-input w-full"
+                    required
+                  />
+                </div>
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-white/80 dark:text-white/80 light:text-black/80 mb-1">
                     Description
@@ -311,7 +424,7 @@ const CalendarOverlay = ({ isOpen, onClose, selectedDate }) => {
               dayTasks.map((task) => {
                 if (!task) return null;
                 const quadrantInfo = quadrantConfig[task.quadrant] || { title: 'Task', subtitle: '' };
-                const statusInfo = statusConfig[task.status] || statusConfig[TaskStatus.CREATED];
+                const statusInfo = statusConfig[task.status] || statusConfig[TaskStatus.TODO];
                 
                 return (
                   <div
@@ -332,7 +445,7 @@ const CalendarOverlay = ({ isOpen, onClose, selectedDate }) => {
                           <p className="text-sm text-white/80 dark:text-white/80 light:text-black/80 mb-2">{task.description}</p>
                         )}
                         <p className="text-xs text-white/60 dark:text-white/60 light:text-black/60">
-                          {quadrantInfo.title} • Created {new Date(task.created_at).toLocaleDateString()}
+                          {quadrantInfo.title} • {task.due_date ? `Due ${new Date(task.due_date).toLocaleDateString()}` : `Created ${new Date(task.created_at).toLocaleDateString()}`}
                         </p>
                       </div>
                       <div className="flex items-center gap-2 ml-4">

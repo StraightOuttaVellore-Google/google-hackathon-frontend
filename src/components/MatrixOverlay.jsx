@@ -81,20 +81,22 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
   };
 
   const handleAddTask = async () => {
-    if (newTask.title.trim()) {
+    if (newTask.title.trim() && newTask.due_date) {
       try {
-        const selectedDate = newTask.due_date ? new Date(newTask.due_date) : new Date();
+        const selectedDate = new Date(newTask.due_date);
         await syncAddTask(newTask, selectedDate);
         setNewTask({ title: '', description: '', quadrant: TaskQuadrant.HIHU, due_date: '' });
         setIsAddingTask(false);
       } catch (error) {
         console.error('Failed to add task:', error);
         // Fallback to local add
-        const selectedDate = newTask.due_date ? new Date(newTask.due_date) : new Date();
+        const selectedDate = new Date(newTask.due_date);
         addTask(newTask, selectedDate);
         setNewTask({ title: '', description: '', quadrant: TaskQuadrant.HIHU, due_date: '' });
         setIsAddingTask(false);
       }
+    } else {
+      alert('Please fill in both title and due date');
     }
   };
 
@@ -416,13 +418,14 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-white/80 mb-1">
-                    Deadline (optional)
+                    Due Date *
                   </label>
                   <input
                     type="date"
                     value={newTask.due_date}
                     onChange={(e) => setNewTask({ ...newTask, due_date: e.target.value })}
                     className="neumorphic-input w-full"
+                    required
                   />
                 </div>
                 <div className="md:col-span-2 flex gap-2">
