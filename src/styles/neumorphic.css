@@ -816,7 +816,54 @@ body.light .neumorphic-timer-card:hover,
     0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* Neomorphic Pomodoro Buttons */
+/* Light mode overrides for overlay card */
+.light .neumorphic-overlay-card {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 
+    inset 8px 8px 16px rgba(221, 231, 224, 0.3), 
+    inset -8px -8px 16px rgba(255, 255, 255, 0.8),
+    0 25px 80px rgba(221, 231, 224, 0.2),
+    0 15px 50px rgba(221, 231, 224, 0.15),
+    0 8px 25px rgba(221, 231, 224, 0.1),
+    0 4px 12px rgba(221, 231, 224, 0.08),
+    0 2px 6px rgba(221, 231, 224, 0.06);
+}
+
+.light .neumorphic-overlay-card:hover {
+  box-shadow: 
+    inset 6px 6px 12px rgba(221, 231, 224, 0.4), 
+    inset -6px -6px 12px rgba(255, 255, 255, 0.9),
+    0 30px 100px rgba(221, 231, 224, 0.25),
+    0 18px 60px rgba(221, 231, 224, 0.2),
+    0 10px 30px rgba(221, 231, 224, 0.15),
+    0 5px 15px rgba(221, 231, 224, 0.1),
+    0 2px 8px rgba(221, 231, 224, 0.08);
+}
+
+/* Light mode overrides for Pomodoro buttons */
+.light .neumorphic-pomodoro-button {
+  background: var(--surface);
+  color: var(--text-color);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 
+    inset 2px 2px 4px rgba(221, 231, 224, 0.3),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.8);
+}
+
+.light .neumorphic-pomodoro-button:hover {
+  box-shadow: 
+    inset 1px 1px 2px rgba(221, 231, 224, 0.4),
+    inset -1px -1px 2px rgba(255, 255, 255, 0.9);
+  transform: scale(1.02);
+}
+
+.light .neumorphic-pomodoro-button:active {
+  box-shadow: 
+    inset 3px 3px 6px rgba(221, 231, 224, 0.5),
+    inset -3px -3px 6px rgba(255, 255, 255, 0.7);
+  transform: scale(0.98);
+}
 .neumorphic-pomodoro-button {
   background: #0f0f0f;
   color: rgba(255, 255, 255, 0.8);
@@ -1332,41 +1379,43 @@ body.light .neumorphic-timer-card:hover,
 
 /* Light mode overrides for matrix cards */
 .light .neumorphic-matrix-card {
-  background: var(--surface);
-  border: 1px solid var(--border-subtle);
+  background: var(--aurora-dark);
+  border: 1px solid color-mix(in srgb, var(--aurora-dark) 60%, var(--border-subtle));
   box-shadow: 
-    inset 3px 3px 6px rgba(221, 231, 224, 0.3), 
-    inset -3px -3px 6px rgba(255, 255, 255, 0.8),
-    0 4px 12px rgba(221, 231, 224, 0.2),
-    0 2px 6px rgba(221, 231, 224, 0.15);
-  color: var(--text-color);
+    inset 3px 3px 6px rgba(0, 0, 0, 0.1), 
+    inset -3px -3px 6px rgba(255, 255, 255, 0.3),
+    0 4px 12px rgba(0, 0, 0, 0.1),
+    0 2px 6px rgba(0, 0, 0, 0.08);
+  color: #ffffff;
 }
 
 .light .neumorphic-matrix-card:hover {
   box-shadow: 
-    inset 2px 2px 4px rgba(221, 231, 224, 0.4), 
-    inset -2px -2px 4px rgba(255, 255, 255, 0.9),
-    0 6px 16px rgba(221, 231, 224, 0.25),
-    0 3px 8px rgba(221, 231, 224, 0.2);
+    inset 2px 2px 4px rgba(0, 0, 0, 0.15), 
+    inset -2px -2px 4px rgba(255, 255, 255, 0.4),
+    0 6px 16px rgba(0, 0, 0, 0.12),
+    0 3px 8px rgba(0, 0, 0, 0.1);
   transform: scale(1.01);
 }
 
 .light .neumorphic-matrix-card:active {
   box-shadow: 
-    inset 4px 4px 8px rgba(221, 231, 224, 0.5), 
-    inset -4px -4px 8px rgba(255, 255, 255, 0.7),
-    0 2px 8px rgba(221, 231, 224, 0.15),
-    0 1px 4px rgba(221, 231, 224, 0.1);
+    inset 4px 4px 8px rgba(0, 0, 0, 0.2), 
+    inset -4px -4px 8px rgba(255, 255, 255, 0.2),
+    0 2px 8px rgba(0, 0, 0, 0.1),
+    0 1px 4px rgba(0, 0, 0, 0.08);
   transform: scale(0.99);
 }
 
 /* Light mode color variants for matrix cards */
 .light .neumorphic-matrix-card-red {
+  background: var(--aurora-dark);
+  border: 1px solid color-mix(in srgb, var(--aurora-dark) 60%, var(--border-subtle));
   box-shadow: 
-    inset 3px 3px 6px rgba(221, 231, 224, 0.3), 
-    inset -3px -3px 6px rgba(255, 255, 255, 0.8),
-    0 4px 12px rgba(221, 231, 224, 0.2),
-    0 2px 6px rgba(221, 231, 224, 0.15),
+    inset 3px 3px 6px rgba(0, 0, 0, 0.1), 
+    inset -3px -3px 6px rgba(255, 255, 255, 0.3),
+    0 4px 12px rgba(0, 0, 0, 0.1),
+    0 2px 6px rgba(0, 0, 0, 0.08),
     0 0 20px color-mix(in srgb, var(--danger) 20%, transparent);
 }
 
@@ -1463,7 +1512,44 @@ body.light .neumorphic-timer-card:hover,
     inset -2px -2px 4px rgba(60, 60, 60, 0.2);
 }
 
-/* Neomorphic Close Button */
+/* Light mode overrides for neumorphic input */
+.light .neumorphic-input {
+  background: var(--surface);
+  color: var(--text-color);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 
+    inset 6px 6px 12px rgba(221, 231, 224, 0.3), 
+    inset -6px -6px 12px rgba(255, 255, 255, 0.8),
+    0 16px 48px rgba(221, 231, 224, 0.2),
+    0 8px 24px rgba(221, 231, 224, 0.15),
+    0 4px 12px rgba(221, 231, 224, 0.1),
+    0 2px 6px rgba(221, 231, 224, 0.08);
+}
+
+.light .neumorphic-input:focus {
+  outline: none;
+  box-shadow: 
+    inset 4px 4px 8px rgba(221, 231, 224, 0.4), 
+    inset -4px -4px 8px rgba(255, 255, 255, 0.9),
+    0 20px 60px rgba(221, 231, 224, 0.25),
+    0 12px 36px rgba(221, 231, 224, 0.2),
+    0 6px 18px rgba(221, 231, 224, 0.15),
+    0 3px 9px rgba(221, 231, 224, 0.1);
+  transform: scale(1.01);
+}
+
+.light .neumorphic-input:disabled {
+  background: rgba(232, 242, 236, 0.5);
+  color: rgba(37, 50, 59, 0.3);
+  cursor: not-allowed;
+  box-shadow: 
+    inset 2px 2px 4px rgba(221, 231, 224, 0.2),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.4);
+}
+
+.light .neumorphic-input::placeholder {
+  color: rgba(37, 50, 59, 0.5);
+}
 .neumorphic-close-button {
   background: #000000;
   color: rgba(255, 255, 255, 0.7);
@@ -1862,20 +1948,20 @@ body.light .neumorphic-timer-card:hover,
 }
 
 .wellness-star-green {
-  background: rgba(100, 180, 100, 0.8);
+  background: rgba(120, 200, 120, 0.8);
   border-radius: 50%;
-  box-shadow: 0 0 6px rgba(80, 160, 80, 0.7), 0 0 12px rgba(60, 140, 60, 0.5), 0 0 18px rgba(40, 120, 40, 0.3);
+  box-shadow: 0 0 6px rgba(100, 180, 100, 0.7), 0 0 12px rgba(80, 160, 80, 0.5), 0 0 18px rgba(60, 140, 60, 0.3);
 }
 
 .light .wellness-star-green {
-  background: rgba(116, 200, 163, 0.6);
-  box-shadow: 0 0 6px rgba(116, 200, 163, 0.5), 0 0 12px rgba(116, 200, 163, 0.3), 0 0 18px rgba(116, 200, 163, 0.2);
+  background: rgba(139, 212, 179, 0.6);
+  box-shadow: 0 0 6px rgba(139, 212, 179, 0.5), 0 0 12px rgba(139, 212, 179, 0.3), 0 0 18px rgba(139, 212, 179, 0.2);
 }
 
 /* Wellness Mode Specific Colors */
 .neumorphic-wellness {
   --card-bg: rgba(0, 0, 0, 0.3);
-  --star-color: rgba(100, 200, 100, 0.6);
+  --star-color: rgba(120, 200, 120, 0.6);
   --star-glow: rgba(80, 150, 80, 0.4);
 }
 
@@ -1892,13 +1978,36 @@ body.light .neumorphic-timer-card:hover,
 }
 
 .neumorphic-wellness .neumorphic-card-stars .star:nth-child(odd) {
-  background: rgba(120, 200, 120, 0.7);
-  box-shadow: 0 0 4px rgba(100, 180, 100, 0.5);
+  background: rgba(140, 220, 140, 0.7);
+  box-shadow: 0 0 4px rgba(120, 200, 120, 0.5);
 }
 
 .neumorphic-wellness .neumorphic-card-stars .star:nth-child(3n) {
-  background: rgba(90, 170, 90, 0.6);
-  box-shadow: 0 0 2px rgba(70, 140, 70, 0.3);
+  background: rgba(110, 190, 110, 0.6);
+  box-shadow: 0 0 2px rgba(90, 170, 90, 0.3);
+}
+
+/* Calendar overlay specific elements */
+.light .calendar-header {
+  background: var(--surface-dark) !important;
+}
+
+.light .daily-summary {
+  background: var(--surface-dark) !important;
+}
+
+.light .calendar-add-button {
+  background: var(--surface-dark) !important;
+}
+
+/* Individual task item components background */
+.light .task-item {
+  background: var(--surface-dark) !important;
+}
+
+/* Add New Task form background - specific targeting */
+.light .add-task-form {
+  background: var(--surface-dark) !important;
 }
 
 /* Responsive adjustments */
