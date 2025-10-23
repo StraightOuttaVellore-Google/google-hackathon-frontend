@@ -1,0 +1,2773 @@
+/* Custom Neomorphic Styles - Replicating Study Mode Design */
+
+/* Neomorphic Card Base */
+.neumorphic-card {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 16px;
+  box-shadow: inset 2px 2px 4px #000000, inset -2px -2px 4px #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+/* Light mode overrides using Aurora Daylight palette - scoped to .light */
+.light .neumorphic-card {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  box-shadow: inset 2px 2px 4px rgba(221, 231, 224, 0.3), inset -2px -2px 4px rgba(255, 255, 255, 0.8);
+  color: var(--text-color);
+}
+
+.light .neumorphic-card:hover {
+  box-shadow: inset 2px 2px 6px rgba(221, 231, 224, 0.4), inset -2px -2px 6px rgba(255, 255, 255, 0.9);
+  transform: translateY(-2px);
+}
+
+.neumorphic-card:hover {
+  box-shadow: inset 2px 2px 6px #000000, inset -2px -2px 6px #1a1a1a;
+  transform: translateY(-2px);
+}
+
+/* Neomorphic Button - Unselected State (from study mode toggle) */
+.neumorphic-button {
+  background: #000000;
+  color: white;
+  border: none;
+  border-radius: 9999px;
+  padding: 12px 24px;
+  box-shadow: inset 4px 4px 8px #000000, inset -4px -4px 8px #1a1a1a;
+  transform: scale(1);
+  transition: all 0.5s ease;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.light .neumorphic-button {
+  background: var(--panel);
+  color: var(--text-color);
+  border: 1px solid var(--border-subtle);
+  box-shadow: inset 4px 4px 8px rgba(221, 231, 224, 0.3), inset -4px -4px 8px rgba(255, 255, 255, 0.8);
+}
+
+.light .neumorphic-button:hover {
+  box-shadow: inset 2px 2px 4px rgba(221, 231, 224, 0.4), inset -2px -2px 4px rgba(255, 255, 255, 0.9);
+  transform: scale(1.02);
+}
+
+.light .neumorphic-button:active {
+  box-shadow: inset 6px 6px 12px rgba(221, 231, 224, 0.5), inset -6px -6px 12px rgba(255, 255, 255, 0.7);
+  transform: scale(0.98);
+}
+
+.neumorphic-button:hover {
+  box-shadow: inset 2px 2px 4px #000000, inset -2px -2px 4px #1a1a1a;
+  transform: scale(1.02);
+}
+
+.neumorphic-button:active {
+  box-shadow: inset 6px 6px 12px #000000, inset -6px -6px 12px #1a1a1a;
+  transform: scale(0.98);
+}
+
+/* Neomorphic Button - Selected State */
+.neumorphic-button-selected {
+  background: #000000;
+  color: white;
+  border: none;
+  border-radius: 9999px;
+  padding: 12px 24px;
+  box-shadow: 2px 2px 4px #000000, -2px -2px 4px #1a1a1a;
+  transform: scale(1.05);
+  transition: all 0.5s ease;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.light .neumorphic-button-selected {
+  background: var(--primary);
+  color: #ffffff;
+  border: 1px solid color-mix(in srgb, var(--primary) 60%, var(--border-subtle));
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.08), -2px -2px 4px rgba(255, 255, 255, 0.8);
+}
+
+.neumorphic-button-selected:hover {
+  box-shadow: 3px 3px 6px #000000, -3px -3px 6px #1a1a1a;
+  transform: scale(1.08);
+}
+
+/* Neomorphic Card with Star Effects */
+.neumorphic-card-with-stars {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 16px;
+  box-shadow: inset 2px 2px 4px #000000, inset -2px -2px 4px #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.light .neumorphic-card-with-stars {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  box-shadow: inset 2px 2px 4px rgba(221, 231, 224, 0.3), inset -2px -2px 4px rgba(255, 255, 255, 0.8);
+  color: var(--text-color);
+}
+
+.light .neumorphic-card-with-stars:hover {
+  box-shadow: inset 2px 2px 6px rgba(221, 231, 224, 0.4), inset -2px -2px 6px rgba(255, 255, 255, 0.9);
+}
+
+.neumorphic-card-with-stars:hover {
+  box-shadow: inset 2px 2px 6px #000000, inset -2px -2px 6px #1a1a1a;
+}
+
+/* Neomorphic Calendar Date Button - Unselected State */
+.neumorphic-calendar-button {
+  background: #000000;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 4px 8px;
+  box-shadow: inset 2px 2px 4px #000000, inset -2px -2px 4px #1a1a1a;
+  transform: scale(1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 12px;
+  min-height: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.light .neumorphic-calendar-button {
+  background: var(--panel);
+  color: var(--text-color);
+  border: 1px solid var(--border-subtle);
+  box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.04), inset -2px -2px 4px rgba(255, 255, 255, 0.8);
+}
+
+.neumorphic-calendar-button:hover {
+  box-shadow: inset 1px 1px 2px #000000, inset -1px -1px 2px #1a1a1a;
+  transform: scale(1.02);
+}
+
+.neumorphic-calendar-button:active {
+  box-shadow: inset 3px 3px 6px #000000, inset -3px -3px 6px #1a1a1a;
+  transform: scale(0.98);
+}
+
+/* Neomorphic Calendar Date Button - Selected State */
+.neumorphic-calendar-button-selected {
+  background: #000000;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 4px 8px;
+  box-shadow: 2px 2px 4px #000000, -2px -2px 4px #1a1a1a;
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 12px;
+  min-height: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.light .neumorphic-calendar-button-selected {
+  background: var(--primary);
+  color: #ffffff;
+  border: 1px solid color-mix(in srgb, var(--primary) 60%, var(--border-subtle));
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.08), -2px -2px 4px rgba(255, 255, 255, 0.8);
+}
+
+.neumorphic-calendar-button-selected:hover {
+  box-shadow: 3px 3px 6px #000000, -3px -3px 6px #1a1a1a;
+  transform: scale(1.08);
+}
+
+/* Neomorphic Calendar Date Button - Today State */
+.neumorphic-calendar-button-today {
+  background: #000000;
+  color: #60a5fa;
+  border: 1px solid rgba(96, 165, 250, 0.3);
+  border-radius: 8px;
+  padding: 4px 8px;
+  box-shadow: inset 2px 2px 4px #000000, inset -2px -2px 4px #1a1a1a, 0 0 8px rgba(96, 165, 250, 0.3);
+  transform: scale(1.02);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 12px;
+  min-height: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.light .neumorphic-calendar-button-today {
+  background: var(--panel);
+  color: var(--primary-dark);
+  border: 1px solid color-mix(in srgb, var(--primary) 30%, var(--border-subtle));
+  box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.04), inset -2px -2px 4px rgba(255, 255, 255, 0.8), 0 0 8px color-mix(in srgb, var(--primary) 25%, transparent);
+}
+
+.neumorphic-calendar-button-today:hover {
+  box-shadow: inset 1px 1px 2px #000000, inset -1px -1px 2px #1a1a1a, 0 0 12px rgba(96, 165, 250, 0.4);
+  transform: scale(1.05);
+}
+
+.neumorphic-calendar-button-today:active {
+  box-shadow: inset 3px 3px 6px #000000, inset -3px -3px 6px #1a1a1a, 0 0 6px rgba(96, 165, 250, 0.2);
+  transform: scale(0.98);
+}
+
+/* Neomorphic Calendar Date Button - Has Data State */
+.neumorphic-calendar-button-data {
+  background: #000000;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 4px 8px;
+  box-shadow: inset 2px 2px 4px #000000, inset -2px -2px 4px #1a1a1a, 0 0 4px rgba(255, 255, 255, 0.1);
+  transform: scale(1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 12px;
+  min-height: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.light .neumorphic-calendar-button-data {
+  background: var(--panel);
+  color: var(--text-color);
+  border: 1px solid var(--border-subtle);
+  box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.04), inset -2px -2px 4px rgba(255, 255, 255, 0.8), 0 0 4px rgba(0, 0, 0, 0.03);
+}
+
+.neumorphic-calendar-button-data:hover {
+  box-shadow: inset 1px 1px 2px #000000, inset -1px -1px 2px #1a1a1a, 0 0 6px rgba(255, 255, 255, 0.15);
+  transform: scale(1.02);
+}
+
+.neumorphic-calendar-button-data:active {
+  box-shadow: inset 3px 3px 6px #000000, inset -3px -3px 6px #1a1a1a, 0 0 2px rgba(255, 255, 255, 0.05);
+  transform: scale(0.98);
+}
+
+/* Light mode overrides for Calendar buttons */
+.light .neumorphic-calendar-button:hover {
+  box-shadow: inset 1px 1px 2px rgba(116, 200, 163, 0.3), inset -1px -1px 2px rgba(255, 255, 255, 0.9);
+  transform: scale(1.02);
+}
+
+.light .neumorphic-calendar-button-selected:hover {
+  box-shadow: 3px 3px 6px rgba(116, 200, 163, 0.4), -3px -3px 6px rgba(255, 255, 255, 0.9);
+  transform: scale(1.08);
+}
+
+.light .neumorphic-calendar-button-today:hover {
+  box-shadow: inset 1px 1px 2px rgba(116, 200, 163, 0.3), inset -1px -1px 2px rgba(255, 255, 255, 0.9), 0 0 12px rgba(116, 200, 163, 0.4);
+  transform: scale(1.05);
+}
+
+.light .neumorphic-calendar-button-data:hover {
+  box-shadow: inset 1px 1px 2px rgba(116, 200, 163, 0.3), inset -1px -1px 2px rgba(255, 255, 255, 0.9), 0 0 6px rgba(116, 200, 163, 0.2);
+  transform: scale(1.02);
+}
+
+/* Neomorphic Timer Card - 3 Separate Theme Styles */
+
+/* DARK MODE Timer Card */
+.dark .neumorphic-timer-card {
+  background: rgba(5, 5, 5, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  box-shadow: 
+    inset 6px 6px 12px rgba(0, 0, 0, 0.8), 
+    inset -6px -6px 12px rgba(60, 60, 60, 0.4),
+    0 16px 48px rgba(0, 0, 0, 0.6),
+    0 8px 24px rgba(0, 0, 0, 0.4),
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  min-height: 140px;
+}
+
+.dark .neumorphic-timer-card:hover {
+  box-shadow: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.9), 
+    inset -4px -4px 8px rgba(60, 60, 60, 0.5),
+    0 20px 60px rgba(0, 0, 0, 0.7),
+    0 12px 36px rgba(0, 0, 0, 0.5),
+    0 6px 18px rgba(0, 0, 0, 0.4),
+    0 3px 9px rgba(0, 0, 0, 0.3);
+  transform: scale(1.01);
+}
+
+.dark .neumorphic-timer-card:active {
+  box-shadow: 
+    inset 8px 8px 16px rgba(0, 0, 0, 0.9), 
+    inset -8px -8px 16px rgba(60, 60, 60, 0.3),
+    0 8px 24px rgba(0, 0, 0, 0.5),
+    0 4px 12px rgba(0, 0, 0, 0.4),
+    0 2px 6px rgba(0, 0, 0, 0.3),
+    0 1px 3px rgba(0, 0, 0, 0.2);
+  transform: scale(0.99);
+}
+
+/* BLACK MODE Timer Card */
+.black .neumorphic-timer-card {
+  background: rgba(0, 0, 0, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  box-shadow: 
+    inset 8px 8px 16px rgba(0, 0, 0, 0.9), 
+    inset -8px -8px 16px rgba(255, 255, 255, 0.08),
+    0 12px 48px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  min-height: 140px;
+}
+
+.black .neumorphic-timer-card:hover {
+  box-shadow: 
+    inset 10px 10px 20px rgba(0, 0, 0, 0.9), 
+    inset -10px -10px 20px rgba(255, 255, 255, 0.08),
+    0 16px 56px rgba(0, 0, 0, 0.9),
+    0 0 0 1px rgba(255, 255, 255, 0.12);
+  transform: scale(1.01);
+}
+
+.black .neumorphic-timer-card:active {
+  box-shadow: 
+    inset 12px 12px 24px rgba(0, 0, 0, 0.9), 
+    inset -12px -12px 24px rgba(255, 255, 255, 0.06),
+    0 8px 32px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
+  transform: scale(0.99);
+}
+
+/* LIGHT MODE Timer Card */
+.light .neumorphic-timer-card {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  box-shadow: 
+    inset 6px 6px 12px rgba(221, 231, 224, 0.3), 
+    inset -6px -6px 12px rgba(255, 255, 255, 0.8),
+    0 8px 20px rgba(221, 231, 224, 0.2),
+    0 4px 12px rgba(221, 231, 224, 0.15),
+    0 2px 6px rgba(221, 231, 224, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  min-height: 140px;
+  color: var(--text-color);
+}
+
+/* Force light mode timer card hover - Maximum specificity */
+html.light body.light .neumorphic-timer-card:hover,
+html.light .neumorphic-timer-card:hover,
+body.light .neumorphic-timer-card:hover,
+.light .neumorphic-timer-card:hover {
+  box-shadow: 
+    inset 4px 4px 8px rgba(221, 231, 224, 0.4) !important, 
+    inset -4px -4px 8px rgba(255, 255, 255, 0.9) !important,
+    0 12px 24px rgba(221, 231, 224, 0.25) !important,
+    0 6px 16px rgba(221, 231, 224, 0.2) !important,
+    0 3px 8px rgba(221, 231, 224, 0.15) !important;
+  transform: scale(1.01) !important;
+}
+
+/* Additional fallback for light mode timer card hover */
+.light .neumorphic-timer-card:hover {
+  box-shadow: 
+    inset 4px 4px 8px rgba(221, 231, 224, 0.4) !important, 
+    inset -4px -4px 8px rgba(255, 255, 255, 0.9) !important,
+    0 12px 24px rgba(221, 231, 224, 0.25) !important,
+    0 6px 16px rgba(221, 231, 224, 0.2) !important,
+    0 3px 8px rgba(221, 231, 224, 0.15) !important;
+  transform: scale(1.01) !important;
+}
+
+.light .neumorphic-timer-card:active {
+  box-shadow: 
+    inset 8px 8px 16px rgba(221, 231, 224, 0.5) !important, 
+    inset -8px -8px 16px rgba(255, 255, 255, 0.7) !important,
+    0 4px 12px rgba(221, 231, 224, 0.15) !important,
+    0 2px 6px rgba(221, 231, 224, 0.1) !important,
+    0 1px 3px rgba(221, 231, 224, 0.08) !important;
+  transform: scale(0.99) !important;
+}
+
+/* Neomorphic Timer Card - Non-interactive (for containers) */
+.neumorphic-timer-card-container {
+  background: rgba(5, 5, 5, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  box-shadow: 
+    inset 6px 6px 12px rgba(0, 0, 0, 0.8), 
+    inset -6px -6px 12px rgba(60, 60, 60, 0.4),
+    0 16px 48px rgba(0, 0, 0, 0.6),
+    0 8px 24px rgba(0, 0, 0, 0.4),
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    0 2px 6px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.light .neumorphic-timer-card-container {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 
+    inset 6px 6px 12px rgba(221, 231, 224, 0.3), 
+    inset -6px -6px 12px rgba(255, 255, 255, 0.8),
+    0 8px 20px rgba(221, 231, 224, 0.2),
+    0 4px 12px rgba(221, 231, 224, 0.15),
+    0 2px 6px rgba(221, 231, 224, 0.1);
+}
+
+/* Ensure interactive elements within containers have proper click handling */
+.neumorphic-timer-card-container button,
+.neumorphic-timer-card-container input,
+.neumorphic-timer-card-container select,
+.neumorphic-timer-card-container textarea {
+  position: relative;
+  z-index: 1;
+}
+
+/* Neomorphic Matrix Overlay Buttons */
+.neumorphic-matrix-button {
+  background: #1a1a1a;
+  color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  box-shadow: 
+    inset 2px 2px 4px rgba(0, 0, 0, 0.8), 
+    inset -2px -2px 4px rgba(40, 40, 40, 0.4);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  min-width: 120px;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.neumorphic-matrix-button:hover {
+  box-shadow: 
+    inset 1px 1px 2px rgba(0, 0, 0, 0.9), 
+    inset -1px -1px 2px rgba(30, 30, 30, 0.5);
+  transform: scale(1.02);
+}
+
+.neumorphic-matrix-button:active {
+  box-shadow: 
+    inset 3px 3px 6px rgba(0, 0, 0, 0.95), 
+    inset -3px -3px 6px rgba(20, 20, 20, 0.3);
+  transform: scale(0.98);
+}
+
+/* Neomorphic Matrix Close Button - Round */
+.neumorphic-matrix-close-button {
+  background: #1a1a1a;
+  color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  box-shadow: 
+    inset 2px 2px 4px rgba(0, 0, 0, 0.8), 
+    inset -2px -2px 4px rgba(40, 40, 40, 0.4);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.neumorphic-matrix-close-button:hover {
+  box-shadow: 
+    inset 1px 1px 2px rgba(0, 0, 0, 0.9), 
+    inset -1px -1px 2px rgba(30, 30, 30, 0.5);
+  transform: scale(1.02);
+}
+
+.neumorphic-matrix-close-button:active {
+  box-shadow: 
+    inset 3px 3px 6px rgba(0, 0, 0, 0.95), 
+    inset -3px -3px 6px rgba(20, 20, 20, 0.3);
+  transform: scale(0.98);
+}
+
+/* Light mode overrides for Matrix buttons */
+.light .neumorphic-matrix-button {
+  background: var(--surface);
+  color: var(--text-color);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 
+    inset 2px 2px 4px rgba(221, 231, 224, 0.3),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.8);
+}
+
+.light .neumorphic-matrix-button:hover {
+  box-shadow: 
+    inset 1px 1px 2px rgba(221, 231, 224, 0.4),
+    inset -1px -1px 2px rgba(255, 255, 255, 0.9);
+  transform: scale(1.02);
+}
+
+.light .neumorphic-matrix-button:active {
+  box-shadow: 
+    inset 3px 3px 6px rgba(221, 231, 224, 0.5),
+    inset -3px -3px 6px rgba(255, 255, 255, 0.7);
+  transform: scale(0.98);
+}
+
+.light .neumorphic-matrix-close-button {
+  background: var(--surface);
+  color: var(--text-color);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 
+    inset 2px 2px 4px rgba(221, 231, 224, 0.3),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.8);
+}
+
+.light .neumorphic-matrix-close-button:hover {
+  box-shadow: 
+    inset 1px 1px 2px rgba(221, 231, 224, 0.4),
+    inset -1px -1px 2px rgba(255, 255, 255, 0.9);
+  transform: scale(1.02);
+}
+
+.light .neumorphic-matrix-close-button:active {
+  box-shadow: 
+    inset 3px 3px 6px rgba(221, 231, 224, 0.5),
+    inset -3px -3px 6px rgba(255, 255, 255, 0.7);
+  transform: scale(0.98);
+}
+
+/* Neomorphic Select Dropdown - Matrix Overlay */
+.neumorphic-select {
+  background: rgba(5, 5, 5, 0.95);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 8px 16px;
+  box-shadow: 
+    inset 6px 6px 12px rgba(0, 0, 0, 0.8), 
+    inset -6px -6px 12px rgba(60, 60, 60, 0.4),
+    0 16px 48px rgba(0, 0, 0, 0.6),
+    0 8px 24px rgba(0, 0, 0, 0.4),
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  padding-right: 40px;
+}
+
+.neumorphic-select:hover {
+  box-shadow: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.9), 
+    inset -4px -4px 8px rgba(60, 60, 60, 0.5),
+    0 20px 60px rgba(0, 0, 0, 0.7),
+    0 12px 36px rgba(0, 0, 0, 0.5),
+    0 6px 18px rgba(0, 0, 0, 0.4),
+    0 3px 9px rgba(0, 0, 0, 0.3);
+  transform: scale(1.01);
+}
+
+.neumorphic-select:focus {
+  outline: none;
+  box-shadow: 
+    inset 8px 8px 16px rgba(0, 0, 0, 0.9), 
+    inset -8px -8px 16px rgba(60, 60, 60, 0.3),
+    0 8px 24px rgba(0, 0, 0, 0.5),
+    0 4px 12px rgba(0, 0, 0, 0.4),
+    0 2px 6px rgba(0, 0, 0, 0.3),
+    0 1px 3px rgba(0, 0, 0, 0.2);
+  transform: scale(0.99);
+}
+
+.neumorphic-select option {
+  background: rgba(5, 5, 5, 0.95);
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Enhanced native select dropdown styling */
+.neumorphic-select:focus {
+  outline: none;
+  box-shadow: 
+    inset 8px 8px 16px rgba(0, 0, 0, 0.9), 
+    inset -8px -8px 16px rgba(60, 60, 60, 0.3),
+    0 8px 24px rgba(0, 0, 0, 0.5),
+    0 4px 12px rgba(0, 0, 0, 0.4),
+    0 2px 6px rgba(0, 0, 0, 0.3),
+    0 1px 3px rgba(0, 0, 0, 0.2);
+  transform: scale(0.99);
+}
+
+/* Custom dropdown arrow styling */
+.neumorphic-select::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+.neumorphic-select::-ms-expand {
+  display: none;
+}
+
+/* Neomorphic Scrollbar for Matrix Overlay */
+.neumorphic-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) rgba(0, 0, 0, 0.4);
+}
+
+
+/* Neomorphic Dropdown Options with Scrollbar */
+.neumorphic-dropdown-options-scrollable {
+  background: rgba(5, 5, 5, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  box-shadow: 
+    inset 6px 6px 12px rgba(0, 0, 0, 0.8), 
+    inset -6px -6px 12px rgba(60, 60, 60, 0.4),
+    0 16px 48px rgba(0, 0, 0, 0.6),
+    0 8px 24px rgba(0, 0, 0, 0.4),
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    0 2px 6px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99999;
+  margin-top: 8px;
+  max-height: 160px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) rgba(0, 0, 0, 0.4);
+}
+
+/* Apply neumorphic scrollbar to dropdown options */
+.neumorphic-dropdown-options-scrollable.neumorphic-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) rgba(0, 0, 0, 0.4);
+}
+
+.neumorphic-dropdown-options-scrollable::-webkit-scrollbar {
+  width: 8px;
+}
+
+.neumorphic-dropdown-options-scrollable::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  box-shadow: 
+    inset 1px 1px 2px rgba(0, 0, 0, 0.6), 
+    inset -1px -1px 2px rgba(40, 40, 40, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.neumorphic-dropdown-options-scrollable::-webkit-scrollbar-thumb {
+  background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    inset 1px 1px 2px rgba(0, 0, 0, 0.8), 
+    inset -1px -1px 2px rgba(60, 60, 60, 0.3);
+  transition: all 0.3s ease;
+}
+
+.neumorphic-dropdown-options-scrollable::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(145deg, #0f0f0f, #1a1a1a);
+  box-shadow: 
+    inset 2px 2px 4px rgba(0, 0, 0, 0.9), 
+    inset -2px -2px 4px rgba(50, 50, 50, 0.4);
+}
+
+.neumorphic-dropdown-options-scrollable::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(145deg, #000000, #0f0f0f);
+  box-shadow: 
+    inset 3px 3px 6px rgba(0, 0, 0, 0.95), 
+    inset -3px -3px 6px rgba(30, 30, 30, 0.2);
+}
+
+.neumorphic-dropdown-options-scrollable::-webkit-scrollbar-corner {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.neumorphic-scrollbar::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 14px;
+}
+
+.neumorphic-scrollbar::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  box-shadow: 
+    inset 3px 3px 6px rgba(0, 0, 0, 0.7), 
+    inset -3px -3px 6px rgba(40, 40, 40, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  margin: 4px;
+}
+
+.neumorphic-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    inset 2px 2px 4px rgba(0, 0, 0, 0.8), 
+    inset -2px -2px 4px rgba(60, 60, 60, 0.4);
+  transition: all 0.3s ease;
+  min-height: 40px;
+}
+
+.neumorphic-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+  box-shadow: 
+    inset 3px 3px 6px rgba(0, 0, 0, 0.9), 
+    inset -3px -3px 6px rgba(50, 50, 50, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.neumorphic-scrollbar::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(145deg, #0f0f0f, #000000);
+  box-shadow: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.95), 
+    inset -4px -4px 8px rgba(30, 30, 30, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.neumorphic-scrollbar::-webkit-scrollbar-corner {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* Neomorphic Overlay Card */
+.neumorphic-overlay-card {
+  background: #000000;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  box-shadow: 
+    inset 8px 8px 16px rgba(0, 0, 0, 0.8), 
+    inset -8px -8px 16px rgba(26, 26, 26, 0.4),
+    0 25px 80px rgba(0, 0, 0, 0.8),
+    0 15px 50px rgba(0, 0, 0, 0.6),
+    0 8px 25px rgba(0, 0, 0, 0.4),
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.neumorphic-overlay-card:hover {
+  box-shadow: 
+    inset 6px 6px 12px rgba(0, 0, 0, 0.9), 
+    inset -6px -6px 12px rgba(26, 26, 26, 0.5),
+    0 30px 100px rgba(0, 0, 0, 0.9),
+    0 18px 60px rgba(0, 0, 0, 0.7),
+    0 10px 30px rgba(0, 0, 0, 0.5),
+    0 5px 15px rgba(0, 0, 0, 0.4),
+    0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Neomorphic Pomodoro Buttons */
+.neumorphic-pomodoro-button {
+  background: #0f0f0f;
+  color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 12px 20px;
+  box-shadow: 
+    inset 2px 2px 4px rgba(0, 0, 0, 0.8),
+    inset -2px -2px 4px rgba(60, 60, 60, 0.4);
+  transform: scale(1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.neumorphic-pomodoro-button:hover {
+  box-shadow: 
+    inset 1px 1px 2px rgba(0, 0, 0, 0.9),
+    inset -1px -1px 2px rgba(60, 60, 60, 0.5);
+  transform: scale(1.02);
+}
+
+.neumorphic-pomodoro-button:active {
+  box-shadow: 
+    inset 3px 3px 6px rgba(0, 0, 0, 0.9),
+    inset -3px -3px 6px rgba(60, 60, 60, 0.3);
+  transform: scale(0.98);
+}
+
+/* Neomorphic Pomodoro Button - Start State */
+.neumorphic-pomodoro-button-start {
+  background: #0f0f0f;
+  color: #10b981;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 12px 20px;
+  box-shadow: 
+    inset 2px 2px 4px rgba(0, 0, 0, 0.8),
+    inset -2px -2px 4px rgba(60, 60, 60, 0.4);
+  transform: scale(1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.neumorphic-pomodoro-button-start:hover {
+  box-shadow: 
+    inset 1px 1px 2px rgba(0, 0, 0, 0.9),
+    inset -1px -1px 2px rgba(60, 60, 60, 0.5);
+  transform: scale(1.02);
+}
+
+.neumorphic-pomodoro-button-start:active {
+  box-shadow: 
+    inset 3px 3px 6px rgba(0, 0, 0, 0.9),
+    inset -3px -3px 6px rgba(60, 60, 60, 0.3);
+  transform: scale(0.98);
+}
+
+/* Neomorphic Pomodoro Button - Pause State */
+.neumorphic-pomodoro-button-pause {
+  background: #0f0f0f;
+  color: #f59e0b;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 12px 20px;
+  box-shadow: 
+    inset 2px 2px 4px rgba(0, 0, 0, 0.8),
+    inset -2px -2px 4px rgba(60, 60, 60, 0.4);
+  transform: scale(1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.neumorphic-pomodoro-button-pause:hover {
+  box-shadow: 
+    inset 1px 1px 2px rgba(0, 0, 0, 0.9),
+    inset -1px -1px 2px rgba(60, 60, 60, 0.5);
+  transform: scale(1.02);
+}
+
+.neumorphic-pomodoro-button-pause:active {
+  box-shadow: 
+    inset 3px 3px 6px rgba(0, 0, 0, 0.9),
+    inset -3px -3px 6px rgba(60, 60, 60, 0.3);
+  transform: scale(0.98);
+}
+
+/* Neomorphic Pomodoro Button - Reset State */
+.neumorphic-pomodoro-button-reset {
+  background: #0f0f0f;
+  color: #ef4444;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 12px 20px;
+  box-shadow: 
+    inset 2px 2px 4px rgba(0, 0, 0, 0.8),
+    inset -2px -2px 4px rgba(60, 60, 60, 0.4);
+  transform: scale(1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.neumorphic-pomodoro-button-reset:hover {
+  box-shadow: 
+    inset 1px 1px 2px rgba(0, 0, 0, 0.9),
+    inset -1px -1px 2px rgba(60, 60, 60, 0.5);
+  transform: scale(1.02);
+}
+
+.neumorphic-pomodoro-button-reset:active {
+  box-shadow: 
+    inset 3px 3px 6px rgba(0, 0, 0, 0.9),
+    inset -3px -3px 6px rgba(60, 60, 60, 0.3);
+  transform: scale(0.98);
+}
+
+/* Light mode overrides for Pomodoro buttons */
+.light .neumorphic-pomodoro-button {
+  background: var(--surface);
+  color: var(--text-color);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 
+    inset 2px 2px 4px rgba(221, 231, 224, 0.3),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.8),
+    0 4px 12px rgba(221, 231, 224, 0.2),
+    0 2px 6px rgba(221, 231, 224, 0.15),
+    0 1px 3px rgba(221, 231, 224, 0.1);
+}
+
+.light .neumorphic-pomodoro-button:hover {
+  box-shadow: 
+    inset 1px 1px 2px rgba(221, 231, 224, 0.4),
+    inset -1px -1px 2px rgba(255, 255, 255, 0.9);
+  transform: scale(1.02);
+}
+
+.light .neumorphic-pomodoro-button:active {
+  box-shadow: 
+    inset 3px 3px 6px rgba(221, 231, 224, 0.5),
+    inset -3px -3px 6px rgba(255, 255, 255, 0.7);
+  transform: scale(0.98);
+}
+
+.light .neumorphic-pomodoro-button-start {
+  background: var(--surface);
+  color: var(--text-color);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 
+    inset 2px 2px 4px rgba(221, 231, 224, 0.3),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.8),
+    0 4px 12px rgba(221, 231, 224, 0.2),
+    0 2px 6px rgba(221, 231, 224, 0.15),
+    0 1px 3px rgba(221, 231, 224, 0.1);
+}
+
+.light .neumorphic-pomodoro-button-start:hover {
+  box-shadow: 
+    inset 1px 1px 2px rgba(221, 231, 224, 0.4),
+    inset -1px -1px 2px rgba(255, 255, 255, 0.9);
+  transform: scale(1.02);
+}
+
+.light .neumorphic-pomodoro-button-start:active {
+  box-shadow: 
+    inset 3px 3px 6px rgba(221, 231, 224, 0.5),
+    inset -3px -3px 6px rgba(255, 255, 255, 0.7);
+  transform: scale(0.98);
+}
+
+.light .neumorphic-pomodoro-button-pause {
+  background: var(--surface);
+  color: var(--text-color);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 
+    inset 2px 2px 4px rgba(221, 231, 224, 0.3),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.8),
+    0 4px 12px rgba(221, 231, 224, 0.2),
+    0 2px 6px rgba(221, 231, 224, 0.15),
+    0 1px 3px rgba(221, 231, 224, 0.1);
+}
+
+.light .neumorphic-pomodoro-button-pause:hover {
+  box-shadow: 
+    inset 1px 1px 2px rgba(221, 231, 224, 0.4),
+    inset -1px -1px 2px rgba(255, 255, 255, 0.9);
+  transform: scale(1.02);
+}
+
+.light .neumorphic-pomodoro-button-pause:active {
+  box-shadow: 
+    inset 3px 3px 6px rgba(221, 231, 224, 0.5),
+    inset -3px -3px 6px rgba(255, 255, 255, 0.7);
+  transform: scale(0.98);
+}
+
+.light .neumorphic-pomodoro-button-reset {
+  background: var(--surface);
+  color: var(--text-color);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 
+    inset 2px 2px 4px rgba(221, 231, 224, 0.3),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.8),
+    0 4px 12px rgba(221, 231, 224, 0.2),
+    0 2px 6px rgba(221, 231, 224, 0.15),
+    0 1px 3px rgba(221, 231, 224, 0.1);
+}
+
+.light .neumorphic-pomodoro-button-reset:hover {
+  box-shadow: 
+    inset 1px 1px 2px rgba(221, 231, 224, 0.4),
+    inset -1px -1px 2px rgba(255, 255, 255, 0.9);
+  transform: scale(1.02);
+}
+
+.light .neumorphic-pomodoro-button-reset:active {
+  box-shadow: 
+    inset 3px 3px 6px rgba(221, 231, 224, 0.5),
+    inset -3px -3px 6px rgba(255, 255, 255, 0.7);
+  transform: scale(0.98);
+}
+
+/* Neomorphic Music Card - Dynamic Colors */
+.neumorphic-music-card {
+  background: rgba(5, 5, 5, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  box-shadow: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.6), 
+    inset -4px -4px 8px rgba(60, 60, 60, 0.3),
+    0 12px 32px rgba(0, 0, 0, 0.4),
+    0 6px 16px rgba(0, 0, 0, 0.3),
+    0 3px 8px rgba(0, 0, 0, 0.2),
+    0 1px 4px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  min-height: 140px;
+}
+
+.neumorphic-music-card:hover {
+  box-shadow: 
+    inset 3px 3px 6px rgba(0, 0, 0, 0.7), 
+    inset -3px -3px 6px rgba(60, 60, 60, 0.4),
+    0 16px 40px rgba(0, 0, 0, 0.5),
+    0 8px 20px rgba(0, 0, 0, 0.4),
+    0 4px 10px rgba(0, 0, 0, 0.3),
+    0 2px 5px rgba(0, 0, 0, 0.2);
+  transform: scale(1.01);
+}
+
+.neumorphic-music-card:active {
+  box-shadow: 
+    inset 5px 5px 10px rgba(0, 0, 0, 0.8), 
+    inset -5px -5px 10px rgba(60, 60, 60, 0.2),
+    0 6px 16px rgba(0, 0, 0, 0.4),
+    0 3px 8px rgba(0, 0, 0, 0.3),
+    0 1px 4px rgba(0, 0, 0, 0.2),
+    0 1px 2px rgba(0, 0, 0, 0.1);
+  transform: scale(0.99);
+}
+
+/* Light mode overrides for music cards */
+.light .neumorphic-music-card {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 
+    inset 4px 4px 8px rgba(221, 231, 224, 0.3), 
+    inset -4px -4px 8px rgba(255, 255, 255, 0.8),
+    0 8px 20px rgba(221, 231, 224, 0.2),
+    0 4px 12px rgba(221, 231, 224, 0.15),
+    0 2px 6px rgba(221, 231, 224, 0.1);
+  color: var(--text-color);
+}
+
+.light .neumorphic-music-card:hover {
+  box-shadow: 
+    inset 3px 3px 6px rgba(221, 231, 224, 0.4), 
+    inset -3px -3px 6px rgba(255, 255, 255, 0.9),
+    0 12px 24px rgba(221, 231, 224, 0.25),
+    0 6px 16px rgba(221, 231, 224, 0.2),
+    0 3px 8px rgba(221, 231, 224, 0.15);
+  transform: scale(1.01);
+}
+
+.light .neumorphic-music-card:active {
+  box-shadow: 
+    inset 5px 5px 10px rgba(221, 231, 224, 0.5), 
+    inset -5px -5px 10px rgba(255, 255, 255, 0.7),
+    0 4px 12px rgba(221, 231, 224, 0.15),
+    0 2px 6px rgba(221, 231, 224, 0.1),
+    0 1px 3px rgba(221, 231, 224, 0.08);
+  transform: scale(0.99);
+}
+
+/* Light mode color variants for music cards */
+.light .neumorphic-music-card-white {
+  box-shadow: 
+    inset 4px 4px 8px rgba(221, 231, 224, 0.3), 
+    inset -4px -4px 8px rgba(255, 255, 255, 0.8),
+    0 8px 20px rgba(221, 231, 224, 0.2),
+    0 4px 12px rgba(221, 231, 224, 0.15),
+    0 2px 6px rgba(221, 231, 224, 0.1);
+}
+
+.light .neumorphic-music-card-pink {
+  box-shadow: 
+    inset 4px 4px 8px rgba(221, 231, 224, 0.3), 
+    inset -4px -4px 8px rgba(255, 255, 255, 0.8),
+    0 8px 20px rgba(221, 231, 224, 0.2),
+    0 4px 12px rgba(221, 231, 224, 0.15),
+    0 2px 6px rgba(221, 231, 224, 0.1),
+    0 0 20px color-mix(in srgb, var(--accent-peach) 20%, transparent);
+}
+
+.light .neumorphic-music-card-brown {
+  box-shadow: 
+    inset 4px 4px 8px rgba(221, 231, 224, 0.3), 
+    inset -4px -4px 8px rgba(255, 255, 255, 0.8),
+    0 8px 20px rgba(221, 231, 224, 0.2),
+    0 4px 12px rgba(221, 231, 224, 0.15),
+    0 2px 6px rgba(221, 231, 224, 0.1),
+    0 0 20px color-mix(in srgb, var(--accent-warm) 20%, transparent);
+}
+
+.light .neumorphic-music-card-forest {
+  box-shadow: 
+    inset 4px 4px 8px rgba(221, 231, 224, 0.3), 
+    inset -4px -4px 8px rgba(255, 255, 255, 0.8),
+    0 8px 20px rgba(221, 231, 224, 0.2),
+    0 4px 12px rgba(221, 231, 224, 0.15),
+    0 2px 6px rgba(221, 231, 224, 0.1),
+    0 0 20px color-mix(in srgb, var(--success) 20%, transparent);
+}
+
+.light .neumorphic-music-card-rain {
+  box-shadow: 
+    inset 4px 4px 8px rgba(221, 231, 224, 0.3), 
+    inset -4px -4px 8px rgba(255, 255, 255, 0.8),
+    0 8px 20px rgba(221, 231, 224, 0.2),
+    0 4px 12px rgba(221, 231, 224, 0.15),
+    0 2px 6px rgba(221, 231, 224, 0.1),
+    0 0 20px color-mix(in srgb, var(--info) 20%, transparent);
+}
+
+.light .neumorphic-music-card-city {
+  box-shadow: 
+    inset 4px 4px 8px rgba(221, 231, 224, 0.3), 
+    inset -4px -4px 8px rgba(255, 255, 255, 0.8),
+    0 8px 20px rgba(221, 231, 224, 0.2),
+    0 4px 12px rgba(221, 231, 224, 0.15),
+    0 2px 6px rgba(221, 231, 224, 0.1);
+}
+
+.light .neumorphic-music-card-ocean {
+  box-shadow: 
+    inset 4px 4px 8px rgba(221, 231, 224, 0.3), 
+    inset -4px -4px 8px rgba(255, 255, 255, 0.8),
+    0 8px 20px rgba(221, 231, 224, 0.2),
+    0 4px 12px rgba(221, 231, 224, 0.15),
+    0 2px 6px rgba(221, 231, 224, 0.1),
+    0 0 20px color-mix(in srgb, var(--primary-strong) 20%, transparent);
+}
+
+.light .neumorphic-music-card-cafe_chatter {
+  box-shadow: 
+    inset 4px 4px 8px rgba(221, 231, 224, 0.3), 
+    inset -4px -4px 8px rgba(255, 255, 255, 0.8),
+    0 8px 20px rgba(221, 231, 224, 0.2),
+    0 4px 12px rgba(221, 231, 224, 0.15),
+    0 2px 6px rgba(221, 231, 224, 0.1),
+    0 0 20px color-mix(in srgb, var(--accent-warm) 20%, transparent);
+}
+
+/* Dynamic color overlays for music card */
+.neumorphic-music-card-white {
+  box-shadow: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.6), 
+    inset -4px -4px 8px rgba(107, 114, 128, 0.3),
+    0 12px 32px rgba(107, 114, 128, 0.2),
+    0 6px 16px rgba(107, 114, 128, 0.15),
+    0 3px 8px rgba(0, 0, 0, 0.2),
+    0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.neumorphic-music-card-pink {
+  box-shadow: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.6), 
+    inset -4px -4px 8px rgba(236, 72, 153, 0.3),
+    0 12px 32px rgba(236, 72, 153, 0.2),
+    0 6px 16px rgba(236, 72, 153, 0.15),
+    0 3px 8px rgba(0, 0, 0, 0.2),
+    0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.neumorphic-music-card-brown {
+  box-shadow: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.6), 
+    inset -4px -4px 8px rgba(245, 158, 11, 0.3),
+    0 12px 32px rgba(245, 158, 11, 0.2),
+    0 6px 16px rgba(245, 158, 11, 0.15),
+    0 3px 8px rgba(0, 0, 0, 0.2),
+    0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.neumorphic-music-card-forest {
+  box-shadow: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.6), 
+    inset -4px -4px 8px rgba(34, 197, 94, 0.3),
+    0 12px 32px rgba(34, 197, 94, 0.2),
+    0 6px 16px rgba(34, 197, 94, 0.15),
+    0 3px 8px rgba(0, 0, 0, 0.2),
+    0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.neumorphic-music-card-rain {
+  box-shadow: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.6), 
+    inset -4px -4px 8px rgba(59, 130, 246, 0.3),
+    0 12px 32px rgba(59, 130, 246, 0.2),
+    0 6px 16px rgba(59, 130, 246, 0.15),
+    0 3px 8px rgba(0, 0, 0, 0.2),
+    0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.neumorphic-music-card-city {
+  box-shadow: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.6), 
+    inset -4px -4px 8px rgba(75, 85, 99, 0.3),
+    0 12px 32px rgba(75, 85, 99, 0.2),
+    0 6px 16px rgba(75, 85, 99, 0.15),
+    0 3px 8px rgba(0, 0, 0, 0.2),
+    0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.neumorphic-music-card-ocean {
+  box-shadow: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.6), 
+    inset -4px -4px 8px rgba(6, 182, 212, 0.3),
+    0 12px 32px rgba(6, 182, 212, 0.2),
+    0 6px 16px rgba(6, 182, 212, 0.15),
+    0 3px 8px rgba(0, 0, 0, 0.2),
+    0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.neumorphic-music-card-cafe_chatter {
+  box-shadow: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.6), 
+    inset -4px -4px 8px rgba(249, 115, 22, 0.3),
+    0 12px 32px rgba(249, 115, 22, 0.2),
+    0 6px 16px rgba(249, 115, 22, 0.15),
+    0 3px 8px rgba(0, 0, 0, 0.2),
+    0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Neomorphic Matrix Card */
+.neumorphic-matrix-card {
+  background: rgba(5, 5, 5, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  box-shadow: 
+    inset 3px 3px 6px rgba(0, 0, 0, 0.7), 
+    inset -3px -3px 6px rgba(60, 60, 60, 0.4);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.neumorphic-matrix-card:hover {
+  box-shadow: 
+    inset 2px 2px 4px rgba(0, 0, 0, 0.8), 
+    inset -2px -2px 4px rgba(60, 60, 60, 0.5);
+  transform: scale(1.01);
+}
+
+.neumorphic-matrix-card:active {
+  box-shadow: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.9), 
+    inset -4px -4px 8px rgba(60, 60, 60, 0.3);
+  transform: scale(0.99);
+}
+
+/* Light mode overrides for matrix cards */
+.light .neumorphic-matrix-card {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 
+    inset 3px 3px 6px rgba(221, 231, 224, 0.3), 
+    inset -3px -3px 6px rgba(255, 255, 255, 0.8),
+    0 4px 12px rgba(221, 231, 224, 0.2),
+    0 2px 6px rgba(221, 231, 224, 0.15);
+  color: var(--text-color);
+}
+
+.light .neumorphic-matrix-card:hover {
+  box-shadow: 
+    inset 2px 2px 4px rgba(221, 231, 224, 0.4), 
+    inset -2px -2px 4px rgba(255, 255, 255, 0.9),
+    0 6px 16px rgba(221, 231, 224, 0.25),
+    0 3px 8px rgba(221, 231, 224, 0.2);
+  transform: scale(1.01);
+}
+
+.light .neumorphic-matrix-card:active {
+  box-shadow: 
+    inset 4px 4px 8px rgba(221, 231, 224, 0.5), 
+    inset -4px -4px 8px rgba(255, 255, 255, 0.7),
+    0 2px 8px rgba(221, 231, 224, 0.15),
+    0 1px 4px rgba(221, 231, 224, 0.1);
+  transform: scale(0.99);
+}
+
+/* Light mode color variants for matrix cards */
+.light .neumorphic-matrix-card-red {
+  box-shadow: 
+    inset 3px 3px 6px rgba(221, 231, 224, 0.3), 
+    inset -3px -3px 6px rgba(255, 255, 255, 0.8),
+    0 4px 12px rgba(221, 231, 224, 0.2),
+    0 2px 6px rgba(221, 231, 224, 0.15),
+    0 0 20px color-mix(in srgb, var(--danger) 20%, transparent);
+}
+
+.light .neumorphic-matrix-card-yellow {
+  box-shadow: 
+    inset 3px 3px 6px rgba(221, 231, 224, 0.3), 
+    inset -3px -3px 6px rgba(255, 255, 255, 0.8),
+    0 4px 12px rgba(221, 231, 224, 0.2),
+    0 2px 6px rgba(221, 231, 224, 0.15),
+    0 0 20px color-mix(in srgb, var(--warning) 20%, transparent);
+}
+
+.light .neumorphic-matrix-card-blue {
+  box-shadow: 
+    inset 3px 3px 6px rgba(221, 231, 224, 0.3), 
+    inset -3px -3px 6px rgba(255, 255, 255, 0.8),
+    0 4px 12px rgba(221, 231, 224, 0.2),
+    0 2px 6px rgba(221, 231, 224, 0.15),
+    0 0 20px color-mix(in srgb, var(--info) 20%, transparent);
+}
+
+.light .neumorphic-matrix-card-gray {
+  box-shadow: 
+    inset 3px 3px 6px rgba(221, 231, 224, 0.3), 
+    inset -3px -3px 6px rgba(255, 255, 255, 0.8),
+    0 4px 12px rgba(221, 231, 224, 0.2),
+    0 2px 6px rgba(221, 231, 224, 0.15);
+}
+
+/* Dynamic color shadows for matrix quadrants */
+.neumorphic-matrix-card-red {
+  box-shadow: 
+    inset 3px 3px 6px rgba(0, 0, 0, 0.7), 
+    inset -3px -3px 6px rgba(239, 68, 68, 0.4);
+}
+
+.neumorphic-matrix-card-yellow {
+  box-shadow: 
+    inset 3px 3px 6px rgba(0, 0, 0, 0.7), 
+    inset -3px -3px 6px rgba(245, 158, 11, 0.4);
+}
+
+.neumorphic-matrix-card-blue {
+  box-shadow: 
+    inset 3px 3px 6px rgba(0, 0, 0, 0.7), 
+    inset -3px -3px 6px rgba(59, 130, 246, 0.4);
+}
+
+.neumorphic-matrix-card-gray {
+  box-shadow: 
+    inset 3px 3px 6px rgba(0, 0, 0, 0.7), 
+    inset -3px -3px 6px rgba(107, 114, 128, 0.4);
+}
+
+/* Neomorphic Input Fields */
+.neumorphic-input {
+  background: rgba(5, 5, 5, 0.95);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 12px 16px;
+  box-shadow: 
+    inset 6px 6px 12px rgba(0, 0, 0, 0.8), 
+    inset -6px -6px 12px rgba(60, 60, 60, 0.4),
+    0 16px 48px rgba(0, 0, 0, 0.6),
+    0 8px 24px rgba(0, 0, 0, 0.4),
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  font-weight: 500;
+  font-size: 14px;
+  text-align: left;
+  width: 100%;
+}
+
+.neumorphic-input:focus {
+  outline: none;
+  box-shadow: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.9), 
+    inset -4px -4px 8px rgba(60, 60, 60, 0.5),
+    0 20px 60px rgba(0, 0, 0, 0.7),
+    0 12px 36px rgba(0, 0, 0, 0.5),
+    0 6px 18px rgba(0, 0, 0, 0.4),
+    0 3px 9px rgba(0, 0, 0, 0.3);
+  transform: scale(1.01);
+}
+
+.neumorphic-input:disabled {
+  background: rgba(5, 5, 5, 0.5);
+  color: rgba(255, 255, 255, 0.3);
+  cursor: not-allowed;
+  box-shadow: 
+    inset 2px 2px 4px rgba(0, 0, 0, 0.6),
+    inset -2px -2px 4px rgba(60, 60, 60, 0.2);
+}
+
+/* Neomorphic Close Button */
+.neumorphic-close-button {
+  background: #000000;
+  color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.8), inset -3px -3px 6px rgba(26, 26, 26, 0.4);
+  transform: scale(1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.neumorphic-close-button:hover {
+  color: rgba(255, 255, 255, 0.9);
+  box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.9), inset -2px -2px 4px rgba(26, 26, 26, 0.5);
+  transform: scale(1.05);
+}
+
+.neumorphic-close-button:active {
+  box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.9), inset -4px -4px 8px rgba(26, 26, 26, 0.3);
+  transform: scale(1);
+}
+
+/* Neomorphic Dropdown Button */
+.neumorphic-dropdown-button {
+  background: rgba(5, 5, 5, 0.95);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 12px 20px;
+  box-shadow: 
+    inset 6px 6px 12px rgba(0, 0, 0, 0.8), 
+    inset -6px -6px 12px rgba(60, 60, 60, 0.4),
+    0 16px 48px rgba(0, 0, 0, 0.6),
+    0 8px 24px rgba(0, 0, 0, 0.4),
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    0 2px 6px rgba(0, 0, 0, 0.2);
+  transform: scale(1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.neumorphic-dropdown-button:hover {
+  box-shadow: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.9), 
+    inset -4px -4px 8px rgba(60, 60, 60, 0.5),
+    0 20px 60px rgba(0, 0, 0, 0.7),
+    0 12px 36px rgba(0, 0, 0, 0.5),
+    0 6px 18px rgba(0, 0, 0, 0.4),
+    0 3px 9px rgba(0, 0, 0, 0.3);
+  transform: scale(1.01);
+}
+
+.neumorphic-dropdown-button:active {
+  box-shadow: 
+    inset 8px 8px 16px rgba(0, 0, 0, 0.9), 
+    inset -8px -8px 16px rgba(60, 60, 60, 0.3),
+    0 8px 24px rgba(0, 0, 0, 0.5),
+    0 4px 12px rgba(0, 0, 0, 0.4),
+    0 2px 6px rgba(0, 0, 0, 0.3),
+    0 1px 3px rgba(0, 0, 0, 0.2);
+  transform: scale(0.99);
+}
+
+/* Neomorphic Dropdown Options */
+.neumorphic-dropdown-options {
+  background: rgba(5, 5, 5, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  box-shadow: 
+    inset 6px 6px 12px rgba(0, 0, 0, 0.8), 
+    inset -6px -6px 12px rgba(60, 60, 60, 0.4),
+    0 16px 48px rgba(0, 0, 0, 0.6),
+    0 8px 24px rgba(0, 0, 0, 0.4),
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    0 2px 6px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99999;
+  margin-top: 8px;
+  overflow: visible;
+}
+
+.neumorphic-dropdown-option {
+  background: rgba(5, 5, 5, 0.95);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  width: calc(100% - 8px);
+  text-align: left;
+  position: relative;
+  margin: 4px;
+  border-radius: 12px;
+  box-shadow: 
+    inset 2px 2px 4px rgba(0, 0, 0, 0.8), 
+    inset -2px -2px 4px rgba(60, 60, 60, 0.4);
+}
+
+.neumorphic-dropdown-option:hover {
+  background: rgba(5, 5, 5, 0.95);
+  box-shadow: 
+    inset 1px 1px 2px rgba(0, 0, 0, 0.9), 
+    inset -1px -1px 2px rgba(60, 60, 60, 0.5);
+  transform: translateY(1px);
+}
+
+.neumorphic-dropdown-option:active {
+  background: rgba(5, 5, 5, 0.95);
+  box-shadow: 
+    inset 3px 3px 6px rgba(0, 0, 0, 0.9), 
+    inset -3px -3px 6px rgba(60, 60, 60, 0.3);
+  transform: translateY(2px);
+}
+
+.neumorphic-dropdown-option:first-child {
+  border-radius: 12px;
+  margin-top: 8px;
+}
+
+.neumorphic-dropdown-option:last-child {
+  border-radius: 12px;
+  margin-bottom: 8px;
+}
+
+.neumorphic-dropdown-option:only-child {
+  border-radius: 12px;
+  margin: 8px;
+}
+
+/* Neomorphic Sound Player Buttons - Inset Style */
+.neumorphic-sound-button {
+  background: #2a2a2a;
+  color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  box-shadow: 
+    inset 2px 2px 4px rgba(0, 0, 0, 0.8),
+    inset -2px -2px 4px rgba(60, 60, 60, 0.4);
+  transform: scale(1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.neumorphic-sound-button:hover {
+  box-shadow: 
+    inset 1px 1px 2px rgba(0, 0, 0, 0.9),
+    inset -1px -1px 2px rgba(60, 60, 60, 0.5);
+  transform: scale(1.02);
+}
+
+.neumorphic-sound-button:active {
+  box-shadow: 
+    inset 3px 3px 6px rgba(0, 0, 0, 0.9),
+    inset -3px -3px 6px rgba(60, 60, 60, 0.3);
+  transform: scale(0.98);
+}
+
+.neumorphic-sound-button:disabled {
+  background: rgba(42, 42, 42, 0.5);
+  color: rgba(255, 255, 255, 0.3);
+  cursor: not-allowed;
+  box-shadow: 
+    inset 1px 1px 2px rgba(0, 0, 0, 0.6),
+    inset -1px -1px 2px rgba(60, 60, 60, 0.2);
+}
+
+.neumorphic-sound-button:disabled:hover {
+  transform: scale(1);
+  box-shadow: 
+    inset 1px 1px 2px rgba(0, 0, 0, 0.6),
+    inset -1px -1px 2px rgba(60, 60, 60, 0.2);
+}
+
+/* Neomorphic Play/Pause Button - Inset Style */
+.neumorphic-play-button {
+  background: #2a2a2a;
+  color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  box-shadow: 
+    inset 3px 3px 6px rgba(0, 0, 0, 0.8),
+    inset -3px -3px 6px rgba(60, 60, 60, 0.4);
+  transform: scale(1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.neumorphic-play-button:hover {
+  box-shadow: 
+    inset 2px 2px 4px rgba(0, 0, 0, 0.9),
+    inset -2px -2px 4px rgba(60, 60, 60, 0.5);
+  transform: scale(1.02);
+}
+
+.neumorphic-play-button:active {
+  box-shadow: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.9),
+    inset -4px -4px 8px rgba(60, 60, 60, 0.3);
+  transform: scale(0.98);
+}
+
+/* Light mode overrides for Sound Player buttons */
+.light .neumorphic-sound-button {
+  background: var(--surface);
+  color: var(--text-color);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 
+    inset 1px 1px 2px rgba(221, 231, 224, 0.3),
+    inset -1px -1px 2px rgba(255, 255, 255, 0.8),
+    0 2px 6px rgba(221, 231, 224, 0.2),
+    0 1px 3px rgba(221, 231, 224, 0.15);
+}
+
+.light .neumorphic-sound-button:hover {
+  box-shadow: 
+    inset 1px 1px 2px rgba(221, 231, 224, 0.4),
+    inset -1px -1px 2px rgba(255, 255, 255, 0.9);
+  transform: scale(1.02);
+}
+
+.light .neumorphic-sound-button:active {
+  box-shadow: 
+    inset 3px 3px 6px rgba(221, 231, 224, 0.5),
+    inset -3px -3px 6px rgba(255, 255, 255, 0.7);
+  transform: scale(0.98);
+}
+
+.light .neumorphic-sound-button:disabled {
+  background: rgba(232, 242, 236, 0.5);
+  color: rgba(37, 50, 59, 0.3);
+  cursor: not-allowed;
+  box-shadow: 
+    inset 1px 1px 2px rgba(221, 231, 224, 0.2),
+    inset -1px -1px 2px rgba(255, 255, 255, 0.4);
+}
+
+.light .neumorphic-sound-button:disabled:hover {
+  transform: scale(1);
+  box-shadow: 
+    inset 1px 1px 2px rgba(221, 231, 224, 0.2),
+    inset -1px -1px 2px rgba(255, 255, 255, 0.4);
+}
+
+.light .neumorphic-play-button {
+  background: var(--surface);
+  color: var(--text-color);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 
+    inset 2px 2px 4px rgba(221, 231, 224, 0.3),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.8),
+    0 4px 12px rgba(221, 231, 224, 0.2),
+    0 2px 6px rgba(221, 231, 224, 0.15),
+    0 1px 3px rgba(221, 231, 224, 0.1);
+}
+
+.light .neumorphic-play-button:hover {
+  box-shadow: 
+    inset 2px 2px 4px rgba(221, 231, 224, 0.4),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.9);
+  transform: scale(1.02);
+}
+
+.light .neumorphic-play-button:active {
+  box-shadow: 
+    inset 4px 4px 8px rgba(221, 231, 224, 0.5),
+    inset -4px -4px 8px rgba(255, 255, 255, 0.7);
+  transform: scale(0.98);
+}
+
+/* Star Effects for Cards */
+.neumorphic-card-stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.neumorphic-card-stars .star {
+  position: absolute;
+  background: rgba(200, 220, 255, 0.6);
+  border-radius: 50%;
+  box-shadow: 0 0 3px rgba(150, 180, 255, 0.4);
+  animation: starPulse 3s ease-in-out infinite;
+}
+
+.neumorphic-card-stars .star:nth-child(odd) {
+  background: rgba(180, 140, 220, 0.7);
+  box-shadow: 0 0 4px rgba(140, 100, 200, 0.5);
+}
+
+.neumorphic-card-stars .star:nth-child(3n) {
+  background: rgba(160, 100, 200, 0.6);
+  box-shadow: 0 0 2px rgba(120, 80, 180, 0.3);
+}
+
+@keyframes starPulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* Content positioning for cards with stars */
+.neumorphic-card-content {
+  position: relative;
+  z-index: 10;
+}
+
+/* Study Mode Specific Colors */
+.neumorphic-study {
+  --card-bg: rgba(0, 0, 0, 0.3);
+  --star-color: rgba(200, 220, 255, 0.6);
+  --star-glow: rgba(150, 180, 255, 0.4);
+}
+
+/* Light mode overrides for Study Mode */
+.light .neumorphic-study {
+  --card-bg: var(--surface);
+  --star-color: rgba(116, 200, 163, 0.6);
+  --star-glow: rgba(116, 200, 163, 0.4);
+}
+
+/* Voice AI Image Styles */
+.voice-ai-image {
+  filter: drop-shadow(0 0 8px rgba(60, 90, 150, 0.7)) drop-shadow(0 0 16px rgba(40, 70, 120, 0.5)) drop-shadow(0 0 24px rgba(30, 50, 100, 0.4)) drop-shadow(0 0 32px rgba(20, 40, 80, 0.3));
+}
+
+.light .voice-ai-image {
+  filter: drop-shadow(0 0 8px rgba(116, 200, 163, 0.7)) drop-shadow(0 0 16px rgba(116, 200, 163, 0.5)) drop-shadow(0 0 24px rgba(116, 200, 163, 0.4)) drop-shadow(0 0 32px rgba(116, 200, 163, 0.3));
+}
+
+/* Wellness Stars Styles */
+.wellness-star {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(100, 200, 100, 0.8), 0 0 16px rgba(80, 180, 80, 0.6), 0 0 24px rgba(60, 160, 60, 0.4);
+}
+
+.light .wellness-star {
+  background: rgba(116, 200, 163, 0.9);
+  box-shadow: 0 0 8px rgba(116, 200, 163, 0.8), 0 0 16px rgba(116, 200, 163, 0.6), 0 0 24px rgba(116, 200, 163, 0.4);
+}
+
+.wellness-star-medium {
+  background: rgba(120, 220, 120, 0.9);
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(100, 200, 100, 0.8), 0 0 16px rgba(80, 180, 80, 0.6), 0 0 24px rgba(60, 160, 60, 0.4);
+}
+
+.light .wellness-star-medium {
+  background: rgba(116, 200, 163, 0.7);
+  box-shadow: 0 0 8px rgba(116, 200, 163, 0.6), 0 0 16px rgba(116, 200, 163, 0.4), 0 0 24px rgba(116, 200, 163, 0.3);
+}
+
+.wellness-star-green {
+  background: rgba(100, 180, 100, 0.8);
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(80, 160, 80, 0.7), 0 0 12px rgba(60, 140, 60, 0.5), 0 0 18px rgba(40, 120, 40, 0.3);
+}
+
+.light .wellness-star-green {
+  background: rgba(116, 200, 163, 0.6);
+  box-shadow: 0 0 6px rgba(116, 200, 163, 0.5), 0 0 12px rgba(116, 200, 163, 0.3), 0 0 18px rgba(116, 200, 163, 0.2);
+}
+
+/* Wellness Mode Specific Colors */
+.neumorphic-wellness {
+  --card-bg: rgba(0, 0, 0, 0.3);
+  --star-color: rgba(100, 200, 100, 0.6);
+  --star-glow: rgba(80, 150, 80, 0.4);
+}
+
+/* Light mode overrides for Wellness Mode */
+.light .neumorphic-wellness {
+  --card-bg: var(--surface);
+  --star-color: rgba(116, 200, 163, 0.6);
+  --star-glow: rgba(116, 200, 163, 0.4);
+}
+
+.neumorphic-wellness .neumorphic-card-stars .star {
+  background: rgba(100, 200, 100, 0.6);
+  box-shadow: 0 0 3px rgba(80, 150, 80, 0.4);
+}
+
+.neumorphic-wellness .neumorphic-card-stars .star:nth-child(odd) {
+  background: rgba(120, 200, 120, 0.7);
+  box-shadow: 0 0 4px rgba(100, 180, 100, 0.5);
+}
+
+.neumorphic-wellness .neumorphic-card-stars .star:nth-child(3n) {
+  background: rgba(90, 170, 90, 0.6);
+  box-shadow: 0 0 2px rgba(70, 140, 70, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .neumorphic-button {
+    padding: 10px 20px;
+    font-size: 12px;
+  }
+  
+  .neumorphic-card {
+    border-radius: 12px;
+  }
+  
+  .neumorphic-card-with-stars {
+    border-radius: 12px;
+  }
+}
+
+.black .neumorphic-music-card {
+  background: rgba(0, 0, 0, 0.95);
+  box-shadow: 
+    inset 6px 6px 12px rgba(0, 0, 0, 0.9), 
+    inset -6px -6px 12px rgba(255, 255, 255, 0.08),
+    0 10px 40px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.black .neumorphic-music-card:hover {
+  box-shadow: 
+    inset 8px 8px 16px rgba(0, 0, 0, 0.9), 
+    inset -8px -8px 16px rgba(255, 255, 255, 0.08),
+    0 14px 48px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.black .neumorphic-music-card:active {
+  box-shadow: 
+    inset 10px 10px 20px rgba(0, 0, 0, 0.9), 
+    inset -10px -10px 20px rgba(255, 255, 255, 0.08),
+    0 18px 56px rgba(0, 0, 0, 0.9),
+    0 0 0 1px rgba(255, 255, 255, 0.15);
+}
+
+.black .neumorphic-matrix-card {
+  background: rgba(0, 0, 0, 0.95);
+  box-shadow: 
+    inset 5px 5px 10px rgba(0, 0, 0, 0.9), 
+    inset -5px -5px 10px rgba(255, 255, 255, 0.08),
+    0 8px 32px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.black .neumorphic-matrix-card:hover {
+  box-shadow: 
+    inset 6px 6px 12px rgba(0, 0, 0, 0.9), 
+    inset -6px -6px 12px rgba(255, 255, 255, 0.08),
+    0 12px 40px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.black .neumorphic-matrix-card:active {
+  box-shadow: 
+    inset 8px 8px 16px rgba(0, 0, 0, 0.9), 
+    inset -8px -8px 16px rgba(255, 255, 255, 0.08),
+    0 16px 48px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(255, 255, 255, 0.15);
+}
+
+.black .neumorphic-card-with-stars {
+  background: rgba(0, 0, 0, 0.95) !important;
+  box-shadow: 
+    inset 6px 6px 12px rgba(0, 0, 0, 0.9), 
+    inset -6px -6px 12px rgba(255, 255, 255, 0.08),
+    0 10px 40px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(255, 255, 255, 0.1) !important;
+}
+
+.black .neumorphic-card-with-stars:hover {
+  box-shadow: 
+    inset 8px 8px 16px rgba(0, 0, 0, 0.9), 
+    inset -8px -8px 16px rgba(255, 255, 255, 0.08),
+    0 14px 48px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(255, 255, 255, 0.12) !important;
+}
+
+.black .neumorphic-card-with-stars:active {
+  box-shadow: 
+    inset 10px 10px 20px rgba(0, 0, 0, 0.9), 
+    inset -10px -10px 20px rgba(255, 255, 255, 0.08),
+    0 18px 56px rgba(0, 0, 0, 0.9),
+    0 0 0 1px rgba(255, 255, 255, 0.15) !important;
+}
+
+.black .neumorphic-overlay-card {
+  box-shadow: 
+    inset 8px 8px 16px rgba(0, 0, 0, 0.9), 
+    inset -8px -8px 16px rgba(255, 255, 255, 0.05),
+    0 12px 40px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.black .neumorphic-overlay-card:hover {
+  box-shadow: 
+    inset 10px 10px 20px rgba(0, 0, 0, 0.9), 
+    inset -10px -10px 20px rgba(255, 255, 255, 0.05),
+    0 16px 48px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.black .neumorphic-overlay-card:active {
+  box-shadow: 
+    inset 12px 12px 24px rgba(0, 0, 0, 0.9), 
+    inset -12px -12px 24px rgba(255, 255, 255, 0.05),
+    0 20px 56px rgba(0, 0, 0, 0.9),
+    0 0 0 1px rgba(255, 255, 255, 0.15);
+}
+
+/* Black Mode Overrides for Timer Card Container */
+.black .neumorphic-timer-card-container {
+  box-shadow: 
+    inset 6px 6px 12px rgba(0, 0, 0, 0.9), 
+    inset -6px -6px 12px rgba(255, 255, 255, 0.05),
+    0 8px 32px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+
+/* Black Mode Overrides for Music Card Color Variants */
+.black .neumorphic-music-card-white {
+  box-shadow: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.8), 
+    inset -4px -4px 8px rgba(255, 255, 255, 0.05),
+    0 6px 24px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.black .neumorphic-music-card-pink {
+  box-shadow: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.8), 
+    inset -4px -4px 8px rgba(255, 255, 255, 0.05),
+    0 6px 24px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 0 20px rgba(236, 72, 153, 0.3);
+}
+
+.black .neumorphic-music-card-brown {
+  box-shadow: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.8), 
+    inset -4px -4px 8px rgba(255, 255, 255, 0.05),
+    0 6px 24px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 0 20px rgba(139, 69, 19, 0.3);
+}
+
+.black .neumorphic-music-card-forest {
+  box-shadow: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.8), 
+    inset -4px -4px 8px rgba(255, 255, 255, 0.05),
+    0 6px 24px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 0 20px rgba(34, 197, 94, 0.3);
+}
+
+.black .neumorphic-music-card-rain {
+  box-shadow: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.8), 
+    inset -4px -4px 8px rgba(255, 255, 255, 0.05),
+    0 6px 24px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+.black .neumorphic-music-card-city {
+  box-shadow: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.8), 
+    inset -4px -4px 8px rgba(255, 255, 255, 0.05),
+    0 6px 24px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 0 20px rgba(107, 114, 128, 0.3);
+}
+
+.black .neumorphic-music-card-ocean {
+  box-shadow: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.8), 
+    inset -4px -4px 8px rgba(255, 255, 255, 0.05),
+    0 6px 24px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 0 20px rgba(14, 165, 233, 0.3);
+}
+
+.black .neumorphic-music-card-cafe_chatter {
+  box-shadow: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.8), 
+    inset -4px -4px 8px rgba(255, 255, 255, 0.05),
+    0 6px 24px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 0 20px rgba(245, 158, 11, 0.3);
+}
+
+/* Utility Classes for Neumorphic Design */
+
+/* Base Card */
+.neuro-card {
+  background: rgba(5, 5, 5, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  box-shadow: 
+    inset 6px 6px 12px rgba(0, 0, 0, 0.8), 
+    inset -6px -6px 12px rgba(60, 60, 60, 0.4),
+    0 16px 48px rgba(0, 0, 0, 0.6),
+    0 8px 24px rgba(0, 0, 0, 0.4),
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    0 2px 6px rgba(0, 0, 0, 0.2);
+  padding: 1.5rem;
+}
+
+/* Text Colors */
+.neuro-text-primary {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.neuro-text-secondary {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.neuro-text-tertiary {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Surface Styles */
+.neuro-surface-elevated {
+  background: rgba(15, 15, 15, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    2px 2px 4px rgba(0, 0, 0, 0.8),
+    -2px -2px 4px rgba(60, 60, 60, 0.4);
+  transition: all 0.3s ease;
+}
+
+.neuro-surface-inset {
+  background: rgba(5, 5, 5, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.9),
+    inset -4px -4px 8px rgba(60, 60, 60, 0.3);
+  transition: all 0.3s ease;
+}
+
+/* Button Styles */
+.neuro-button {
+  background: rgba(15, 15, 15, 0.95);
+  color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    inset 2px 2px 4px rgba(0, 0, 0, 0.8),
+    inset -2px -2px 4px rgba(60, 60, 60, 0.4);
+  transition: all 0.3s ease;
+}
+
+.neuro-button:hover:not(:disabled) {
+  box-shadow: 
+    inset 1px 1px 2px rgba(0, 0, 0, 0.9),
+    inset -1px -1px 2px rgba(60, 60, 60, 0.5);
+  transform: scale(1.02);
+}
+
+.neuro-button:active:not(:disabled) {
+  box-shadow: 
+    inset 3px 3px 6px rgba(0, 0, 0, 0.9),
+    inset -3px -3px 6px rgba(60, 60, 60, 0.3);
+  transform: scale(0.98);
+}
+
+.neuro-button-primary {
+  background: linear-gradient(145deg, #3b82f6, #2563eb);
+  color: white;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  box-shadow: 
+    inset 2px 2px 4px rgba(96, 165, 250, 0.3),
+    inset -2px -2px 4px rgba(29, 78, 216, 0.5),
+    0 4px 12px rgba(59, 130, 246, 0.4);
+  transition: all 0.3s ease;
+}
+
+.neuro-button-primary:hover:not(:disabled) {
+  background: linear-gradient(145deg, #2563eb, #1d4ed8);
+  box-shadow: 
+    inset 1px 1px 2px rgba(96, 165, 250, 0.4),
+    inset -1px -1px 2px rgba(29, 78, 216, 0.6),
+    0 6px 16px rgba(59, 130, 246, 0.5);
+  transform: scale(1.02);
+}
+
+.neuro-button-primary:active:not(:disabled) {
+  box-shadow: 
+    inset 3px 3px 6px rgba(29, 78, 216, 0.7),
+    inset -3px -3px 6px rgba(96, 165, 250, 0.2),
+    0 2px 8px rgba(59, 130, 246, 0.3);
+  transform: scale(0.98);
+}
+
+/* Input Styles */
+.neuro-input {
+  background: rgba(5, 5, 5, 0.95);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.9),
+    inset -4px -4px 8px rgba(60, 60, 60, 0.3);
+  transition: all 0.3s ease;
+}
+
+.neuro-input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.neuro-input:focus {
+  outline: none;
+  box-shadow: 
+    inset 3px 3px 6px rgba(0, 0, 0, 0.95),
+    inset -3px -3px 6px rgba(60, 60, 60, 0.4),
+    0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+.neuro-input:disabled {
+  background: rgba(5, 5, 5, 0.5);
+  color: rgba(255, 255, 255, 0.3);
+  cursor: not-allowed;
+  box-shadow: 
+    inset 2px 2px 4px rgba(0, 0, 0, 0.6),
+    inset -2px -2px 4px rgba(60, 60, 60, 0.2);
+}
+
+/* Select Styles */
+.neuro-select {
+  background: rgba(5, 5, 5, 0.95);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.9),
+    inset -4px -4px 8px rgba(60, 60, 60, 0.3);
+  transition: all 0.3s ease;
+  appearance: none;
+  cursor: pointer;
+}
+
+.neuro-select:focus {
+  outline: none;
+  box-shadow: 
+    inset 3px 3px 6px rgba(0, 0, 0, 0.95),
+    inset -3px -3px 6px rgba(60, 60, 60, 0.4),
+    0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+.neuro-select option {
+  background: rgba(5, 5, 5, 0.95);
+  color: white;
+}
+
+/* Fade-in animation for overlays */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* CSS Globe Styles - Fallback for non-WebGL browsers */
+.css-globe-container {
+  width: 160px;
+  height: 160px;
+  position: relative;
+  perspective: 800px;
+}
+
+.css-globe-container-large {
+  width: 500px;
+  height: 500px;
+  position: relative;
+  perspective: 1500px;
+}
+
+.css-globe {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: rotateGlobe 20s linear infinite;
+}
+
+@keyframes rotateGlobe {
+  from {
+    transform: rotateY(0deg) rotateX(15deg);
+  }
+  to {
+    transform: rotateY(360deg) rotateX(15deg);
+  }
+}
+
+.css-globe-sphere {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: 
+    radial-gradient(circle at 35% 35%, #0f1419, #050508),
+    linear-gradient(135deg, #0a0e13 0%, #050508 100%);
+  box-shadow: 
+    inset -30px -30px 60px rgba(0, 0, 0, 0.9),
+    inset 20px 20px 40px rgba(15, 20, 30, 0.4),
+    0 0 50px rgba(34, 211, 238, 0.25),
+    0 0 100px rgba(34, 211, 238, 0.15),
+    0 0 2px rgba(148, 163, 184, 0.3);
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+.css-globe-latitude {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(100, 116, 139, 0.35) 15%,
+    rgba(100, 116, 139, 0.35) 85%,
+    transparent
+  );
+  transform: rotateX(75deg);
+  opacity: 0.6;
+  box-shadow: 0 0 3px rgba(100, 116, 139, 0.4);
+}
+
+.css-globe-longitude {
+  position: absolute;
+  top: 8%;
+  bottom: 8%;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(100, 116, 139, 0.35) 15%,
+    rgba(100, 116, 139, 0.35) 85%,
+    transparent
+  );
+  transform: rotateY(75deg);
+  opacity: 0.6;
+  box-shadow: 0 0 3px rgba(100, 116, 139, 0.4);
+}
+
+.css-globe-atmosphere {
+  position: absolute;
+  top: -8%;
+  left: -8%;
+  right: -8%;
+  bottom: -8%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 45% 45%,
+    rgba(34, 211, 238, 0.12),
+    rgba(34, 211, 238, 0.06) 50%,
+    transparent 70%
+  );
+  box-shadow: 
+    0 0 40px rgba(34, 211, 238, 0.4),
+    0 0 80px rgba(34, 211, 238, 0.2),
+    inset 0 0 40px rgba(34, 211, 238, 0.08);
+  border: 1px solid rgba(34, 211, 238, 0.2);
+  pointer-events: none;
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Pause rotation on hover */
+.css-globe-container:hover .css-globe {
+  animation-play-state: paused;
+}
+
+/* Glowing city dots on CSS globe */
+.css-globe-dot {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #22d3ee;
+  box-shadow: 
+    0 0 8px rgba(34, 211, 238, 0.8),
+    0 0 16px rgba(34, 211, 238, 0.5),
+    0 0 24px rgba(34, 211, 238, 0.3);
+  animation: pulseDot 2s ease-in-out infinite;
+  z-index: 10;
+}
+
+@keyframes pulseDot {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.3);
+  }
+}
+
+/* Custom SVG Globe Styles */
+.globe-svg {
+  transition: transform 0.1s ease-out;
+  filter: drop-shadow(0 0 20px rgba(34, 211, 238, 0.3));
+}
+
+.activity-pulse {
+  animation: pulseCity 2s ease-in-out infinite;
+}
+
+@keyframes pulseCity {
+  0%, 100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.4);
+  }
+}
+
+.continents {
+  transition: fill 0.3s ease;
+}
+
+.continents:hover {
+  fill: rgba(30, 35, 45, 0.8);
+}
+
+/* Compact Scrollbar for Smaller Cards - Always Visible */
+.neumorphic-scrollbar-compact {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(100, 100, 100, 0.9) rgba(0, 0, 0, 0.6);
+}
+
+.neumorphic-scrollbar-compact::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+.neumorphic-scrollbar-compact::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  box-shadow: 
+    inset 3px 3px 6px rgba(0, 0, 0, 0.9), 
+    inset -3px -3px 6px rgba(50, 50, 50, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  margin: 2px;
+}
+
+.neumorphic-scrollbar-compact::-webkit-scrollbar-thumb {
+  background: linear-gradient(145deg, #505050, #3a3a3a);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    2px 2px 4px rgba(0, 0, 0, 0.8), 
+    -2px -2px 4px rgba(80, 80, 80, 0.4),
+    0 0 10px rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  min-height: 50px;
+}
+
+/* Light mode overrides for scrollbar */
+.light .neumorphic-scrollbar-compact {
+  scrollbar-color: rgba(221, 231, 224, 0.9) rgba(255, 255, 255, 0.6);
+}
+
+.light .neumorphic-scrollbar-compact::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: 
+    inset 3px 3px 6px rgba(221, 231, 224, 0.3), 
+    inset -3px -3px 6px rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(221, 231, 224, 0.3);
+}
+
+.light .neumorphic-scrollbar-compact::-webkit-scrollbar-thumb {
+  background: linear-gradient(145deg, var(--mist), var(--surface));
+  border: 1px solid rgba(221, 231, 224, 0.4);
+  box-shadow: 
+    2px 2px 4px rgba(221, 231, 224, 0.3), 
+    -2px -2px 4px rgba(255, 255, 255, 0.8),
+    0 0 10px rgba(116, 200, 163, 0.1);
+}
+
+.light .neumorphic-scrollbar-compact::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(145deg, var(--surface), var(--panel));
+  box-shadow: 
+    2px 2px 4px rgba(221, 231, 224, 0.4), 
+    -2px -2px 4px rgba(255, 255, 255, 0.9),
+    0 0 15px rgba(116, 200, 163, 0.2);
+}
+
+.neumorphic-scrollbar-compact::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(145deg, #606060, #4a4a4a);
+  box-shadow: 
+    2px 2px 4px rgba(0, 0, 0, 0.9), 
+    -2px -2px 4px rgba(100, 100, 100, 0.5),
+    0 0 15px rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.neumorphic-scrollbar-compact::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
+  box-shadow: 
+    inset 3px 3px 6px rgba(0, 0, 0, 0.95), 
+    inset -3px -3px 6px rgba(60, 60, 60, 0.5),
+    0 0 8px rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  transform: scale(1);
+}
+
+.neumorphic-scrollbar-compact::-webkit-scrollbar-corner {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* Light mode overrides for Neuro classes */
+.light .neuro-card {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 
+    inset 2px 2px 4px rgba(221, 231, 224, 0.3),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.8),
+    0 4px 12px rgba(221, 231, 224, 0.2),
+    0 2px 6px rgba(221, 231, 224, 0.15);
+}
+
+.light .neuro-text-primary {
+  color: var(--text-color);
+}
+
+.light .neuro-text-secondary {
+  color: var(--text-muted);
+}
+
+.light .neuro-text-tertiary {
+  color: rgba(37, 50, 59, 0.5);
+}
+
+.light .neuro-surface-elevated {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 
+    inset 2px 2px 4px rgba(221, 231, 224, 0.3),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.8),
+    0 4px 12px rgba(221, 231, 224, 0.2),
+    0 2px 6px rgba(221, 231, 224, 0.15);
+}
+
+.light .neuro-surface-inset {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 
+    inset 3px 3px 6px rgba(221, 231, 224, 0.3),
+    inset -3px -3px 6px rgba(255, 255, 255, 0.8);
+}
+
+.light .neuro-button {
+  background: var(--surface);
+  color: var(--text-color);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 
+    inset 2px 2px 4px rgba(221, 231, 224, 0.3),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.8);
+}
+
+.light .neuro-button:hover:not(:disabled) {
+  box-shadow: 
+    inset 1px 1px 2px rgba(221, 231, 224, 0.4),
+    inset -1px -1px 2px rgba(255, 255, 255, 0.9);
+  transform: scale(1.02);
+}
+
+.light .neuro-button:active:not(:disabled) {
+  box-shadow: 
+    inset 3px 3px 6px rgba(221, 231, 224, 0.5),
+    inset -3px -3px 6px rgba(255, 255, 255, 0.7);
+  transform: scale(0.98);
+}
+
+.light .neuro-input {
+  background: var(--surface);
+  color: var(--text-color);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 
+    inset 2px 2px 4px rgba(221, 231, 224, 0.3),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.8);
+}
+
+.light .neuro-input::placeholder {
+  color: rgba(37, 50, 59, 0.5);
+}
+
+.light .neuro-input:focus {
+  box-shadow: 
+    inset 3px 3px 6px rgba(221, 231, 224, 0.3),
+    inset -3px -3px 6px rgba(255, 255, 255, 0.8),
+    0 0 0 2px rgba(116, 200, 163, 0.3);
+}
+
+.light .neuro-input:disabled {
+  background: rgba(232, 242, 236, 0.5);
+  color: rgba(37, 50, 59, 0.3);
+}
+
+.light .neuro-select {
+  background: var(--surface);
+  color: var(--text-color);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 
+    inset 2px 2px 4px rgba(221, 231, 224, 0.3),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.8);
+}
+
+.light .neuro-select:focus {
+  box-shadow: 
+    inset 3px 3px 6px rgba(221, 231, 224, 0.3),
+    inset -3px -3px 6px rgba(255, 255, 255, 0.8),
+    0 0 0 2px rgba(116, 200, 163, 0.3);
+}
+
+.light .neuro-select option {
+  background: var(--surface);
+  color: var(--text-color);
+}
+
+/* Light mode overrides for dropdown button */
+.light .neumorphic-dropdown-button {
+  background: var(--surface);
+  color: var(--text-color);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 
+    inset 6px 6px 12px rgba(221, 231, 224, 0.3),
+    inset -6px -6px 12px rgba(255, 255, 255, 0.8),
+    0 16px 48px rgba(221, 231, 224, 0.2),
+    0 8px 24px rgba(221, 231, 224, 0.15),
+    0 4px 12px rgba(221, 231, 224, 0.1),
+    0 2px 6px rgba(221, 231, 224, 0.08);
+}
+
+.light .neumorphic-dropdown-button:hover {
+  box-shadow: 
+    inset 4px 4px 8px rgba(221, 231, 224, 0.4),
+    inset -4px -4px 8px rgba(255, 255, 255, 0.9),
+    0 20px 60px rgba(221, 231, 224, 0.25),
+    0 12px 36px rgba(221, 231, 224, 0.2),
+    0 6px 18px rgba(221, 231, 224, 0.15),
+    0 3px 9px rgba(221, 231, 224, 0.1);
+  transform: scale(1.01);
+}
+
+.light .neumorphic-dropdown-button:active {
+  box-shadow: 
+    inset 8px 8px 16px rgba(221, 231, 224, 0.5),
+    inset -8px -8px 16px rgba(255, 255, 255, 0.7),
+    0 8px 24px rgba(221, 231, 224, 0.15),
+    0 4px 12px rgba(221, 231, 224, 0.1),
+    0 2px 6px rgba(221, 231, 224, 0.08);
+  transform: scale(0.99);
+}
+
+/* Light mode overrides for dropdown options */
+.light .neumorphic-dropdown-options {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 
+    inset 6px 6px 12px rgba(221, 231, 224, 0.3),
+    inset -6px -6px 12px rgba(255, 255, 255, 0.8),
+    0 16px 48px rgba(221, 231, 224, 0.2),
+    0 8px 24px rgba(221, 231, 224, 0.15),
+    0 4px 12px rgba(221, 231, 224, 0.1),
+    0 2px 6px rgba(221, 231, 224, 0.08);
+}
+
+.light .neumorphic-dropdown-option {
+  background: var(--surface);
+  color: var(--text-color);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 
+    inset 2px 2px 4px rgba(221, 231, 224, 0.3),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.8);
+}
+
+.light .neumorphic-dropdown-option:hover {
+  background: var(--surface);
+  box-shadow: 
+    inset 1px 1px 2px rgba(221, 231, 224, 0.4),
+    inset -1px -1px 2px rgba(255, 255, 255, 0.9);
+  transform: translateY(1px);
+}
+
+.light .neumorphic-dropdown-option:active {
+  background: var(--surface);
+  box-shadow: 
+    inset 3px 3px 6px rgba(221, 231, 224, 0.5),
+    inset -3px -3px 6px rgba(255, 255, 255, 0.7);
+  transform: translateY(2px);
+}
+
+/* Light mode overrides for scrollable dropdown options */
+.light .neumorphic-dropdown-options-scrollable {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 
+    inset 6px 6px 12px rgba(221, 231, 224, 0.3),
+    inset -6px -6px 12px rgba(255, 255, 255, 0.8),
+    0 16px 48px rgba(221, 231, 224, 0.2),
+    0 8px 24px rgba(221, 231, 224, 0.15),
+    0 4px 12px rgba(221, 231, 224, 0.1),
+    0 2px 6px rgba(221, 231, 224, 0.08);
+  scrollbar-color: rgba(221, 231, 224, 0.3) rgba(255, 255, 255, 0.4);
+}
+
+.light .neumorphic-dropdown-options-scrollable.neumorphic-scrollbar {
+  scrollbar-color: rgba(221, 231, 224, 0.3) rgba(255, 255, 255, 0.4);
+}
+
+.light .neumorphic-dropdown-options-scrollable::-webkit-scrollbar-track {
+  background: rgba(221, 231, 224, 0.3);
+  box-shadow: 
+    inset 1px 1px 2px rgba(221, 231, 224, 0.6),
+    inset -1px -1px 2px rgba(255, 255, 255, 0.3);
+  border: 1px solid var(--border-subtle);
+}
+
+.light .neumorphic-dropdown-options-scrollable::-webkit-scrollbar-thumb {
+  background: linear-gradient(145deg, var(--mist), var(--surface));
+  border: 1px solid var(--border-subtle);
+}
+
+.light .neumorphic-dropdown-options-scrollable::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(145deg, var(--surface), var(--panel));
+  box-shadow: 
+    2px 2px 4px rgba(221, 231, 224, 0.4), 
+    -2px -2px 4px rgba(255, 255, 255, 0.8);
+}
+
+.light .neumorphic-dropdown-options-scrollable::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(145deg, var(--panel), var(--mist));
+  box-shadow: 
+    inset 1px 1px 2px rgba(221, 231, 224, 0.5),
+    inset -1px -1px 2px rgba(255, 255, 255, 0.7);
+}
+
+.light .neumorphic-dropdown-options-scrollable::-webkit-scrollbar-corner {
+  background: var(--surface);
+}
