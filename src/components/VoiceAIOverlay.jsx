@@ -194,9 +194,9 @@ export default function VoiceAIOverlay({ isOpen, onClose }) {
               top: `${Math.random() * 100}%`,
               width: `${Math.random() * 1 + 0.5}px`,
               height: `${Math.random() * 1 + 0.5}px`,
-              background: 'rgba(200, 220, 255, 0.6)',
+              background: 'rgba(160, 240, 160, 0.6)',
               borderRadius: '50%',
-              boxShadow: '0 0 3px rgba(150, 180, 255, 0.4)',
+              boxShadow: '0 0 3px rgba(120, 200, 120, 0.4)',
               animationDelay: `${Math.random() * 4}s`,
               animationDuration: `${Math.random() * 3 + 2}s`,
               zIndex: 1
