@@ -24,7 +24,7 @@ export default function GlobalWellnessGlobe({ isOverlay = false, selectedRegion,
       .globeImageUrl(null)
       .showGlobe(true)
       .showAtmosphere(true)
-      .atmosphereColor(theme === 'light' ? '#74C8A3' : '#22d3ee')
+      .atmosphereColor(theme === 'light' ? '#8BD4B3' : '#22d3ee')
       .atmosphereAltitude(0.15)
       
       // Show graticules (grid lines)
@@ -104,7 +104,7 @@ export default function GlobalWellnessGlobe({ isOverlay = false, selectedRegion,
 
             globe
               .pointsData(activityPoints)
-              .pointColor(() => theme === 'light' ? '#74C8A3' : '#ffffff') // Light: Aurora green, Dark: White
+              .pointColor(() => theme === 'light' ? '#8BD4B3' : '#ffffff') // Light: Warmer Aurora green, Dark: White
               .pointAltitude(0.01)
               .pointRadius('size')
               .pointsMerge(true)
