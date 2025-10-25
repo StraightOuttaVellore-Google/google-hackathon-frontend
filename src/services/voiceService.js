@@ -86,7 +86,22 @@ export class VoiceService {
   }
 
   disconnect() {
-    if (this.ws) {
+    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+      logger.info('Sending explicit disconnect message', {}, 'VoiceService');
+      // Send a disconnect message before closing
+      try {
+        this.ws.send(JSON.stringify({ type: 'disconnect' }));
+      } catch (error) {
+        logger.warn('Could not send disconnect message', { error }, 'VoiceService');
+      }
+      
+      // Give a moment for the message to be sent
+      setTimeout(() => {
+        this.ws.close();
+        this.ws = null;
+        logger.info('WebSocket connection closed', {}, 'VoiceService');
+      }, 100);
+    } else if (this.ws) {
       this.ws.close();
       this.ws = null;
     }

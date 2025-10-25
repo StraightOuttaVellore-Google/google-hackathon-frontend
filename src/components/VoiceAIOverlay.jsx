@@ -20,6 +20,65 @@ export default function VoiceAIOverlay({ isOpen, onClose }) {
   const voiceServiceRef = useRef(null)
   const audioServiceRef = useRef(null)
   const recognitionRef = useRef(null)
+  
+  // Audio queue management for accurate transcript recording
+  const audioQueueRef = useRef([])
+  const isPlayingRef = useRef(false)
+
+  // Audio queue management functions
+  const addToAudioQueue = useCallback((audioData, mimeType, audioId) => {
+    const audioItem = {
+      id: audioId,
+      data: audioData,
+      mimeType: mimeType,
+      timestamp: Date.now(),
+      played: false
+    }
+    audioQueueRef.current.push(audioItem)
+    logger.info('Added audio to queue', { audioId, queueSize: audioQueueRef.current.length }, 'VoiceAIOverlay')
+    
+    // Process queue if not currently playing
+    if (!isPlayingRef.current) {
+      processAudioQueue()
+    }
+  }, [])
+
+  const processAudioQueue = useCallback(async () => {
+    if (isPlayingRef.current || audioQueueRef.current.length === 0) {
+      return
+    }
+
+    const audioItem = audioQueueRef.current.shift()
+    if (!audioItem) return
+
+    isPlayingRef.current = true
+    logger.info('Processing audio from queue', { audioId: audioItem.id }, 'VoiceAIOverlay')
+
+    try {
+      if (audioServiceRef.current) {
+        await audioServiceRef.current.playAudio(audioItem.data, audioItem.mimeType)
+        audioItem.played = true
+        
+        // Send playback confirmation to backend
+        if (voiceServiceRef.current) {
+          voiceServiceRef.current.send({
+            type: 'audio_played',
+            audioId: audioItem.id
+          })
+          logger.info('Sent audio playback confirmation', { audioId: audioItem.id }, 'VoiceAIOverlay')
+        }
+      }
+    } catch (error) {
+      logger.error('Error playing audio from queue', { error, audioId: audioItem.id }, 'VoiceAIOverlay')
+    } finally {
+      isPlayingRef.current = false
+      
+      // Process next item in queue immediately for faster response
+      setTimeout(() => {
+        processAudioQueue()
+      }, 50)  // Reduced from 100ms to 50ms
+    }
+  }, [])
 
   // Voice message handler
   const handleVoiceMessage = useCallback((message) => {
@@ -28,15 +87,14 @@ export default function VoiceAIOverlay({ isOpen, onClose }) {
       case 'audio':
         logger.info('Audio message received', { 
           dataLength: message.data?.length, 
-          mimeType: message.mimeType 
+          mimeType: message.mimeType,
+          audioId: message.audioId
         }, 'VoiceAIOverlay')
-        if (message.data && audioServiceRef.current) {
-          logger.debug('Attempting to play audio', { mimeType: message.mimeType }, 'VoiceAIOverlay')
-          audioServiceRef.current.playAudio(message.data, message.mimeType || 'audio/pcm;rate=24000').catch(error => {
-            logger.error('Error playing audio', { error }, 'VoiceAIOverlay')
-          })
+        if (message.data && message.audioId) {
+          // Add to audio queue instead of playing immediately
+          addToAudioQueue(message.data, message.mimeType || 'audio/pcm;rate=24000', message.audioId)
         } else {
-          logger.warn('Cannot play audio - no data or service not ready', {}, 'VoiceAIOverlay')
+          logger.warn('Cannot queue audio - missing data or audioId', {}, 'VoiceAIOverlay')
         }
         break
       case 'text':
