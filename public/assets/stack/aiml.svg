@@ -1,0 +1,21 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="aimlGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B5CF6;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#7C3AED;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6D28D9;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="aimlAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#A78BFA;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#C4B5FD;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" rx="20" fill="url(#aimlGrad)"/>
+  <circle cx="100" cy="100" r="60" fill="rgba(255,255,255,0.1)"/>
+  <path d="M60 100L80 120L140 80" stroke="url(#aimlAccent)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="100" cy="60" r="8" fill="url(#aimlAccent)"/>
+  <circle cx="140" cy="80" r="8" fill="url(#aimlAccent)" opacity="0.8"/>
+  <circle cx="60" cy="140" r="8" fill="url(#aimlAccent)" opacity="0.6"/>
+  <path d="M100 40L110 60L140 50" stroke="url(#aimlAccent)" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+  <text x="100" y="170" text-anchor="middle" fill="white" font-family="Arial" font-size="16" font-weight="bold">TensorFlow + PyTorch</text>
+</svg>

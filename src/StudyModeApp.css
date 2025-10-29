@@ -1,0 +1,68 @@
+/* Study Mode App - UI-Neumorphism Implementation */
+@import 'ui-neumorphism/dist/index.css';
+
+/* Override UI-Neumorphism theme for dark mode */
+.study-mode-app {
+  --primary: #050505;
+  --secondary: #1a1a1a;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --info: #3b82f6;
+  --text: #ffffff;
+  --textSecondary: rgba(255, 255, 255, 0.7);
+  --disabled: rgba(255, 255, 255, 0.3);
+  --divider: rgba(255, 255, 255, 0.1);
+  --border: rgba(255, 255, 255, 0.1);
+  --hover: rgba(255, 255, 255, 0.05);
+  --selected: rgba(255, 255, 255, 0.1);
+  --activated: rgba(255, 255, 255, 0.15);
+  --background: #050505;
+  --surface: #0a0a0a;
+  --grey: #1a1a1a;
+  --greyLight: #2a2a2a;
+  --greyLighter: #3a3a3a;
+  --greyLightest: #4a4a4a;
+  --greyDark: #0a0a0a;
+  --greyDarker: #000000;
+  --greyDarkest: #000000;
+}
+
+/* Enhanced button styles for contained effect */
+.study-mode-app .ui-neumorphism-button {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.study-mode-app .ui-neumorphism-button:hover {
+  transform: translateY(-2px);
+}
+
+.study-mode-app .ui-neumorphism-button:active {
+  transform: translateY(0);
+  box-shadow: inset 4px 4px 8px #000000, inset -4px -4px 8px #1a1a1a;
+}
+
+/* Sticky header styles */
+.study-mode-app .fixed {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Custom scrollbar */
+.study-mode-app ::-webkit-scrollbar {
+  width: 8px;
+}
+
+.study-mode-app ::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.study-mode-app ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+.study-mode-app ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
