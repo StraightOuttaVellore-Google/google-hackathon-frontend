@@ -2,9 +2,11 @@ import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { useTheme } from '../contexts/ThemeContext'
+import ProfileOverlay from './ProfileOverlay'
 
 export default function UserDropdown() {
   const [isOpen, setIsOpen] = useState(false)
+  const [isProfileOpen, setIsProfileOpen] = useState(false)
   const dropdownRef = useRef(null)
   const navigate = useNavigate()
   const { user, signOut } = useAuth()
@@ -33,9 +35,8 @@ export default function UserDropdown() {
   }
 
   const handleProfile = () => {
-    // Navigate to profile page or show profile modal
-    console.log('Profile clicked')
     setIsOpen(false)
+    setIsProfileOpen(true)
   }
 
   const handleSettings = () => {
@@ -162,6 +163,13 @@ export default function UserDropdown() {
           )}
         </div>
       )}
+
+      {/* Profile Overlay */}
+      <ProfileOverlay
+        isOpen={isProfileOpen}
+        onClose={() => setIsProfileOpen(false)}
+        user={user}
+      />
     </div>
   )
 }

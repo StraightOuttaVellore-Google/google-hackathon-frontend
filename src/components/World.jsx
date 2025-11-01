@@ -1,12 +1,35 @@
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
-import { Globe as GlobeIcon, MapPin, Users, Award, Maximize2, X } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { Globe as GlobeIcon, MapPin, Users, Award, Maximize2, X, MessageSquare } from 'lucide-react'
 import GlobalWellnessGlobe from './GlobalWellnessGlobe'
 
 export default function World() {
+  const navigate = useNavigate()
   const [selectedRegion, setSelectedRegion] = useState('Global')
   const [showOverlay, setShowOverlay] = useState(false)
   const [hovering, setHovering] = useState(false)
+
+  // Popular countries for Reddit navigation
+  const countries = [
+    { isoCode: 'US', name: 'United States', flag: '🇺🇸' },
+    { isoCode: 'IN', name: 'India', flag: '🇮🇳' },
+    { isoCode: 'GB', name: 'United Kingdom', flag: '🇬🇧' },
+    { isoCode: 'CA', name: 'Canada', flag: '🇨🇦' },
+    { isoCode: 'AU', name: 'Australia', flag: '🇦🇺' },
+    { isoCode: 'DE', name: 'Germany', flag: '🇩🇪' },
+    { isoCode: 'FR', name: 'France', flag: '🇫🇷' },
+    { isoCode: 'JP', name: 'Japan', flag: '🇯🇵' },
+    { isoCode: 'BR', name: 'Brazil', flag: '🇧🇷' },
+    { isoCode: 'CN', name: 'China', flag: '🇨🇳' },
+    { isoCode: 'MX', name: 'Mexico', flag: '🇲🇽' },
+    { isoCode: 'IT', name: 'Italy', flag: '🇮🇹' },
+  ]
+
+  const handleCountryClick = (isoCode) => {
+    navigate(`/reddit/${isoCode}`)
+    setShowOverlay(false)
+  }
 
   // Sample global wellness data
   const globalStats = {
@@ -157,9 +180,9 @@ export default function World() {
             if (e.target === e.currentTarget) setShowOverlay(false)
           }}
         >
-          <div className="relative w-[85vw] h-[85vh] max-w-5xl neumorphic-overlay-card p-6" style={{ zIndex: 1000000 }}>
-            {/* Header */}
-            <div className="flex items-center justify-between mb-6">
+          <div className="relative w-[85vw] h-[85vh] max-w-5xl neumorphic-overlay-card flex flex-col" style={{ zIndex: 1000000 }}>
+            {/* Fixed Header */}
+            <div className="flex-shrink-0 flex items-center justify-between mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
               <div>
                 <h2 className="text-xl font-bold neuro-text-primary mb-1">Global Wellness Network</h2>
                 <p className="text-sm neuro-text-tertiary">
@@ -174,60 +197,92 @@ export default function World() {
               </button>
             </div>
 
-            {/* Region Pills */}
-            <div className="flex flex-wrap gap-2 mb-6">
-              {regions.map((region) => (
-                <button
-                  key={region.name}
-                  onClick={() => setSelectedRegion(region.name)}
-                  className={`px-4 py-2 text-xs font-medium transition-all duration-500 flex items-center gap-2 ${
-                    selectedRegion === region.name
-                      ? 'neumorphic-button-selected'
-                      : 'neumorphic-button'
-                  }`}
-                >
-                  <span className="text-base">{region.icon}</span>
-                  {region.name}
-                </button>
-              ))}
-            </div>
+            {/* Scrollable Content */}
+            <div className="flex-1 overflow-y-auto pr-2">
+              {/* Region Pills */}
+              <div className="flex flex-wrap gap-2 mb-6">
+                {regions.map((region) => (
+                  <button
+                    key={region.name}
+                    onClick={() => setSelectedRegion(region.name)}
+                    className={`px-4 py-2 text-xs font-medium transition-all duration-500 flex items-center gap-2 ${
+                      selectedRegion === region.name
+                        ? 'neumorphic-button-selected'
+                        : 'neumorphic-button'
+                    }`}
+                  >
+                    <span className="text-base">{region.icon}</span>
+                    {region.name}
+                  </button>
+                ))}
+              </div>
 
-            {/* Large Interactive Globe */}
-            <div className="flex items-center justify-center mb-6">
-              <GlobalWellnessGlobe 
-                isOverlay={true}
-                selectedRegion={selectedRegion}
-                onRegionChange={setSelectedRegion}
-              />
-            </div>
+              {/* Large Interactive Globe */}
+              <div className="flex items-center justify-center mb-6">
+                <GlobalWellnessGlobe 
+                  isOverlay={true}
+                  selectedRegion={selectedRegion}
+                  onRegionChange={setSelectedRegion}
+                />
+              </div>
 
-            {/* Stats for selected region */}
-            <div className="grid grid-cols-3 gap-4">
-              <div className="neuro-surface-inset rounded-xl p-4">
-                <div className="flex items-center gap-2 mb-2">
-                  <Users className="w-4 h-4 text-blue-400" />
-                  <h4 className="font-semibold neuro-text-primary text-sm">Total Users</h4>
+              {/* Stats for selected region */}
+              <div className="grid grid-cols-3 gap-4 mb-6">
+                <div className="neuro-surface-inset rounded-xl p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Users className="w-4 h-4 text-blue-400" />
+                    <h4 className="font-semibold neuro-text-primary text-sm">Total Users</h4>
+                  </div>
+                  <div className="text-xl font-bold text-blue-400">
+                    {currentStats.totalUsers}
+                  </div>
                 </div>
-                <div className="text-xl font-bold text-blue-400">
-                  {currentStats.totalUsers}
+                <div className="neuro-surface-inset rounded-xl p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <MapPin className="w-4 h-4 text-green-400" />
+                    <h4 className="font-semibold neuro-text-primary text-sm">Active Today</h4>
+                  </div>
+                  <div className="text-xl font-bold text-green-400">
+                    {currentStats.activeToday}
+                  </div>
+                </div>
+                <div className="neuro-surface-inset rounded-xl p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Award className="w-4 h-4 text-cyan-400" />
+                    <h4 className="font-semibold neuro-text-primary text-sm">Top Activity</h4>
+                  </div>
+                  <div className="text-xl font-bold text-cyan-400">
+                    {currentStats.topActivity}
+                  </div>
                 </div>
               </div>
-              <div className="neuro-surface-inset rounded-xl p-4">
-                <div className="flex items-center gap-2 mb-2">
-                  <MapPin className="w-4 h-4 text-green-400" />
-                  <h4 className="font-semibold neuro-text-primary text-sm">Active Today</h4>
+
+              {/* Country Reddit Communities */}
+              <div className="border-t border-gray-200 dark:border-gray-700 pt-6 pb-4">
+                <div className="flex items-center gap-2 mb-4">
+                  <MessageSquare className="w-5 h-5 neuro-text-primary" />
+                  <h3 className="text-lg font-semibold neuro-text-primary">
+                    Country Communities
+                  </h3>
                 </div>
-                <div className="text-xl font-bold text-green-400">
-                  {currentStats.activeToday}
-                </div>
-              </div>
-              <div className="neuro-surface-inset rounded-xl p-4">
-                <div className="flex items-center gap-2 mb-2">
-                  <Award className="w-4 h-4 text-cyan-400" />
-                  <h4 className="font-semibold neuro-text-primary text-sm">Top Activity</h4>
-                </div>
-                <div className="text-xl font-bold text-cyan-400">
-                  {currentStats.topActivity}
+                <p className="text-sm neuro-text-tertiary mb-4">
+                  Click on a country to open its Reddit community page
+                </p>
+                <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                  {countries.map((country) => (
+                    <button
+                      key={country.isoCode}
+                      onClick={() => handleCountryClick(country.isoCode)}
+                      className="flex flex-col items-center gap-2 p-3 neuro-surface-inset rounded-xl hover:neuro-surface-elevated transition-all duration-200 group"
+                    >
+                      <span className="text-3xl group-hover:scale-110 transition-transform">
+                        {country.flag}
+                      </span>
+                      <span className="text-xs font-medium neuro-text-primary text-center">
+                        {country.name}
+                      </span>
+                    </button>
+                  ))}
                 </div>
               </div>
             </div>

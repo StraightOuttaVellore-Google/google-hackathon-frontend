@@ -15,6 +15,11 @@ import Article4 from './pages/Article4'
 import EisenhowerMatrixPage from './pages/EisenhowerMatrixPage'
 import VoiceAIAgent from './pages/VoiceAIAgent'
 import StudyModeApp from './StudyModeApp'
+import CountryPage from './pages/CountryPage'
+import ModelsPage from './pages/ModelsPage'
+import ResearchPage from './pages/ResearchPage'
+import SciencePage from './pages/SciencePage'
+import AboutPage from './pages/AboutPage'
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -38,6 +43,18 @@ createRoot(document.getElementById('root')).render(
           />
           <Route path="/voice-ai" element={<VoiceAIAgent />} />
           <Route path="/study-mode" element={<StudyModeApp />} />
+          <Route 
+            path="/reddit/:isoCode" 
+            element={
+              <ProtectedRoute>
+                <CountryPage />
+              </ProtectedRoute>
+            } 
+          />
+          <Route path="/models" element={<ModelsPage />} />
+          <Route path="/research" element={<ResearchPage />} />
+          <Route path="/science" element={<SciencePage />} />
+          <Route path="/about" element={<AboutPage />} />
           <Route 
             path="/app/*" 
             element={

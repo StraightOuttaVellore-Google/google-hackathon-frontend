@@ -307,19 +307,31 @@ export default function LandingPage() {
             
             {/* Inline Navigation */}
             <nav className="hidden md:flex items-center gap-12">
-              <button className="text-white/80 hover:text-white font-medium text-xl transition-all duration-300 relative group">
+              <button 
+                onClick={() => navigate('/models')}
+                className="text-white/80 hover:text-white font-medium text-xl transition-all duration-300 relative group"
+              >
                 Models
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#4285f4] to-[#a142f4] group-hover:w-full transition-all duration-300"></span>
               </button>
-              <button className="text-white/80 hover:text-white font-medium text-xl transition-all duration-300 relative group">
+              <button 
+                onClick={() => navigate('/research')}
+                className="text-white/80 hover:text-white font-medium text-xl transition-all duration-300 relative group"
+              >
                 Research
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#4285f4] to-[#a142f4] group-hover:w-full transition-all duration-300"></span>
               </button>
-              <button className="text-white/80 hover:text-white font-medium text-xl transition-all duration-300 relative group">
+              <button 
+                onClick={() => navigate('/science')}
+                className="text-white/80 hover:text-white font-medium text-xl transition-all duration-300 relative group"
+              >
                 Science
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#4285f4] to-[#a142f4] group-hover:w-full transition-all duration-300"></span>
               </button>
-              <button className="text-white/80 hover:text-white font-medium text-xl transition-all duration-300 relative group">
+              <button 
+                onClick={() => navigate('/about')}
+                className="text-white/80 hover:text-white font-medium text-xl transition-all duration-300 relative group"
+              >
                 About
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#4285f4] to-[#a142f4] group-hover:w-full transition-all duration-300"></span>
               </button>
@@ -385,16 +397,40 @@ export default function LandingPage() {
         {isMobileMenuOpen && (
           <div className="md:hidden bg-[#060606] border-t border-gray-800/50 pl-20 pr-6 py-4">
             <nav className="flex flex-col space-y-6">
-              <button className="text-white/80 hover:text-white font-medium text-xl transition-colors text-left">
+              <button 
+                onClick={() => {
+                  navigate('/models')
+                  setIsMobileMenuOpen(false)
+                }}
+                className="text-white/80 hover:text-white font-medium text-xl transition-colors text-left"
+              >
                 Models
               </button>
-              <button className="text-white/80 hover:text-white font-medium text-xl transition-colors text-left">
+              <button 
+                onClick={() => {
+                  navigate('/research')
+                  setIsMobileMenuOpen(false)
+                }}
+                className="text-white/80 hover:text-white font-medium text-xl transition-colors text-left"
+              >
                 Research
               </button>
-              <button className="text-white/80 hover:text-white font-medium text-xl transition-colors text-left">
+              <button 
+                onClick={() => {
+                  navigate('/science')
+                  setIsMobileMenuOpen(false)
+                }}
+                className="text-white/80 hover:text-white font-medium text-xl transition-colors text-left"
+              >
                 Science
               </button>
-              <button className="text-white/80 hover:text-white font-medium text-xl transition-colors text-left">
+              <button 
+                onClick={() => {
+                  navigate('/about')
+                  setIsMobileMenuOpen(false)
+                }}
+                className="text-white/80 hover:text-white font-medium text-xl transition-colors text-left"
+              >
                 About
               </button>
             </nav>
