@@ -79,7 +79,7 @@ export default function CommentTree({ postId, comments, onCommentCreated }) {
     const shouldContinue = depth < maxDepth
 
     return (
-      <div key={comment.id} className={isReply ? 'ml-6 border-l-2 border-white/10 pl-4' : ''}>
+      <div key={comment.id} className={isReply ? 'ml-6 border-l-2 border-white/10 dark:border-white/10 light:border-black/10 pl-4' : ''}>
         <div className="neuro-surface-inset rounded-xl p-4 mb-3">
           <div className="flex items-start gap-3">
             {/* Vote Section */}

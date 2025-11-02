@@ -3,7 +3,7 @@ import Globe from 'globe.gl'
 import * as THREE from 'three'
 import { useTheme } from '../contexts/ThemeContext'
 
-export default function GlobalWellnessGlobe({ isOverlay = false, selectedRegion, onRegionChange }) {
+export default function GlobalWellnessGlobe({ isOverlay = false, selectedRegion, onRegionChange, countries = [], countryNameToIso = {}, onCountryClick }) {
   const globeContainerRef = useRef()
   const globeInstance = useRef()
   const [hoveredRegion, setHoveredRegion] = useState(null)
@@ -48,6 +48,10 @@ export default function GlobalWellnessGlobe({ isOverlay = false, selectedRegion,
     if (!isOverlay) {
       globe.controls().autoRotate = true
       globe.controls().autoRotateSpeed = 0.6
+    } else {
+      // Slow rotation for overlay
+      globe.controls().autoRotate = true
+      globe.controls().autoRotateSpeed = 0.2
     }
     
     // Disable zoom for mini globe
@@ -75,14 +79,37 @@ export default function GlobalWellnessGlobe({ isOverlay = false, selectedRegion,
               .polygonCapCurvatureResolution(isOverlay ? 3 : 5)
               .onPolygonHover((polygon) => {
                 if (isOverlay && polygon) {
-                  setHoveredRegion(polygon.properties?.name || 'Unknown')
+                  const countryName = polygon.properties?.name || 'Unknown'
+                  setHoveredRegion(countryName)
                 } else {
                   setHoveredRegion(null)
                 }
               })
               .onPolygonClick((polygon) => {
-                if (isOverlay && polygon && onRegionChange) {
-                  onRegionChange(polygon.properties?.name || 'Unknown')
+                if (isOverlay && polygon) {
+                  const countryName = polygon.properties?.name || 'Unknown'
+                  
+                  // Check if clicked country is in our list of 12 countries
+                  // Try exact match first
+                  let isoCode = countryNameToIso[countryName]
+                  
+                  // If no match, try finding by checking if country name contains any of our country names
+                  if (!isoCode) {
+                    for (const [name, code] of Object.entries(countryNameToIso)) {
+                      if (countryName.includes(name) || name.includes(countryName)) {
+                        isoCode = code
+                        break
+                      }
+                    }
+                  }
+                  
+                  if (isoCode && onCountryClick) {
+                    // Country is in our list, open Reddit page
+                    onCountryClick(isoCode)
+                  } else if (onRegionChange) {
+                    // Fallback to region change if country not in list
+                    onRegionChange(countryName)
+                  }
                 }
               })
 
@@ -123,16 +150,35 @@ export default function GlobalWellnessGlobe({ isOverlay = false, selectedRegion,
         globeInstance.current._destructor?.()
       }
     }
-  }, [isOverlay, size, onRegionChange, theme])
+  }, [isOverlay, size, onRegionChange, theme, countries, countryNameToIso, onCountryClick])
+
+  // Check if hovered country is clickable (in our list of 12)
+  const isClickableCountry = () => {
+    if (!hoveredRegion) return false
+    if (countryNameToIso[hoveredRegion]) return true
+    
+    // Fuzzy match check
+    for (const [name] of Object.entries(countryNameToIso)) {
+      if (hoveredRegion.includes(name) || name.includes(hoveredRegion)) {
+        return true
+      }
+    }
+    return false
+  }
 
   return (
     <div style={{ position: 'relative', width: `${size}px`, height: `${size}px` }}>
       <div ref={globeContainerRef} />
       
-      {/* Region name tooltip */}
+      {/* Country name tooltip */}
       {isOverlay && hoveredRegion && (
         <div className="absolute top-4 left-1/2 transform -translate-x-1/2 neuro-surface-elevated px-4 py-2 rounded-lg animate-fadeIn pointer-events-none z-10">
-          <span className="text-sm font-semibold neuro-text-primary">{hoveredRegion}</span>
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-semibold neuro-text-primary">{hoveredRegion}</span>
+            {isClickableCountry() && (
+              <span className="text-xs neuro-text-secondary">(Click to open Reddit)</span>
+            )}
+          </div>
         </div>
       )}
     </div>

@@ -50,12 +50,12 @@ const HistoryOverlay = ({ isOpen, onClose }) => {
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
       <div className="neumorphic-timer-card-container max-w-4xl w-full max-h-[90vh] overflow-hidden rounded-2xl">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-white/20 bg-black/20">
+        <div className="flex items-center justify-between p-6 border-b border-white/20 dark:border-white/20 light:border-black/20 bg-black/20 calendar-header">
           <div>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-white dark:text-white light:text-black">
               Study History & Progress
             </h2>
-            <p className="text-white/80">
+            <p className="text-white/80 dark:text-white/80 light:text-black/80">
               Track your study patterns and progress
             </p>
           </div>
@@ -73,39 +73,39 @@ const HistoryOverlay = ({ isOpen, onClose }) => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div className="neumorphic-matrix-card p-6 rounded-xl">
               <div className="flex items-center gap-3 mb-2">
-                <CheckCircle className="w-6 h-6 text-blue-400" />
-                <h3 className="text-lg font-semibold text-white">Task Completion</h3>
+                <CheckCircle className="w-6 h-6 text-blue-400 dark:text-blue-400 light:text-blue-600" />
+                <h3 className="text-lg font-semibold text-white dark:text-white light:text-black">Task Completion</h3>
               </div>
-              <div className="text-3xl font-bold text-white mb-1">
+              <div className="text-3xl font-bold text-white dark:text-white light:text-black mb-1">
                 {completedTasks}/{totalTasks}
               </div>
-              <div className="text-sm text-white/80">
+              <div className="text-sm text-white/80 dark:text-white/80 light:text-black/80">
                 {completionRate}% completion rate
               </div>
             </div>
 
             <div className="neumorphic-matrix-card p-6 rounded-xl">
               <div className="flex items-center gap-3 mb-2">
-                <TrendingUp className="w-6 h-6 text-green-400" />
-                <h3 className="text-lg font-semibold text-white">Study Streak</h3>
+                <TrendingUp className="w-6 h-6 text-green-400 dark:text-green-400 light:text-green-600" />
+                <h3 className="text-lg font-semibold text-white dark:text-white light:text-black">Study Streak</h3>
               </div>
-              <div className="text-3xl font-bold text-white mb-1">
+              <div className="text-3xl font-bold text-white dark:text-white light:text-black mb-1">
                 {recentDays.filter(day => day.data).length}
               </div>
-              <div className="text-sm text-white/80">
+              <div className="text-sm text-white/80 dark:text-white/80 light:text-black/80">
                 Days with journal entries
               </div>
             </div>
 
             <div className="neumorphic-matrix-card p-6 rounded-xl">
               <div className="flex items-center gap-3 mb-2">
-                <Calendar className="w-6 h-6 text-purple-400" />
-                <h3 className="text-lg font-semibold text-white">Total Days</h3>
+                <Calendar className="w-6 h-6 text-purple-400 dark:text-purple-400 light:text-purple-600" />
+                <h3 className="text-lg font-semibold text-white dark:text-white light:text-black">Total Days</h3>
               </div>
-              <div className="text-3xl font-bold text-white mb-1">
+              <div className="text-3xl font-bold text-white dark:text-white light:text-black mb-1">
                 {studyData.stress_jounral_data.length}
               </div>
-              <div className="text-sm text-white/80">
+              <div className="text-sm text-white/80 dark:text-white/80 light:text-black/80">
                 Journal entries recorded
               </div>
             </div>
@@ -113,7 +113,7 @@ const HistoryOverlay = ({ isOpen, onClose }) => {
 
           {/* Recent Days */}
           <div className="mb-8">
-            <h3 className="text-xl font-semibold text-white mb-4">
+            <h3 className="text-xl font-semibold text-white dark:text-white light:text-black mb-4">
               Last 7 Days
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -130,10 +130,10 @@ const HistoryOverlay = ({ isOpen, onClose }) => {
                     }`}
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <div className="text-sm font-medium text-white/80">
+                      <div className="text-sm font-medium text-white/80 dark:text-white/80 light:text-black/80">
                         {date.toLocaleDateString('en-US', { weekday: 'short' })}
                       </div>
-                      <div className="text-sm text-white/60">
+                      <div className="text-sm text-white/60 dark:text-white/60 light:text-black/60">
                         {date.getDate()}/{date.getMonth() + 1}
                       </div>
                     </div>
@@ -142,18 +142,18 @@ const HistoryOverlay = ({ isOpen, onClose }) => {
                       <div>
                         <div className="flex items-center gap-2 mb-2">
                           <span className="text-2xl">{data.emoji}</span>
-                          <span className="text-sm font-medium text-white">
+                          <span className="text-sm font-medium text-white dark:text-white light:text-black">
                             {emojiInfo.label}
                           </span>
                         </div>
-                        <p className="text-sm text-white/80 line-clamp-2">
+                        <p className="text-sm text-white/80 dark:text-white/80 light:text-black/80 line-clamp-2">
                           {data.summary}
                         </p>
                       </div>
                     ) : (
                       <div className="text-center py-4">
-                        <Clock className="w-8 h-8 text-white/40 mx-auto mb-2" />
-                        <p className="text-sm text-white/60">
+                        <Clock className="w-8 h-8 text-white/40 dark:text-white/40 light:text-black/40 mx-auto mb-2" />
+                        <p className="text-sm text-white/60 dark:text-white/60 light:text-black/60">
                           No journal entry
                         </p>
                       </div>
@@ -167,7 +167,7 @@ const HistoryOverlay = ({ isOpen, onClose }) => {
           {/* All Journal Entries */}
           {studyData.stress_jounral_data.length > 0 && (
             <div>
-              <h3 className="text-xl font-semibold text-white mb-4">
+              <h3 className="text-xl font-semibold text-white dark:text-white light:text-black mb-4">
                 All Journal Entries
               </h3>
               <div className="space-y-4">
@@ -185,15 +185,15 @@ const HistoryOverlay = ({ isOpen, onClose }) => {
                         <div className="flex items-center justify-between mb-2">
                           <div className="flex items-center gap-2">
                             <span className="text-2xl">{entry.emoji}</span>
-                            <span className="font-medium text-white">
+                            <span className="font-medium text-white dark:text-white light:text-black">
                               {emojiInfo.label}
                             </span>
                           </div>
-                          <div className="text-sm text-white/80">
+                          <div className="text-sm text-white/80 dark:text-white/80 light:text-black/80">
                             {entryDate.toLocaleDateString()}
                           </div>
                         </div>
-                        <p className="text-white/80">
+                        <p className="text-white/80 dark:text-white/80 light:text-black/80">
                           {entry.summary}
                         </p>
                       </div>
@@ -205,11 +205,11 @@ const HistoryOverlay = ({ isOpen, onClose }) => {
 
           {studyData.stress_jounral_data.length === 0 && (
             <div className="text-center py-12">
-              <AlertCircle className="w-16 h-16 text-white/40 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-white/80 mb-2">
+              <AlertCircle className="w-16 h-16 text-white/40 dark:text-white/40 light:text-black/40 mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-white/80 dark:text-white/80 light:text-black/80 mb-2">
                 No Journal Entries Yet
               </h3>
-              <p className="text-white/60">
+              <p className="text-white/60 dark:text-white/60 light:text-black/60">
                 Start journaling to track your study progress and mood!
               </p>
             </div>

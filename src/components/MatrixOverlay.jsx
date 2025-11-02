@@ -159,11 +159,11 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
     const statusInfo = statusConfig[task.status] || statusConfig[TaskStatus.TODO];
     
     return (
-      <div className="group p-3 bg-black/20 rounded-lg hover:bg-black/30 transition-all duration-200 mb-2">
+      <div className="group p-3 bg-black/20 rounded-lg hover:bg-black/30 transition-all duration-200 mb-2 task-item">
         <div className="flex items-start justify-between">
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
-              <h4 className={`font-medium text-sm truncate text-white ${task.status === TaskStatus.COMPLETED ? 'line-through opacity-60' : ''}`}>
+              <h4 className={`font-medium text-sm truncate text-white dark:text-white light:text-black ${task.status === TaskStatus.COMPLETED ? 'line-through opacity-60' : ''}`}>
                 {task.title}
               </h4>
               <span className={`px-2 py-1 rounded-full text-xs font-medium ${statusInfo.color}`}>
@@ -171,11 +171,11 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
               </span>
             </div>
             {task.description && (
-              <p className="text-xs text-white/60 line-clamp-2 mb-2">
+              <p className="text-xs text-white/60 dark:text-white/60 light:text-black/60 line-clamp-2 mb-2">
                 {task.description}
               </p>
             )}
-            <div className="text-xs text-white/40">
+            <div className="text-xs text-white/40 dark:text-white/40 light:text-black/40">
               {task.due_date ? `Due ${new Date(task.due_date).toLocaleDateString()}` : `Created ${new Date(task.created_at).toLocaleDateString()}`}
             </div>
           </div>
@@ -190,7 +190,7 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
               >
                 <span>{statusConfig[task.status]?.label || 'Select Status'}</span>
                 <svg 
-                  className={`w-3 h-3 text-white/60 transition-transform duration-200 ${isStatusDropdownOpen[task.id] ? 'rotate-180' : ''}`} 
+                  className={`w-3 h-3 text-white/60 dark:text-white/60 light:text-black/60 transition-transform duration-200 ${isStatusDropdownOpen[task.id] ? 'rotate-180' : ''}`} 
                   fill="none" 
                   stroke="currentColor" 
                   viewBox="0 0 24 24"
@@ -222,9 +222,9 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
                 e.stopPropagation();
                 handleEditTask(task);
               }}
-              className="p-1 hover:bg-white/10 rounded transition-colors opacity-0 group-hover:opacity-100"
+              className="p-1 hover:bg-white/10 dark:hover:bg-white/10 light:hover:bg-black/10 rounded transition-colors opacity-0 group-hover:opacity-100"
             >
-              <Edit2 className="w-3 h-3 text-white/80" />
+              <Edit2 className="w-3 h-3 text-white/80 dark:text-white/80 light:text-black/80" />
             </button>
             <button
               onClick={(e) => {
@@ -345,13 +345,13 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
         <div className="p-6 overflow-y-auto max-h-[calc(90vh-120px)] neumorphic-scrollbar">
           {/* Add/Edit Task Form */}
           {isAddingTask && (
-            <div className="mb-6 p-4 bg-black/20 rounded-lg">
-              <h3 className="text-lg font-semibold mb-4 text-white">
+            <div className="mb-6 p-4 bg-black/20 rounded-lg add-task-form">
+              <h3 className="text-lg font-semibold mb-4 text-white dark:text-white light:text-black">
                 {editingTask ? 'Edit Task' : 'Add New Task'}
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-white/80 dark:text-white/80 light:text-black/80 mb-1">
                     Title
                   </label>
                   <input
@@ -363,7 +363,7 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-white/80 dark:text-white/80 light:text-black/80 mb-1">
                     Priority Quadrant
                   </label>
                   <div className="relative">
@@ -376,7 +376,7 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
                     >
                       <span>{quadrantConfig[newTask.quadrant]?.title || 'Select Quadrant'}</span>
                       <svg 
-                        className={`w-4 h-4 text-white/60 transition-transform duration-200 ${isQuadrantDropdownOpen ? 'rotate-180' : ''}`} 
+                        className={`w-4 h-4 text-white/60 dark:text-white/60 light:text-black/60 transition-transform duration-200 ${isQuadrantDropdownOpen ? 'rotate-180' : ''}`} 
                         fill="none" 
                         stroke="currentColor" 
                         viewBox="0 0 24 24"
@@ -405,7 +405,7 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
                   </div>
                 </div>
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-white/80 dark:text-white/80 light:text-black/80 mb-1">
                     Description
                   </label>
                   <textarea
@@ -417,7 +417,7 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-white/80 dark:text-white/80 light:text-black/80 mb-1">
                     Due Date *
                   </label>
                   <input

@@ -41,7 +41,7 @@ export default function PostForm({ isoCode, countryName, onPostCreated, onCancel
 
   return (
     <div className="neuro-surface-inset rounded-xl overflow-hidden">
-      <div className="p-4 border-b border-white/10 flex items-center justify-between">
+      <div className="p-4 border-b border-white/10 dark:border-white/10 light:border-black/10 flex items-center justify-between">
         <h3 className="text-lg font-semibold neuro-text-primary">
           Create Post in r/{countryName}
         </h3>

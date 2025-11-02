@@ -240,7 +240,7 @@ const CalendarOverlay = ({ isOpen, onClose, selectedDate }) => {
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-6 bg-black/20">
+        <div className="flex items-center justify-between p-6 bg-black/20 calendar-header">
           <div>
             <h2 className="text-2xl font-bold text-white dark:text-white light:text-black">
               {selectedDate ? `Tasks for ${selectedDate.toLocaleDateString()}` : 'Daily Tasks'}
@@ -258,9 +258,9 @@ const CalendarOverlay = ({ isOpen, onClose, selectedDate }) => {
         </div>
 
         {/* Content */}
-        <div className="p-6 max-h-[calc(80vh-120px)] overflow-y-auto neumorphic-scrollbar" style={{ overflowX: 'visible' }}>
+        <div className="p-6 max-h-[calc(80vh-120px)] overflow-y-auto neumorphic-scrollbar" style={{ overflowX: 'visible', position: 'relative' }}>
           {/* Daily Summary Section */}
-          <div className="mb-6 p-4 bg-black/20 rounded-lg">
+          <div className="mb-6 p-4 bg-black/20 rounded-lg daily-summary">
             <h3 className="text-lg font-semibold text-white dark:text-white light:text-black mb-3 flex items-center gap-2">
               📊 Daily Summary
             </h3>
@@ -309,7 +309,7 @@ const CalendarOverlay = ({ isOpen, onClose, selectedDate }) => {
 
           {/* Add Task Form */}
           {isAddingTask && (
-            <div className="mb-6 p-4 bg-black/20 rounded-lg">
+            <div className="mb-6 p-4 bg-black/20 rounded-lg add-task-form">
               <h3 className="text-lg font-semibold mb-4 text-white dark:text-white light:text-black">Add New Task</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
@@ -429,7 +429,7 @@ const CalendarOverlay = ({ isOpen, onClose, selectedDate }) => {
                 return (
                   <div
                     key={task.id}
-                    className={`neumorphic-matrix-card p-4 rounded-lg relative transition-all duration-300 ${isStatusDropdownOpen[task.id] || isQuadrantDropdownOpen[task.id] ? 'overflow-y-auto neumorphic-scrollbar max-h-48' : 'overflow-visible'}`}
+                    className={`neumorphic-matrix-card p-4 rounded-lg relative transition-all duration-300 ${isStatusDropdownOpen[task.id] ? 'neumorphic-matrix-card-dropdown-open' : ''}`}
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
@@ -448,8 +448,8 @@ const CalendarOverlay = ({ isOpen, onClose, selectedDate }) => {
                           {quadrantInfo.title} • {task.due_date ? `Due ${new Date(task.due_date).toLocaleDateString()}` : `Created ${new Date(task.created_at).toLocaleDateString()}`}
                         </p>
                       </div>
-                      <div className="flex items-center gap-2 ml-4">
-                        <div className="relative">
+                      <div className="flex items-center gap-2 ml-4" style={{ position: 'relative', zIndex: isStatusDropdownOpen[task.id] ? 1000 : 'auto' }}>
+                        <div className="relative" style={{ zIndex: isStatusDropdownOpen[task.id] ? 1001 : 'auto' }}>
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
@@ -469,7 +469,7 @@ const CalendarOverlay = ({ isOpen, onClose, selectedDate }) => {
                           </button>
                           
                           {isStatusDropdownOpen[task.id] && (
-                            <div className="neumorphic-dropdown-options-scrollable neumorphic-scrollbar">
+                            <div className="neumorphic-dropdown-options-scrollable neumorphic-scrollbar" style={{ zIndex: 1002 }}>
                               {Object.entries(statusConfig).map(([key, config]) => (
                                 <button
                                   key={key}

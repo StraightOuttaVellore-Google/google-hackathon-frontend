@@ -46,9 +46,9 @@ export default function CountryPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-black">
+      <div className="min-h-screen flex items-center justify-center bg-black dark:bg-black light:bg-[var(--bg)]">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white dark:border-white light:border-black mx-auto mb-4"></div>
           <p className="neuro-text-secondary">Loading...</p>
         </div>
       </div>
@@ -57,9 +57,9 @@ export default function CountryPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-black">
+      <div className="min-h-screen flex items-center justify-center bg-black dark:bg-black light:bg-[var(--bg)]">
         <div className="text-center neuro-surface-inset p-8 rounded-xl">
-          <p className="neuro-text-primary mb-4 text-red-400">{error}</p>
+          <p className="neuro-text-primary mb-4 text-red-400 dark:text-red-400 light:text-red-600">{error}</p>
           <button
             onClick={() => navigate('/app')}
             className="neuro-button-primary px-6 py-2 rounded-xl"
@@ -73,7 +73,7 @@ export default function CountryPage() {
 
   if (!country) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-black">
+      <div className="min-h-screen flex items-center justify-center bg-black dark:bg-black light:bg-[var(--bg)]">
         <div className="text-center neuro-surface-inset p-8 rounded-xl">
           <p className="neuro-text-secondary mb-4">Country not found</p>
           <button
@@ -88,9 +88,9 @@ export default function CountryPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-black dark:bg-black light:bg-[var(--bg)]">
       {/* Header */}
-      <div className="neuro-surface-inset border-b border-white/10 sticky top-0 z-50 backdrop-blur-sm">
+      <div className="neuro-surface-inset border-b border-white/10 dark:border-white/10 light:border-black/10 sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-6xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">

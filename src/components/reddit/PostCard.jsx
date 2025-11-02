@@ -172,7 +172,7 @@ export default function PostCard({ post, onUpdate }) {
 
       {/* Comments Section */}
       {showComments && (
-        <div className="border-t border-white/10 neuro-surface-inset p-6">
+        <div className="border-t border-white/10 dark:border-white/10 light:border-black/10 neuro-surface-inset p-6">
           <CommentTree
             postId={post.id}
             comments={comments}
