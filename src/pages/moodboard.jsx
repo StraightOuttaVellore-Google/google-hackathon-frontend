@@ -21,7 +21,7 @@ export default function MoodBoardWidget({ onCalendarDayClick, onHistoryClick, on
       >
         <div className="flex gap-8 w-full">
           <div className="w-1/4">
-            <VoiceAICard />
+            <VoiceAICard mode="study" />
           </div>
           <div className="w-1/3">
             <MonthlyCalendar onDayClick={handleDayClick} />

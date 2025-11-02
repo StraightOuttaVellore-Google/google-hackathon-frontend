@@ -2847,3 +2847,41 @@ body.light .neumorphic-timer-card:hover,
 .light .absolute.inset-0[class*="bg-black"] {
   background: rgba(37, 50, 59, 0.25) !important;
 }
+
+/* Neomorphic Inset - For subtle inset effects */
+.neumorphic-inset {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 
+    inset 2px 2px 4px rgba(0, 0, 0, 0.7),
+    inset -2px -2px 4px rgba(60, 60, 60, 0.3);
+}
+
+.light .neumorphic-inset {
+  background: rgba(232, 242, 236, 0.6);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 
+    inset 2px 2px 4px rgba(221, 231, 224, 0.4),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.7);
+}
+
+/* Neomorphic Inset Subtle (even more subtle for tags/badges) */
+.neumorphic-inset-subtle {
+  box-shadow: 
+    inset 1px 1px 2px rgba(0, 0, 0, 0.5),
+    inset -1px -1px 2px rgba(60, 60, 60, 0.2);
+}
+
+.light .neumorphic-inset-subtle {
+  box-shadow: 
+    inset 1px 1px 2px rgba(221, 231, 224, 0.3),
+    inset -1px -1px 2px rgba(255, 255, 255, 0.8);
+}
+
+/* Line clamp utilities */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

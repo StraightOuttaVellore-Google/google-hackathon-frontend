@@ -33,9 +33,7 @@ export default function GlobalWellnessGlobe({ isOverlay = false, selectedRegion,
       // Custom globe material - realistic Earth colors only in light mode
       .globeMaterial(new THREE.MeshBasicMaterial({
         color: theme === 'light' ? '#4A90E2' : '#1a1a1a', // Light: Ocean blue, Dark/Black: Original dark gray
-        wireframe: true,
-        wireframeLinewidth: 1,
-        wireframeColor: theme === 'light' ? '#87CEEB' : '#333333' // Light: Sky blue, Dark/Black: Original dark gray
+        wireframe: true
       }))
       
       // Camera controls

@@ -81,11 +81,14 @@ export default function Community() {
 
       const data = await response.json()
       console.log('✅ Fetched servers:', data)
-      setServers(data)
+      
+      // Extract servers array from response
+      const serversList = data.servers || []
+      setServers(serversList)
       
       // Auto-select first server
-      if (data.length > 0) {
-        setSelectedServer(data[0])
+      if (serversList.length > 0) {
+        setSelectedServer(serversList[0])
       }
     } catch (err) {
       console.error('Error fetching servers:', err)
@@ -116,7 +119,9 @@ export default function Community() {
       }
 
       const data = await response.json()
-      setChannels(data)
+      // Extract channels array from response
+      const channelsList = data.channels || []
+      setChannels(channelsList)
     } catch (err) {
       console.error('Error fetching channels:', err)
       setError('Failed to load channels')

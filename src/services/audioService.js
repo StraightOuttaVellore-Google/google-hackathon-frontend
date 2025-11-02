@@ -22,6 +22,10 @@ export class AudioService {
     this.audioQueue = [];
     this.isPlaying = false;
     this.activeSource = null;
+    
+    // Track actually played audio chunks for transcription
+    this.playedAudioChunks = [];
+    this.currentTurnChunks = [];
 
     // Audio settings - matching standalone implementation exactly
     this.TARGET_SAMPLE_RATE = 16000; // Input sample rate
@@ -307,13 +311,34 @@ export class AudioService {
 
   // Stop playback and clear the queue
   stopPlayback() {
-    logger.info('Stopping playback and clearing audio queue', {}, 'AudioService');
+    const unplayedCount = this.audioQueue.length;
+    const playedCount = this.playedAudioChunks.length;
+    
+    logger.info('Stopping playback and clearing audio queue', { 
+      playedChunks: playedCount,
+      unplayedChunks: unplayedCount
+    }, 'AudioService');
+    
     if (this.activeSource) {
       this.activeSource.stop();
       this.activeSource = null;
     }
-    this.audioQueue = []; // Clear the queue
+    
+    this.audioQueue = []; // Clear the queue (unplayed chunks)
+    this.currentTurnChunks = []; // Clear received chunks
+    // Keep playedAudioChunks - they were actually played!
     this.isPlaying = false;
+  }
+  
+  // Get played audio chunks for transcription
+  getPlayedAudioChunks() {
+    return [...this.playedAudioChunks]; // Return copy
+  }
+  
+  // Clear played audio chunks (after transcription sent)
+  clearPlayedAudioChunks() {
+    logger.debug('Clearing played audio chunks', { count: this.playedAudioChunks.length }, 'AudioService');
+    this.playedAudioChunks = [];
   }
 
   // Queue audio for playback
@@ -344,8 +369,14 @@ export class AudioService {
       // Create the AudioBuffer from the raw data
       const audioBuffer = await this.createAudioBuffer(bytes.buffer, mimeType);
       
-      // Add the processed buffer to our queue
-      this.audioQueue.push(audioBuffer);
+      // Add BOTH the buffer AND original data to queue (for transcription tracking)
+      this.audioQueue.push({
+        buffer: audioBuffer,
+        originalData: audioData  // Keep original base64 for transcription
+      });
+      
+      // Track this chunk as part of current turn (received, not yet played)
+      this.currentTurnChunks.push(audioData);
       
       // If the player isn't already running, start it.
       if (!this.isPlaying) {
@@ -367,10 +398,17 @@ export class AudioService {
     logger.info('Starting audio queue processing', { queueSize: this.audioQueue.length }, 'AudioService');
 
     while (this.audioQueue.length > 0) {
-      const audioBuffer = this.audioQueue.shift(); // Get the next buffer from the front of the queue
-      if (audioBuffer) {
+      const audioItem = this.audioQueue.shift(); // Get the next item from the front of the queue
+      if (audioItem) {
         try {
-          await this.playBuffer(audioBuffer);
+          // Play the buffer
+          await this.playBuffer(audioItem.buffer);
+          
+          // Track that this chunk was ACTUALLY PLAYED
+          this.playedAudioChunks.push(audioItem.originalData);
+          logger.debug('Chunk played and tracked for transcription', { 
+            totalPlayed: this.playedAudioChunks.length 
+          }, 'AudioService');
         } catch (error) {
           logger.error('Error playing buffer from queue', { error }, 'AudioService');
           // If one buffer fails, stop processing to avoid a cascade of errors
@@ -380,7 +418,9 @@ export class AudioService {
       }
     }
     
-    logger.info('Audio queue processing finished', {}, 'AudioService');
+    logger.info('Audio queue processing finished', { 
+      totalPlayed: this.playedAudioChunks.length 
+    }, 'AudioService');
     this.isPlaying = false;
   }
 

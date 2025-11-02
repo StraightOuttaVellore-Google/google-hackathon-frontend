@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import VoiceAIOverlay from './VoiceAIOverlay'
 
-export default function VoiceAICard() {
+export default function VoiceAICard({ mode = 'wellness' }) {
   const [isOverlayOpen, setIsOverlayOpen] = useState(false)
 
   const handleTalkClick = () => {
@@ -67,10 +67,11 @@ export default function VoiceAICard() {
         </div>
       </div>
 
-      {/* Voice AI Overlay */}
+      {/* Voice AI Overlay - Pass mode prop (study or wellness) */}
       <VoiceAIOverlay 
         isOpen={isOverlayOpen} 
-        onClose={() => setIsOverlayOpen(false)} 
+        onClose={() => setIsOverlayOpen(false)}
+        mode={mode}
       />
     </>
   )

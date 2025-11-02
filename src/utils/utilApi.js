@@ -94,6 +94,16 @@ export async function apiRequest(endpoint, options = {}) {
     if (error.name === 'AbortError') {
       throw new ApiError('Request timeout', 408);
     }
+    
+    // Provide more helpful error messages for connection issues
+    if (error.message.includes('Failed to fetch') || error.message.includes('ERR_CONNECTION_REFUSED')) {
+      throw new ApiError(
+        `Cannot connect to backend server. Please ensure the backend is running on ${API_BASE_URL}. ` +
+        `Start it with: uvicorn main:app --host 0.0.0.0 --port 8000 --reload`,
+        0
+      );
+    }
+    
     throw new ApiError(`Network error: ${error.message}`, 0);
   }
 }
@@ -108,6 +118,11 @@ export async function apiRequest(endpoint, options = {}) {
 export const handleApiError = (error) => {
   if (error instanceof ApiError) {
     switch (error.status) {
+      case 0:
+        // Connection errors (status 0 means network error)
+        return error.message.includes('Cannot connect to backend')
+          ? error.message
+          : 'Cannot connect to server. Please check if the backend is running.';
       case 400:
         return 'Bad request. Please check your input.';
       case 401:

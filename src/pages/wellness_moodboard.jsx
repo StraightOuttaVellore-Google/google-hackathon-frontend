@@ -33,7 +33,7 @@ export default function WellnessMoodBoardWidget() {
       >
         <div className="flex gap-8 w-full">
           <div className="w-1/4">
-        <VoiceAICard />
+        <VoiceAICard mode="wellness" />
           </div>
           <div className="w-1/3">
           <MonthlyCalendar onDayClick={handleCalendarDayClick} />

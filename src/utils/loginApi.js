@@ -4,6 +4,14 @@
 import { apiRequest, handleApiError, ApiError } from './utilApi';
 
 /**
+ * Get authentication token from localStorage
+ * @returns {string|null} - JWT token or null if not authenticated
+ */
+export const getAuthToken = () => {
+  return localStorage.getItem('access_token');
+};
+
+/**
  * Authentication API
  * Provides methods for user login and registration
  * 
