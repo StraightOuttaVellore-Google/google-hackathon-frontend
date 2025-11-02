@@ -9,15 +9,20 @@ export default function Article4() {
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-md border-b border-gray-800/50">
         <div className="flex justify-between items-center px-6 py-3" style={{ height: '64px' }}>
-          <div 
-            className="text-white font-normal cursor-pointer"
+          <div
+            className="text-white font-normal cursor-pointer flex items-center gap-2"
             style={{ 
               fontFamily: 'Google Sans, Arial, Helvetica, sans-serif',
               fontSize: '20px'
             }}
             onClick={() => navigate('/')}
           >
-            Sahayata आवाज़AI
+            <img 
+              src="/images/16f6e1ea-b24f-4aa3-826c-1d847809b91a-removebg-preview.png" 
+              alt="Sahayata Logo" 
+              className="h-12 w-12 object-contain"
+            />
+            <span>Sahayata</span>
           </div>
           <button
             onClick={() => navigate('/')}

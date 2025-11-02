@@ -1,5 +1,6 @@
 
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useTheme } from './contexts/ThemeContext'
 import StudyPage from './pages/study'
 import WellnessPage from './pages/wellness'
@@ -8,6 +9,7 @@ import UserDropdown from './components/UserDropdown'
 import NeumorphicButton from './components/NeumorphicButton'
 
 export default function App() {
+  const navigate = useNavigate()
   const { isDarkMode, isBlackMode, theme } = useTheme()
   const [isStudyMode, setIsStudyMode] = useState(true)
 
@@ -408,8 +410,21 @@ export default function App() {
         </>
       )}
 
-      {/* Theme Dropdown - Top Left */}
-      <div className="fixed top-6 left-6 z-50">
+      {/* Logo + Theme Dropdown - Top Left */}
+      <div className="fixed top-6 left-6 z-50 flex items-center gap-4">
+        <button 
+          onClick={() => navigate('/')}
+          className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+        >
+          <img 
+            src={theme === 'light' 
+              ? '/images/92e0e757-2caf-4e62-b7da-4a869da67c67-removebg-preview.png'
+              : '/images/16f6e1ea-b24f-4aa3-826c-1d847809b91a-removebg-preview.png'
+            } 
+            alt="Sahayata Logo" 
+            className="h-12 w-12 object-contain"
+          />
+        </button>
         <ThemeDropdown />
       </div>
 

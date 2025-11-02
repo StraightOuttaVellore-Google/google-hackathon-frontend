@@ -303,7 +303,17 @@ export default function LandingPage() {
           {/* Left Section - Logo + Inline Nav */}
           <div className="flex items-center gap-32">
             {/* Logo */}
-            <span className="text-white font-medium text-2xl tracking-wide" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>Sahayata आवाज़AI</span>
+            <button 
+              onClick={() => navigate('/')}
+              className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+            >
+              <img 
+                src="/images/16f6e1ea-b24f-4aa3-826c-1d847809b91a-removebg-preview.png" 
+                alt="Sahayata Logo" 
+                className="h-12 w-12 object-contain"
+              />
+              <span className="text-white font-medium text-2xl tracking-wide" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>Sahayata</span>
+            </button>
             
             {/* Inline Navigation */}
             <nav className="hidden md:flex items-center gap-12">
@@ -974,11 +984,11 @@ export default function LandingPage() {
             {/* Research Card 1 */}
             <a href="/article/article1" className="group cursor-pointer block">
               <div className="bg-black rounded-2xl overflow-hidden border border-gray-300/30 hover:border-blue-400/60 transition-all duration-300">
-                <div className="aspect-video overflow-hidden">
+                <div className="aspect-video overflow-hidden bg-black flex items-center justify-center">
                   <img 
-                    src="/images/img6.png" 
+                    src="/images/16f6e1ea-b24f-4aa3-826c-1d847809b91a-removebg-preview.png" 
                     alt="AI-Driven Conversational Agents for Youth"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
                 <div className="p-6 relative z-10">
@@ -1003,11 +1013,11 @@ export default function LandingPage() {
             {/* Research Card 2 */}
             <a href="/article/article2" className="group cursor-pointer block">
               <div className="bg-black rounded-2xl overflow-hidden border border-gray-300/30 hover:border-blue-400/60 transition-all duration-300">
-                <div className="aspect-video overflow-hidden">
+                <div className="aspect-video overflow-hidden bg-black flex items-center justify-center">
                   <img 
-                    src="/images/img6.png" 
+                    src="/images/16f6e1ea-b24f-4aa3-826c-1d847809b91a-removebg-preview.png" 
                     alt="Voice-Based Depression Recognition"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
                 <div className="p-6 relative z-10">
@@ -1032,11 +1042,11 @@ export default function LandingPage() {
             {/* Research Card 3 */}
             <a href="/article/article3" className="group cursor-pointer block">
               <div className="bg-black rounded-2xl overflow-hidden border border-gray-300/30 hover:border-blue-400/60 transition-all duration-300">
-                <div className="aspect-video overflow-hidden">
+                <div className="aspect-video overflow-hidden bg-black flex items-center justify-center">
                   <img 
-                    src="/images/img6.png" 
+                    src="/images/16f6e1ea-b24f-4aa3-826c-1d847809b91a-removebg-preview.png" 
                     alt="STARS Guided Chatbot Trial"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
                 <div className="p-6 relative z-10">
@@ -1061,11 +1071,11 @@ export default function LandingPage() {
             {/* Research Card 4 */}
             <a href="/article/article4" className="group cursor-pointer block">
               <div className="bg-black rounded-2xl overflow-hidden border border-gray-300/30 hover:border-blue-400/60 transition-all duration-300">
-                <div className="aspect-video overflow-hidden">
+                <div className="aspect-video overflow-hidden bg-black flex items-center justify-center">
                   <img 
-                    src="/images/img6.png" 
+                    src="/images/16f6e1ea-b24f-4aa3-826c-1d847809b91a-removebg-preview.png" 
                     alt="Federated Learning in Mental Health"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
                 <div className="p-6 relative z-10">

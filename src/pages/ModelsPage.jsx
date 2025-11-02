@@ -129,9 +129,19 @@ export default function ModelsPage() {
                 Back to Home
               </span>
             </button>
-            <span className="text-white font-medium text-2xl tracking-wide" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
-              Sahayata आवाज़AI
-            </span>
+            <button 
+              onClick={() => navigate('/')}
+              className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+            >
+              <img 
+                src="/images/16f6e1ea-b24f-4aa3-826c-1d847809b91a-removebg-preview.png" 
+                alt="Sahayata Logo" 
+                className="h-12 w-12 object-contain"
+              />
+              <span className="text-white font-medium text-2xl tracking-wide" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
+                Sahayata
+              </span>
+            </button>
           </div>
           
           <button
@@ -161,6 +171,18 @@ export default function ModelsPage() {
       >
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-16">
+            {/* Logo first */}
+            <div className="mb-8 flex justify-center">
+              <img 
+                src="/images/16f6e1ea-b24f-4aa3-826c-1d847809b91a-removebg-preview.png" 
+                alt="Sahayata Logo" 
+                className="object-contain opacity-100"
+                style={{ 
+                  width: '200px',
+                  height: '200px'
+                }}
+              />
+            </div>
             <h1 
               className="text-6xl md:text-7xl font-bold mb-6"
               style={{ 

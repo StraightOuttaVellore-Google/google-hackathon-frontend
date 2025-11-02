@@ -67,14 +67,19 @@ export default function ModernLogin() {
       {/* Logo - Top Left (Clickable) */}
       <button 
         onClick={() => navigate('/')}
-        className="absolute top-6 left-6 hover:opacity-80 transition-opacity"
+        className="absolute top-6 left-6 hover:opacity-80 transition-opacity flex items-center gap-2"
       >
+        <img 
+          src="/images/16f6e1ea-b24f-4aa3-826c-1d847809b91a-removebg-preview.png" 
+          alt="Sahayata Logo" 
+          className="h-12 w-12 object-contain"
+        />
         <span className={`font-medium text-2xl tracking-wide ${
           isDarkMode ? 'text-white' : 'text-gray-900'
         }`} style={{ 
           fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' 
         }}>
-          Sahayata आवाज़AI
+          Sahayata
         </span>
       </button>
 

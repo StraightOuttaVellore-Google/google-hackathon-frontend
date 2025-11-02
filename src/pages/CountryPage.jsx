@@ -94,6 +94,17 @@ export default function CountryPage() {
         <div className="max-w-6xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
+              {/* Logo */}
+              <button
+                onClick={() => navigate('/')}
+                className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+              >
+                <img 
+                  src="/images/16f6e1ea-b24f-4aa3-826c-1d847809b91a-removebg-preview.png" 
+                  alt="Sahayata Logo" 
+                  className="h-12 w-12 object-contain"
+                />
+              </button>
               <button
                 onClick={() => navigate('/app')}
                 className="neuro-button p-2 rounded-xl"
