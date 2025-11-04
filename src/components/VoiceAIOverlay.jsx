@@ -63,7 +63,8 @@ export default function VoiceAIOverlay({ isOpen, onClose, mode = 'wellness' }) {
       setIsLoadingSummaries(true)
       const data = await getVoiceJournalSummaries(20)
       setSummaries(data.summaries || [])
-      logger.info('Fetched voice journal summaries', { count: data.summaries?.length }, 'VoiceAIOverlay')
+      // Debug: Summary fetched (commented for demo)
+      // logger.info('Fetched voice journal summaries', { count: data.summaries?.length }, 'VoiceAIOverlay')
     } catch (error) {
       logger.error('Failed to fetch summaries', { error }, 'VoiceAIOverlay')
       setSummaries([])
@@ -754,8 +755,8 @@ export default function VoiceAIOverlay({ isOpen, onClose, mode = 'wellness' }) {
 
             </div>
 
-            {/* Debug Status Panel */}
-            {isConnected && (
+            {/* Debug Status Panel - Hidden for hackathon demo */}
+            {false && isConnected && (
               <div className="neumorphic-timer-card rounded-xl p-3 mb-4">
                 <h3 className="text-xs font-semibold text-white/50 mb-2">
                   🔧 Debug Status

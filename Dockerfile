@@ -7,7 +7,10 @@ WORKDIR /app
 
 # Copy package files
 COPY package*.json ./
-RUN npm ci --only=production
+
+# Install all dependencies (including dev dependencies needed for build)
+# Use --legacy-peer-deps to handle peer dependency conflicts (ui-neumorphism requires React 16 types, but we use React 19)
+RUN npm ci --legacy-peer-deps
 
 # Copy source code
 COPY . .

@@ -2,10 +2,73 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <!-- Favicon will be set dynamically by JavaScript -->
+    <link rel="icon" type="image/png" href="/images/92e0e757-2caf-4e62-b7da-4a869da67c67-removebg-preview.png" id="favicon" />
     <link href="/src/index.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
+    <title>Sahayata</title>
+    <script>
+      // Smart favicon detection based on actual tab appearance
+      (function() {
+        const darkIcon = '/images/92e0e757-2caf-4e62-b7da-4a869da67c67-removebg-preview.png'; // Dark icon (good for light tabs)
+        const lightIcon = '/images/16f6e1ea-b24f-4aa3-826c-1d847809b91a-removebg-preview.png'; // Light icon (good for dark tabs)
+        
+        function setFavicon(iconPath) {
+          const link = document.getElementById('favicon');
+          if (link) {
+            link.href = iconPath;
+          } else {
+            // Create if doesn't exist
+            const newLink = document.createElement('link');
+            newLink.rel = 'icon';
+            newLink.type = 'image/png';
+            newLink.href = iconPath;
+            newLink.id = 'favicon';
+            document.head.appendChild(newLink);
+          }
+        }
+        
+        function detectTabColor() {
+          // Firefox often has light tabs even in dark mode
+          const isFirefox = navigator.userAgent.toLowerCase().includes('firefox');
+          
+          // Check system preference
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          
+          // Smart detection logic:
+          // - Firefox: Typically has light/white tabs even in dark mode, so always use dark icon
+          // - Chrome/Edge: Usually respects system dark mode for tabs
+          // - Safari: Usually respects system dark mode for tabs
+          
+          if (isFirefox) {
+            // Firefox typically has light tabs regardless of system theme
+            // So always use dark icon for better contrast on light tabs
+            return darkIcon;
+          } else {
+            // Chrome/Edge/Safari: These browsers usually match tab color to system theme
+            // Dark system = dark tabs = use light icon (better contrast)
+            // Light system = light tabs = use dark icon (better contrast)
+            return prefersDark ? lightIcon : darkIcon;
+          }
+        }
+        
+        // Set initial favicon
+        setFavicon(detectTabColor());
+        
+        // Listen for changes in color scheme preference
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        mediaQuery.addEventListener('change', function() {
+          setFavicon(detectTabColor());
+        });
+        
+        // Also check on visibility change (when tab becomes visible again)
+        document.addEventListener('visibilitychange', function() {
+          if (!document.hidden) {
+            setFavicon(detectTabColor());
+          }
+        });
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

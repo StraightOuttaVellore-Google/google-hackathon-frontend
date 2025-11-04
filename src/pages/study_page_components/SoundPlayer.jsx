@@ -4,6 +4,28 @@ import useStudyStore from '../../stores/studyStore';
 import { TypeOfSound, Noises, Ambient } from '../../types/studyTypes';
 import { soundApi } from '../../utils/soundApi';
 
+// Import sounds
+import brownSound from '../../sounds/brown.mp3';
+import cafeChatterSound from '../../sounds/cafe_chatter.mp3';
+import citySound from '../../sounds/city.mp3';
+import forestSound from '../../sounds/forest.mp3';
+import oceanSound from '../../sounds/ocean.mp3';
+import pinkSound from '../../sounds/pink.mp3';
+import rainSound from '../../sounds/rain.mp3';
+import whiteSound from '../../sounds/white.mp3';
+
+const soundMap = {
+  brown: brownSound,
+  cafe_chatter: cafeChatterSound,
+  city: citySound,
+  forest: forestSound,
+  ocean: oceanSound,
+  pink: pinkSound,
+  rain: rainSound,
+  white: whiteSound,
+};
+
+
 // Convert enums to arrays for slider navigation
 const NOISE_ARRAY = Object.values(Noises);
 const AMBIENT_ARRAY = Object.values(Ambient);
@@ -153,7 +175,7 @@ export default function SoundPlayer() {
   useEffect(() => {
     if (audioRef.current && selectedSound) {
       const wasPlaying = isPlaying;
-      audioRef.current.src = `/src/sounds/${selectedSound}.mp3`;
+      audioRef.current.src = soundMap[selectedSound];
       audioRef.current.load();
       
       // If audio was playing, resume playing the new sound

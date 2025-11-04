@@ -28,7 +28,8 @@ export default function WellnessAnalysisResults({ transcript, analysis, mode, se
         mode,
         timestamp: new Date().toISOString()
       });
-      logger.info('Analysis saved to insights store', { sessionId }, 'WellnessAnalysisResults');
+      // Debug: Analysis saved (commented out for production)
+      // logger.info('Analysis saved to insights store', { sessionId }, 'WellnessAnalysisResults');
     }
   }, [analysis, sessionId, transcript, mode, addAnalysis]);
 
@@ -103,17 +104,22 @@ export default function WellnessAnalysisResults({ transcript, analysis, mode, se
 
 // Summary Tab Component
 function SummaryTab({ transcript, summary, mode }) {
+  // Hide transcript for hackathon demo - AI summary is more important
+  const showTranscript = false; // Set to true to show transcript if needed
+  
   return (
     <div className="flex flex-col gap-5">
-      {/* Transcript Section */}
-      <div className="neumorphic-card rounded-2xl p-6">
-        <h3 className="text-xl font-semibold mb-4 dark:text-white light:text-gray-900">Your Journal Entry</h3>
-        <div className="neumorphic-inset rounded-xl p-4 max-h-[300px] overflow-y-auto neumorphic-scrollbar">
-          <p className="leading-relaxed dark:text-gray-300 light:text-gray-700 text-base">
-            {transcript}
-          </p>
+      {/* Transcript Section - Hidden for demo (transcription issues) */}
+      {showTranscript && transcript && (
+        <div className="neumorphic-card rounded-2xl p-6">
+          <h3 className="text-xl font-semibold mb-4 dark:text-white light:text-gray-900">Your Journal Entry</h3>
+          <div className="neumorphic-inset rounded-xl p-4 max-h-[300px] overflow-y-auto neumorphic-scrollbar">
+            <p className="leading-relaxed dark:text-gray-300 light:text-gray-700 text-base">
+              {transcript}
+            </p>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Summary Card */}
       <div className="neumorphic-card rounded-2xl p-6">

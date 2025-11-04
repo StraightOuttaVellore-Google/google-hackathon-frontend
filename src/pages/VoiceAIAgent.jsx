@@ -15,6 +15,9 @@ export default function VoiceAIAgent() {
 
   const voiceServiceRef = useRef(null)
   const audioServiceRef = useRef(null)
+  const [waveformHeights] = useState(() => 
+    Array.from({ length: 7 }, () => 15 + Math.random() * 25)
+  )
 
   // Cleanup on unmount
   useEffect(() => {
@@ -85,11 +88,6 @@ export default function VoiceAIAgent() {
       audioServiceRef.current = new AudioService({
         onAudioData: (audioData, sampleRate) => {
           logger.debug('Audio callback received', { dataLength: audioData.length, sampleRate, muted: isMuted }, 'VoiceAIAgent')
-          setDebugInfo(prev => ({
-            ...prev,
-            audioChunksSent: prev.audioChunksSent + 1,
-            lastAudioTime: new Date()
-          }))
           if (voiceServiceRef.current && !isMuted) {
             logger.debug('Sending audio to voice service', {}, 'VoiceAIAgent')
             voiceServiceRef.current.sendAudio(audioData, sampleRate)
@@ -185,81 +183,74 @@ export default function VoiceAIAgent() {
   }
 
   return (
-    <div className={`${isDarkMode ? 'dark' : ''} min-h-screen bg-gradient-to-br from-indigo-50 to-purple-100 dark:from-indigo-950 dark:to-purple-950`}>
-      <div className="container mx-auto px-4 py-8">
+    <div className={`${isDarkMode ? 'dark' : ''} min-h-screen bg-gradient-to-br from-indigo-50 to-purple-100 dark:from-indigo-950 dark:to-purple-950 flex items-center justify-center`}>
+      <div className="container mx-auto px-4 py-8 w-full max-w-2xl">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-800 dark:text-white mb-4">
+          <h1 className="text-4xl font-bold text-gray-800 dark:text-white mb-3">
             🎙️ Voice AI Agent
           </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-300">
+          <p className="text-base text-gray-600 dark:text-gray-300 mb-6">
             {getModeDescription()}
           </p>
-        </div>
 
-        {/* Mode Toggle */}
-        <div className="flex justify-center mb-6">
-          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg p-2 border border-white/20 dark:border-gray-700/20">
-            <button
-              onClick={() => setMode('wellness')}
-              className={`px-4 py-2 rounded-md transition-colors ${
-                mode === 'wellness'
-                  ? 'bg-green-500 text-white'
-                  : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-              }`}
-            >
-              🌱 Wellness
-            </button>
-            <button
-              onClick={() => setMode('study')}
-              className={`px-4 py-2 rounded-md transition-colors ${
-                mode === 'study'
-                  ? 'bg-blue-500 text-white'
-                  : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-              }`}
-            >
-              📚 Study
-            </button>
+          {/* Mode Toggle - Neumorphic */}
+          <div className="flex justify-center mb-12">
+            <div className="neumorphic-card p-1 flex gap-1">
+              <button
+                onClick={() => setMode('wellness')}
+                className={`neumorphic-button px-5 py-2.5 text-sm font-medium transition-all ${
+                  mode === 'wellness'
+                    ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-lg shadow-green-500/30'
+                    : ''
+                }`}
+              >
+                🌱 Wellness
+              </button>
+              <button
+                onClick={() => setMode('study')}
+                className={`neumorphic-button px-5 py-2.5 text-sm font-medium transition-all ${
+                  mode === 'study'
+                    ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg shadow-blue-500/30'
+                    : ''
+                }`}
+              >
+                📚 Study
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* Main Voice Interface */}
-        <div className="max-w-4xl mx-auto">
-          {/* Voice Control Panel */}
-          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-white/20 dark:border-gray-700/20 mb-6">
-            <div className="text-center">
-              {/* Microphone Button */}
-              <div className="relative mb-6">
-                <button
-                  onClick={isConnected ? handleEndCall : handleConnect}
-                  disabled={isInitializing}
-                  className={`relative w-32 h-32 rounded-full transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed ${
-                    isConnected
-                      ? 'bg-red-500 hover:bg-red-600 shadow-red-500/30'
-                      : 'bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 shadow-indigo-500/30'
-                  } shadow-2xl`}
-                >
-                  <div className="absolute inset-0 rounded-full animate-pulse bg-white/20"></div>
-                  <div className="relative z-10 text-white text-4xl">
-                    {isConnected ? '🔴' : '🎤'}
-                  </div>
-                </button>
-                
-                {/* Pulse animation when listening */}
-                {isConnected && status === 'listening' && (
-                  <div className="absolute inset-0 rounded-full border-4 border-red-400 animate-ping"></div>
-                )}
-
-                {/* Mute button overlay */}
-                {isConnected && (
-                  <div className="absolute -bottom-3 -right-3">
+        {/* Main Voice Interface - Centered and Spaced */}
+        <div className="flex flex-col items-center justify-center">
+          {/* Voice Control Panel - Neumorphic */}
+          <div className="neumorphic-card p-12 w-full mb-10">
+            <div className="flex flex-col items-center justify-center">
+              {/* Large Centered Microphone Icon - Maximized */}
+              <div className="relative mb-10">
+                {!isConnected ? (
+                  <button
+                    onClick={handleConnect}
+                    disabled={isInitializing}
+                    className="neumorphic-matrix-button relative w-48 h-48 rounded-full mx-auto disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:scale-105 flex items-center justify-center"
+                  >
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 opacity-90 rounded-full"></div>
+                    <div className="relative z-10 text-white text-8xl flex items-center justify-center">🎤</div>
+                  </button>
+                ) : (
+                  <div className="relative w-44 h-44 mx-auto flex items-center justify-center">
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-r from-gray-500 to-gray-600 opacity-60"></div>
+                    <div className="relative z-10 text-gray-300 text-7xl flex items-center justify-center">🎙️</div>
+                    {status === 'listening' && (
+                      <div className="absolute inset-0 rounded-full border-4 border-green-400 animate-ping"></div>
+                    )}
+                    {/* Mute button */}
                     <button
                       onClick={toggleMute}
-                      className={`rounded-full w-10 h-10 p-0 border-2 ${
-                        isMuted 
-                          ? 'bg-red-500 text-white border-red-500' 
-                          : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600'
+                      className={`absolute -bottom-3 -right-3 w-12 h-12 rounded-full neumorphic-button text-base ${
+                        isMuted ? 'bg-red-500 text-white' : ''
                       }`}
+                      title={isMuted ? 'Unmute' : 'Mute'}
                     >
                       {isMuted ? '🔇' : '🎤'}
                     </button>
@@ -267,56 +258,133 @@ export default function VoiceAIAgent() {
                 )}
               </div>
 
-              {/* Status */}
-              <div className="mb-4">
+              {/* Status - Larger and Centered */}
+              <div className="mb-10 w-full">
                 {isInitializing && (
-                  <p className="text-indigo-500 font-medium animate-pulse">
-                    🔄 Connecting...
-                  </p>
+                  <div className="text-center">
+                    <p className="text-indigo-500 font-semibold text-lg animate-pulse mb-3">
+                      🔄 Connecting...
+                    </p>
+                    <div className="flex justify-center gap-2">
+                      <div className="w-3 h-3 bg-indigo-500 rounded-full animate-bounce" style={{animationDelay: '0ms'}}></div>
+                      <div className="w-3 h-3 bg-indigo-500 rounded-full animate-bounce" style={{animationDelay: '150ms'}}></div>
+                      <div className="w-3 h-3 bg-indigo-500 rounded-full animate-bounce" style={{animationDelay: '300ms'}}></div>
+                    </div>
+                  </div>
                 )}
                 {isConnected && status === 'listening' && (
-                  <p className="text-green-500 font-medium animate-pulse">
-                    🎙️ Listening...
-                  </p>
+                  <div className="text-center">
+                    <p className="text-green-500 font-semibold text-2xl animate-pulse mb-5">
+                      🎙️ Listening...
+                    </p>
+                    <div className="flex items-center justify-center gap-3 h-14">
+                      {Array.from({ length: 5 }, (_, i) => {
+                        const heights = [32, 40, 28, 48, 36]
+                        const delays = [0, 150, 300, 450, 600]
+                        const durations = [600, 700, 500, 800, 650]
+                        return (
+                          <div
+                            key={i}
+                            className="w-3 bg-green-500 rounded-full animate-pulse"
+                            style={{
+                              height: `${heights[i]}px`,
+                              animationDelay: `${delays[i]}ms`,
+                              animationDuration: `${durations[i]}ms`
+                            }}
+                          ></div>
+                        )
+                      })}
+                    </div>
+                  </div>
                 )}
                 {isConnected && status === 'thinking' && (
-                  <p className="text-yellow-500 font-medium">
-                    🧠 Thinking...
-                  </p>
+                  <div className="text-center">
+                    <p className="text-yellow-500 font-semibold text-lg mb-3">
+                      🧠 Thinking...
+                    </p>
+                    <div className="flex justify-center gap-2">
+                      <div className="w-3 h-3 bg-yellow-500 rounded-full animate-bounce" style={{animationDelay: '0ms'}}></div>
+                      <div className="w-3 h-3 bg-yellow-500 rounded-full animate-bounce" style={{animationDelay: '200ms'}}></div>
+                      <div className="w-3 h-3 bg-yellow-500 rounded-full animate-bounce" style={{animationDelay: '400ms'}}></div>
+                    </div>
+                  </div>
                 )}
                 {isConnected && status === 'speaking' && (
-                  <p className="text-blue-500 font-medium">
-                    🔊 Speaking...
-                  </p>
+                  <div className="text-center">
+                    <p className="text-blue-500 font-semibold text-lg mb-4">
+                      🔊 Speaking...
+                    </p>
+                    <div className="flex items-center justify-center gap-2 h-10">
+                      {waveformHeights.slice(0, 5).map((height, i) => {
+                        const delays = [0, 80, 160, 240, 320]
+                        const durations = [500, 550, 450, 600, 480]
+                        return (
+                          <div
+                            key={i}
+                            className="w-2 bg-blue-500 rounded-full animate-pulse"
+                            style={{
+                              height: `${height * 0.8}px`,
+                              animationDelay: `${delays[i]}ms`,
+                              animationDuration: `${durations[i]}ms`
+                            }}
+                          ></div>
+                        )
+                      })}
+                    </div>
+                  </div>
                 )}
                 {!isConnected && !isInitializing && (
-                  <p className="text-gray-500 dark:text-gray-400">
-                    Click the microphone to start conversation
+                  <p className="text-gray-600 dark:text-gray-300 text-lg font-medium text-center">
+                    Ready to listen
                   </p>
                 )}
               </div>
 
-              {/* VAD Status */}
+              {/* VAD Status - Larger */}
               {isConnected && (
-                <div className="flex items-center justify-center space-x-2 mb-4">
-                  <div className={`w-2 h-2 rounded-full transition-all duration-200 ${
+                <div className="flex items-center justify-center space-x-3 mb-10">
+                  <div className={`w-3 h-3 rounded-full transition-all duration-200 ${
                     vadStatus.isSpeech 
-                      ? 'bg-green-500 animate-pulse' 
+                      ? 'bg-green-500 animate-pulse shadow-lg shadow-green-500/50' 
                       : 'bg-gray-400'
                   }`} />
-                  <span className="text-xs text-gray-500 dark:text-gray-400">
+                  <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
                     {vadStatus.isSpeech ? 'Speech detected' : 'Listening...'}
                     {vadStatus.confidence > 0 && (
-                      <span className="ml-1">({Math.round(vadStatus.confidence * 100)}%)</span>
+                      <span className="ml-2 text-xs">({Math.round(vadStatus.confidence * 100)}%)</span>
                     )}
                   </span>
                 </div>
               )}
 
-              {/* Greeting */}
+              {/* Large Centered Button - Maximized */}
+              {isConnected ? (
+                <div className="w-full max-w-lg">
+                  <button
+                    onClick={handleEndCall}
+                    className="neumorphic-matrix-close-button w-full py-5 px-10 text-xl font-bold"
+                  >
+                    <span className="text-3xl">📞</span>
+                    <span className="ml-4">End Call</span>
+                  </button>
+                </div>
+              ) : (
+                <div className="w-full max-w-lg">
+                  <button
+                    onClick={handleConnect}
+                    disabled={isInitializing}
+                    className="neumorphic-matrix-button w-full py-5 px-10 text-xl font-bold disabled:opacity-50"
+                  >
+                    <span className="text-3xl">🎤</span>
+                    <span className="ml-4">Start Conversation</span>
+                  </button>
+                </div>
+              )}
+
+              {/* Greeting - Larger */}
               {!isConnected && (
-                <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-4 mb-4">
-                  <p className="text-gray-800 dark:text-gray-200 italic">
+                <div className="neumorphic-card p-6 mt-8 w-full">
+                  <p className="text-gray-800 dark:text-gray-200 text-base leading-relaxed text-center">
                     {getGreeting()}
                   </p>
                 </div>
@@ -324,6 +392,24 @@ export default function VoiceAIAgent() {
             </div>
           </div>
 
+          {/* Tips/Info Cards - Always visible, Neumorphic */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
+            <div className="neumorphic-card p-5 text-center">
+              <div className="text-3xl mb-2">💭</div>
+              <p className="text-sm text-gray-700 dark:text-gray-300 font-medium mb-1">Share freely</p>
+              <p className="text-xs text-gray-600 dark:text-gray-400">Your thoughts are safe</p>
+            </div>
+            <div className="neumorphic-card p-5 text-center">
+              <div className="text-3xl mb-2">🎯</div>
+              <p className="text-sm text-gray-700 dark:text-gray-300 font-medium mb-1">Natural flow</p>
+              <p className="text-xs text-gray-600 dark:text-gray-400">Speak naturally</p>
+            </div>
+            <div className="neumorphic-card p-5 text-center">
+              <div className="text-3xl mb-2">✨</div>
+              <p className="text-sm text-gray-700 dark:text-gray-300 font-medium mb-1">AI insights</p>
+              <p className="text-xs text-gray-600 dark:text-gray-400">Get helpful analysis</p>
+            </div>
+          </div>
         </div>
 
         {/* Speech Recognition Support Check */}

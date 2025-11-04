@@ -190,13 +190,15 @@ export default function Community() {
     const token = localStorage.getItem('access_token')
     
     // Navigate to the chat app with token in query parameter
+    // Production Discord URL (hardcoded to avoid backend redeploy)
+    const DISCORD_APP_URL = import.meta.env.VITE_DISCORD_URL || 'https://sahay-discord-3ftxajsf4q-uc.a.run.app'
+    
     if (token) {
-      const discordAppUrl = `http://localhost:3000?token=${encodeURIComponent(token)}`
-      window.location.href = discordAppUrl
+      window.open(`${DISCORD_APP_URL}?token=${encodeURIComponent(token)}`, '_blank')
     } else {
       console.error('⚠️ No token available! User may not be logged in.')
       setError('Please login first before accessing the chat app')
-      window.location.href = 'http://localhost:3000'
+      window.open(DISCORD_APP_URL, '_blank')
     }
   }
 

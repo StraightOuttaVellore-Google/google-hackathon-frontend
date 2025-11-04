@@ -167,8 +167,9 @@ class LoggingService {
 export const logger = new LoggingService();
 
 // Set default level based on environment
+// For hackathon demo: Only show WARN and ERROR (hide DEBUG and INFO)
 if (import.meta.env.DEV) {
   logger.setLevel(LogLevel.DEBUG);
 } else {
-  logger.setLevel(LogLevel.INFO);
+  logger.setLevel(LogLevel.WARN); // Production: Only warnings and errors
 }
