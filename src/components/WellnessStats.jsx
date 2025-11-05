@@ -339,18 +339,18 @@ export default function WellnessStats() {
 
   return (
     <>
-      <div className="w-full h-72 flex flex-col">
+      <div className="w-full h-auto md:h-72 flex flex-col">
         <div className="flex items-center justify-between mb-3">
-          <h1 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Wellness Stats</h1>
+          <h1 className="text-base md:text-lg font-semibold text-gray-800 dark:text-gray-200">Wellness Stats</h1>
           
           {/* Navigation */}
           <div className="flex items-center space-x-2">
             <button
               onClick={prevCard}
-              className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              className="p-2 md:p-1 min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
               aria-label="Previous stat"
             >
-              <ChevronLeftIcon className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+              <ChevronLeftIcon className="w-5 h-5 md:w-4 md:h-4 text-gray-600 dark:text-gray-400" />
             </button>
             
             <div className="flex space-x-1">
@@ -368,10 +368,10 @@ export default function WellnessStats() {
             
             <button
               onClick={nextCard}
-              className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              className="p-2 md:p-1 min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
               aria-label="Next stat"
             >
-              <ChevronRightIcon className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+              <ChevronRightIcon className="w-5 h-5 md:w-4 md:h-4 text-gray-600 dark:text-gray-400" />
             </button>
           </div>
         </div>

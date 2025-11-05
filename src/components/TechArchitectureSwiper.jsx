@@ -79,7 +79,18 @@ const TechArchitectureSwiper = () => {
         loop={true}
         loopAdditionalSlides={2}
         loopFillGroupWithBlank={false}
-        spaceBetween={40}
+        spaceBetween={20}
+        breakpoints={{
+          640: {
+            spaceBetween: 30,
+          },
+          768: {
+            spaceBetween: 35,
+          },
+          1024: {
+            spaceBetween: 40,
+          },
+        }}
         speed={300}
         allowTouchMove={true}
         threshold={5}
@@ -100,7 +111,7 @@ const TechArchitectureSwiper = () => {
         }}
       >
         {CIRCULAR_CARDS.map((card, index) => (
-          <SwiperSlide key={`${card.id}-${index}`} className="!w-[70vw] sm:!w-[65vw] lg:!w-[60vw] xl:!w-[55vw] 2xl:!w-[50vw]">
+          <SwiperSlide key={`${card.id}-${index}`} className="!w-[85vw] sm:!w-[75vw] md:!w-[70vw] lg:!w-[60vw] xl:!w-[55vw] 2xl:!w-[50vw]">
             <TechCard 
               title={card.title}
               subtext={card.subtext}

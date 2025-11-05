@@ -12,21 +12,21 @@ export default function MoodBoardWidget({ onCalendarDayClick, onHistoryClick, on
   }
 
   return (
-    <div className="pt-0 pb-1 px-6">
+    <div className="pt-0 pb-1 px-3 md:px-6">
       <div 
-        className="neumorphic-card-with-stars neumorphic-study flex p-6"
+        className="neumorphic-card-with-stars neumorphic-study flex p-4 md:p-6"
         style={{
           width: '100%'
         }}
       >
-        <div className="flex gap-8 w-full">
-          <div className="w-1/4">
+        <div className="flex flex-col md:flex-row gap-4 md:gap-8 w-full">
+          <div className="w-full md:w-1/4">
             <VoiceAICard mode="study" />
           </div>
-          <div className="w-1/3">
+          <div className="w-full md:w-1/3">
             <MonthlyCalendar onDayClick={handleDayClick} />
           </div>
-          <div className="w-5/12">
+          <div className="w-full md:w-5/12">
             <MonthlyStats onHistoryClick={onHistoryClick} />
           </div>
         </div>

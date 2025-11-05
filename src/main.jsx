@@ -20,6 +20,7 @@ import ModelsPage from './pages/ModelsPage'
 import ResearchPage from './pages/ResearchPage'
 import SciencePage from './pages/SciencePage'
 import AboutPage from './pages/AboutPage'
+import ComingSoonPage from './pages/ComingSoonPage'
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -55,6 +56,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="/research" element={<ResearchPage />} />
           <Route path="/science" element={<SciencePage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/coming-soon" element={<ComingSoonPage />} />
           <Route 
             path="/app/*" 
             element={

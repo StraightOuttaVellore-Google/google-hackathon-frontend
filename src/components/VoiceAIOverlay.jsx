@@ -607,34 +607,35 @@ export default function VoiceAIOverlay({ isOpen, onClose, mode = 'wellness' }) {
         ))}
 
         {/* Header */}
-        <div className="relative z-10 flex items-center justify-between p-6 border-b border-white/20 dark:border-white/20 light:border-[rgba(116,200,163,0.3)]">
-          <div className="flex items-center gap-4">
+        <div className="relative z-10 flex items-center justify-between p-3 md:p-6 border-b border-white/20 dark:border-white/20 light:border-[rgba(116,200,163,0.3)]">
+          <div className="flex items-center gap-2 md:gap-4 min-w-0 flex-1">
             <img
               src="images/38dc7c1a-2e26-44b6-9c9b-97ca9ff38a60.png"
               alt="Voice Agent"
-              className="w-12 h-12 object-cover rounded-lg"
+              className="w-8 h-8 md:w-12 md:h-12 object-cover rounded-lg flex-shrink-0"
               style={{
                 filter: 'drop-shadow(0 0 8px rgba(60, 90, 150, 0.7)) drop-shadow(0 0 16px rgba(40, 70, 120, 0.5)) drop-shadow(0 0 24px rgba(30, 50, 100, 0.4)) drop-shadow(0 0 32px rgba(20, 40, 80, 0.3))',
                 borderRadius: '0.5rem'
               }}
             />
-            <h2 className="text-2xl font-bold text-white dark:text-white light:text-black">
+            <h2 className="text-base md:text-2xl font-bold text-white dark:text-white light:text-black truncate">
               <span style={{ fontFamily: 'Samarkan' }}>आवाज़</span>AI
             </h2>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1.5 md:gap-3 flex-shrink-0">
             <button
               onClick={() => setShowSummary(!showSummary)}
-              className="neumorphic-matrix-button flex items-center gap-2"
+              className="neumorphic-matrix-button flex items-center gap-1 md:gap-2 px-2 py-1.5 md:px-4 md:py-2 text-xs md:text-sm"
             >
-              <span className="text-lg">📚</span>
-              <span>{showSummary ? 'Hide' : 'Show'} Summary</span>
+              <span className="text-sm md:text-lg">📚</span>
+              <span className="hidden sm:inline">{showSummary ? 'Hide' : 'Show'} Summary</span>
+              <span className="inline sm:hidden">{showSummary ? 'Hide' : 'Show'}</span>
             </button>
             <button
               onClick={onClose}
-              className="neumorphic-matrix-close-button"
+              className="neumorphic-matrix-close-button min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0"
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>

@@ -24,14 +24,10 @@ export default function VoiceAICard({ mode = 'wellness' }) {
         </div>
 
         {/* Single Talk Button */}
-        <div className="flex justify-center mt-6">
+        <div className="flex justify-center mt-4 md:mt-6">
           <button
             onClick={handleTalkClick}
-            className="relative backdrop-blur-lg rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden neumorphic-button"
-            style={{
-              width: 'fit-content',
-              padding: '8px 16px'
-            }}
+            className="relative backdrop-blur-lg rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden neumorphic-button min-h-[44px] px-4 md:px-4 py-2 md:py-2"
           >
             {/* Button Stars */}
             {[...Array(6)].map((_, i) => (
@@ -52,7 +48,7 @@ export default function VoiceAICard({ mode = 'wellness' }) {
                 }}
               />
             ))}
-            <span className="relative z-10 font-medium text-sm text-white dark:text-white light:text-black">
+            <span className="relative z-10 font-medium text-base md:text-sm text-white dark:text-white light:text-black">
               Aawaaz Journal
             </span>
           </button>

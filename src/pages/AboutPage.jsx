@@ -1,8 +1,11 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ArrowLeft, Target, Users, Heart, Zap, Globe, Shield, BookOpen, Timer, Grid3x3, Calendar, MessageCircle, Map, Brain, Watch, Radio, TrendingUp, Layers, Activity, Mic, FileText, Star, Database, Cloud, Settings } from 'lucide-react'
+import UserDropdown from '../components/UserDropdown'
 
 export default function AboutPage() {
   const navigate = useNavigate()
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   return (
     <div 
@@ -37,45 +40,113 @@ export default function AboutPage() {
           borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
         }}
       >
-        <div className="flex justify-between items-center pl-20 pr-6 h-full">
-          <div className="flex items-center gap-8">
-            <button
-              onClick={() => navigate('/')}
-              className="flex items-center gap-2 text-white/80 hover:text-white transition-all duration-300"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              <span className="font-medium text-xl" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
-                Back to Home
-              </span>
-            </button>
+        <div className="flex justify-between items-center pl-3 md:pl-20 pr-3 md:pr-6 h-full relative">
+          {/* Left Section - Mobile Hamburger Menu */}
+          <div className="flex items-center">
+            {/* Mobile Hamburger Menu - Left Side */}
             <button 
-              onClick={() => navigate('/')}
-              className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="lg:hidden text-white/80 hover:text-white transition-colors p-2"
             >
-              <img 
-                src="/images/16f6e1ea-b24f-4aa3-826c-1d847809b91a-removebg-preview.png" 
-                alt="Sahayata Logo" 
-                className="h-12 w-12 object-contain"
-              />
-              <span className="text-white font-medium text-2xl tracking-wide" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
-                Sahayata
-              </span>
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
             </button>
+            
+            {/* Desktop Navigation - Hidden on Mobile */}
+            <div className="hidden lg:flex items-center gap-8">
+              <button
+                onClick={() => navigate('/')}
+                className="flex items-center gap-2 text-white/80 hover:text-white transition-all duration-300"
+              >
+                <ArrowLeft className="w-5 h-5" />
+                <span className="font-medium text-xl" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
+                  Back to Home
+                </span>
+              </button>
+              <button 
+                onClick={() => navigate('/')}
+                className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+              >
+                <img 
+                  src="/images/16f6e1ea-b24f-4aa3-826c-1d847809b91a-removebg-preview.png" 
+                  alt="Sahayata Logo" 
+                  className="h-12 w-12 object-contain"
+                />
+                <span className="text-white font-medium text-2xl tracking-wide" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
+                  Sahayata
+                </span>
+              </button>
+            </div>
           </div>
-          
-          <button
-            onClick={() => navigate('/app')}
-            className="px-5 py-2 rounded-full font-medium text-white text-lg transition-all duration-300 hover:bg-white/10"
-            style={{
-              background: 'rgba(255,255,255,0.08)',
-              borderRadius: '24px',
-              fontWeight: '500',
-              fontFamily: 'Google Sans, Arial, Helvetica, sans-serif'
-            }}
+
+          {/* Center - Logo (Mobile Only) */}
+          <button 
+            onClick={() => navigate('/')}
+            className="absolute left-1/2 transform -translate-x-1/2 lg:hidden hover:opacity-80 transition-opacity"
           >
-            Go to Dashboard
+            <img 
+              src="/images/16f6e1ea-b24f-4aa3-826c-1d847809b91a-removebg-preview.png" 
+              alt="Sahayata Logo" 
+              className="h-8 w-8 object-contain"
+            />
           </button>
+
+          {/* Right Section - Desktop: Dashboard Button, Mobile: User Dropdown Only */}
+          <div className="flex items-center gap-2 md:gap-6">
+            {/* Go to Dashboard Button - Desktop Only */}
+            <button
+              onClick={() => navigate('/app')}
+              className="px-5 py-2 rounded-full font-medium text-white text-lg transition-all duration-300 hover:bg-white/10 hidden md:block"
+              style={{
+                background: 'rgba(255,255,255,0.08)',
+                borderRadius: '24px',
+                fontWeight: '500',
+                fontFamily: 'Google Sans, Arial, Helvetica, sans-serif'
+              }}
+            >
+              Go to Dashboard
+            </button>
+
+            {/* User Avatar Dropdown - Right Side */}
+            <UserDropdown />
+          </div>
         </div>
+
+        {/* Mobile Navigation Menu */}
+        {isMobileMenuOpen && (
+          <div className="lg:hidden bg-[#060606] border-t border-gray-800/50 pl-4 pr-3 py-4">
+            <nav className="flex flex-col space-y-4">
+              <button 
+                onClick={() => {
+                  navigate('/')
+                  setIsMobileMenuOpen(false)
+                }}
+                className="flex items-center gap-2 text-white/80 hover:text-white transition-all duration-300 text-left"
+              >
+                <ArrowLeft className="w-5 h-5" />
+                <span className="font-medium" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
+                  Back to Home
+                </span>
+              </button>
+              <button 
+                onClick={() => {
+                  navigate('/app')
+                  setIsMobileMenuOpen(false)
+                }}
+                className="px-4 py-2 rounded-full font-medium text-white transition-all duration-300 hover:bg-white/10 text-left"
+                style={{
+                  background: 'rgba(255,255,255,0.08)',
+                  borderRadius: '24px',
+                  fontWeight: '500',
+                  fontFamily: 'Google Sans, Arial, Helvetica, sans-serif'
+                }}
+              >
+                Go to Dashboard
+              </button>
+            </nav>
+          </div>
+        )}
       </header>
 
       {/* Hero Section */}

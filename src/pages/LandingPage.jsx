@@ -8,18 +8,35 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 // Card Component for better organization
 const Card = ({ card, isActive, isNext, onClick }) => {
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+  
   let transform = '';
   let opacity = 0;
   let zIndex = 0;
   let pointerEvents = 'none';
   
   if (isActive) {
-    transform = 'translateX(-50%) scale(1.1)';
+    // Less aggressive scaling on mobile
+    transform = isMobile 
+      ? 'translateX(-50%) scale(1.0)' 
+      : 'translateX(-50%) scale(1.1)';
     opacity = 1;
     zIndex = 2;
     pointerEvents = 'auto';
   } else if (isNext) {
-    transform = 'translateX(-50%) scaleX(0.65) scaleY(0.85) translateY(45px)';
+    // Less aggressive next card scaling on mobile
+    transform = isMobile
+      ? 'translateX(-50%) scaleX(0.75) scaleY(0.9) translateY(30px)'
+      : 'translateX(-50%) scaleX(0.65) scaleY(0.85) translateY(45px)';
     opacity = 0.8;
     zIndex = 1;
     pointerEvents = 'auto';
@@ -38,8 +55,8 @@ const Card = ({ card, isActive, isNext, onClick }) => {
         opacity,
         zIndex,
         pointerEvents,
-        width: '720px',
-        height: '180px', // Reduced height to match Gemini proportions
+        width: 'clamp(280px, 92vw, 720px)',
+        height: 'clamp(140px, 30vh, 180px)',
       }}
       onClick={onClick}
     >
@@ -48,61 +65,65 @@ const Card = ({ card, isActive, isNext, onClick }) => {
         style={{
           background: 'var(--surfaces-surface-container-bright)',
           border: '1px solid hsla(0,0%,100%,.15)',
-          borderRadius: '24px',
-          padding: '32px',
+          borderRadius: 'clamp(12px, 2.5vw, 24px)',
+          padding: 'clamp(12px, 3vw, 32px)',
           display: 'flex',
           alignItems: 'center',
-          gap: '24px',
+          gap: 'clamp(10px, 2.5vw, 24px)',
           boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
         }}
       >
-        {/* Media Container - Left Side */}
+        {/* Media Container - Left Side - Better mobile sizing */}
         <div 
-          className="card-asset flex-shrink-0 overflow-hidden rounded-[24px]"
+          className="card-asset flex-shrink-0 overflow-hidden rounded-[clamp(10px, 2.5vw, 24px)]"
           style={{
-            width: '220px',
-            aspectRatio: 'var(--card-asset-ratio)',
+            width: 'clamp(80px, 25vw, 220px)',
+            height: 'clamp(80px, 25vw, 150px)',
+            minWidth: '80px',
+            minHeight: '80px',
           }}
         >
           <img 
             src={card.image} 
             alt={card.title}
             className="w-full h-full object-cover"
+            style={{
+              objectFit: 'cover',
+            }}
           />
         </div>
         
-        {/* Content - Right Side */}
-        <div className="flex-1 flex flex-col justify-center">
+        {/* Content - Right Side - Better mobile text sizing */}
+        <div className="flex-1 flex flex-col justify-center min-w-0 pr-2 md:pr-0">
           {/* Eyebrow Text */}
           <div 
-            className="uppercase text-xs font-medium tracking-wide mb-2"
+            className="uppercase text-[9px] md:text-xs font-medium tracking-wide mb-0.5 md:mb-2"
             style={{ color: '#9aa0a6' }}
           >
             {card.category}
           </div>
           
-          {/* Title */}
+          {/* Title - More readable on mobile */}
           <div 
-            className="font-bold text-white"
+            className="font-bold text-white text-xs md:text-base lg:text-lg leading-tight md:leading-snug"
             style={{ 
               fontFamily: 'Google Sans, Inter, sans-serif',
-              fontSize: 'clamp(1rem, 1.2vw, 1.25rem)',
-              lineHeight: '1.3'
+              lineHeight: '1.2',
             }}
           >
             {card.title}
           </div>
         </div>
         
-        {/* External Link Icon - Bottom Right Corner */}
+        {/* External Link Icon - Smaller on mobile */}
         <div 
-          className="external-link-icon absolute bottom-0 right-0 transition-colors duration-300"
+          className="external-link-icon absolute bottom-0 right-0 transition-colors duration-300 flex-shrink-0"
           style={{ 
             color: '#87ceeb',
-            padding: '16px'
+            padding: 'clamp(6px, 1.5vw, 16px)'
           }}
         >
-          <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-3 h-3 md:w-5 md:h-5 lg:w-7 lg:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
           </svg>
         </div>
@@ -299,61 +320,86 @@ export default function LandingPage() {
           opacity: isHeaderVisible ? 1 : 0
         }}
       >
-        <div className="flex justify-between items-center pl-20 pr-6 h-full">
-          {/* Left Section - Logo + Inline Nav */}
-          <div className="flex items-center gap-32">
-            {/* Logo */}
+        <div className="flex justify-between items-center pl-3 md:pl-20 pr-3 md:pr-6 h-full relative">
+          {/* Left Section - Mobile Hamburger Menu */}
+          <div className="flex items-center">
+            {/* Mobile Hamburger Menu - Left Side */}
             <button 
-              onClick={() => navigate('/')}
-              className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="lg:hidden text-white/80 hover:text-white transition-colors p-2"
             >
-              <img 
-                src="/images/16f6e1ea-b24f-4aa3-826c-1d847809b91a-removebg-preview.png" 
-                alt="Sahayata Logo" 
-                className="h-12 w-12 object-contain"
-              />
-              <span className="text-white font-medium text-2xl tracking-wide" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>Sahayata</span>
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
             </button>
             
-            {/* Inline Navigation */}
-            <nav className="hidden md:flex items-center gap-12">
+            {/* Desktop Navigation - Hidden on Mobile */}
+            <div className="hidden lg:flex items-center gap-32">
+              {/* Logo - Desktop Only */}
               <button 
-                onClick={() => navigate('/models')}
-                className="text-white/80 hover:text-white font-medium text-xl transition-all duration-300 relative group"
+                onClick={() => navigate('/')}
+                className="flex items-center gap-2 hover:opacity-80 transition-opacity"
               >
-                Models
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#4285f4] to-[#a142f4] group-hover:w-full transition-all duration-300"></span>
+                <img 
+                  src="/images/16f6e1ea-b24f-4aa3-826c-1d847809b91a-removebg-preview.png" 
+                  alt="Sahayata Logo" 
+                  className="h-12 w-12 object-contain"
+                />
+                <span className="text-white font-medium text-2xl tracking-wide" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>Sahayata</span>
               </button>
-              <button 
-                onClick={() => navigate('/research')}
-                className="text-white/80 hover:text-white font-medium text-xl transition-all duration-300 relative group"
-              >
-                Research
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#4285f4] to-[#a142f4] group-hover:w-full transition-all duration-300"></span>
-              </button>
-              <button 
-                onClick={() => navigate('/science')}
-                className="text-white/80 hover:text-white font-medium text-xl transition-all duration-300 relative group"
-              >
-                Science
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#4285f4] to-[#a142f4] group-hover:w-full transition-all duration-300"></span>
-              </button>
-              <button 
-                onClick={() => navigate('/about')}
-                className="text-white/80 hover:text-white font-medium text-xl transition-all duration-300 relative group"
-              >
-                About
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#4285f4] to-[#a142f4] group-hover:w-full transition-all duration-300"></span>
-              </button>
-            </nav>
+              
+              {/* Inline Navigation - Desktop Only */}
+              <nav className="flex items-center gap-12">
+                <button 
+                  onClick={() => navigate('/models')}
+                  className="text-white/80 hover:text-white font-medium text-xl transition-all duration-300 relative group"
+                >
+                  Models
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#4285f4] to-[#a142f4] group-hover:w-full transition-all duration-300"></span>
+                </button>
+                <button 
+                  onClick={() => navigate('/research')}
+                  className="text-white/80 hover:text-white font-medium text-xl transition-all duration-300 relative group"
+                >
+                  Research
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#4285f4] to-[#a142f4] group-hover:w-full transition-all duration-300"></span>
+                </button>
+                <button 
+                  onClick={() => navigate('/science')}
+                  className="text-white/80 hover:text-white font-medium text-xl transition-all duration-300 relative group"
+                >
+                  Science
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#4285f4] to-[#a142f4] group-hover:w-full transition-all duration-300"></span>
+                </button>
+                <button 
+                  onClick={() => navigate('/about')}
+                  className="text-white/80 hover:text-white font-medium text-xl transition-all duration-300 relative group"
+                >
+                  About
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#4285f4] to-[#a142f4] group-hover:w-full transition-all duration-300"></span>
+                </button>
+              </nav>
+            </div>
           </div>
 
-          {/* Right Section - Three Items */}
-          <div className="flex items-center gap-6">
-            {/* Try Voice Journal Button - Gemini Card Style */}
+          {/* Center - Logo (Mobile Only) */}
+          <button 
+            onClick={() => navigate('/')}
+            className="absolute left-1/2 transform -translate-x-1/2 lg:hidden hover:opacity-80 transition-opacity"
+          >
+            <img 
+              src="/images/16f6e1ea-b24f-4aa3-826c-1d847809b91a-removebg-preview.png" 
+              alt="Sahayata Logo" 
+              className="h-8 w-8 object-contain"
+            />
+          </button>
+
+          {/* Right Section - Desktop: Three Items, Mobile: User Dropdown Only */}
+          <div className="flex items-center gap-2 md:gap-6">
+            {/* Try Voice Journal Button - Desktop Only */}
             <button 
               onClick={handleTryJournal}
-              className="text-white font-medium text-xl transition-all duration-300 hover:bg-white/10 group"
+              className="text-white font-medium text-sm md:text-xl transition-all duration-300 hover:bg-white/10 group hidden md:block"
               style={{
                 background: 'rgba(255,255,255,0.08)',
                 borderRadius: '24px',
@@ -372,9 +418,9 @@ export default function LandingPage() {
               Try Voice Journal
             </button>
 
-            {/* Search Icon - Gemini Card Style */}
+            {/* Search Icon - Desktop Only */}
             <button 
-              className="text-white/80 hover:text-white transition-all duration-300 hover:bg-white/10 flex items-center justify-center"
+              className="text-white/80 hover:text-white transition-all duration-300 hover:bg-white/10 flex items-center justify-center hidden md:flex"
               style={{
                 background: 'rgba(255,255,255,0.08)',
                 borderRadius: '24px',
@@ -388,31 +434,21 @@ export default function LandingPage() {
               </svg>
             </button>
 
-            {/* User Avatar Dropdown */}
+            {/* User Avatar Dropdown - Right Side */}
             <UserDropdown />
           </div>
-
-          {/* Mobile Hamburger Menu */}
-          <button 
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden text-white/80 hover:text-white transition-colors p-2"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
         </div>
 
         {/* Mobile Navigation Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden bg-[#060606] border-t border-gray-800/50 pl-20 pr-6 py-4">
-            <nav className="flex flex-col space-y-6">
+          <div className="lg:hidden bg-[#060606] border-t border-gray-800/50 pl-4 pr-3 py-4">
+            <nav className="flex flex-col space-y-4">
               <button 
                 onClick={() => {
                   navigate('/models')
                   setIsMobileMenuOpen(false)
                 }}
-                className="text-white/80 hover:text-white font-medium text-xl transition-colors text-left"
+                className="text-white/80 hover:text-white font-medium text-lg md:text-xl transition-colors text-left"
               >
                 Models
               </button>
@@ -421,7 +457,7 @@ export default function LandingPage() {
                   navigate('/research')
                   setIsMobileMenuOpen(false)
                 }}
-                className="text-white/80 hover:text-white font-medium text-xl transition-colors text-left"
+                className="text-white/80 hover:text-white font-medium text-lg md:text-xl transition-colors text-left"
               >
                 Research
               </button>
@@ -430,7 +466,7 @@ export default function LandingPage() {
                   navigate('/science')
                   setIsMobileMenuOpen(false)
                 }}
-                className="text-white/80 hover:text-white font-medium text-xl transition-colors text-left"
+                className="text-white/80 hover:text-white font-medium text-lg md:text-xl transition-colors text-left"
               >
                 Science
               </button>
@@ -439,7 +475,7 @@ export default function LandingPage() {
                   navigate('/about')
                   setIsMobileMenuOpen(false)
                 }}
-                className="text-white/80 hover:text-white font-medium text-xl transition-colors text-left"
+                className="text-white/80 hover:text-white font-medium text-lg md:text-xl transition-colors text-left"
               >
                 About
               </button>
@@ -451,7 +487,7 @@ export default function LandingPage() {
       {/* Hero Section - Gemini Style */}
       <div style={{ background: 'linear-gradient(135deg, #000000 0%, #000000 30%, #060606 70%, #000000 100%)' }}>
         <section
-          className="px-6 relative overflow-hidden"
+          className="px-3 md:px-6 relative overflow-hidden"
           style={{
             marginTop: '88px',
             minHeight: '100vh',
@@ -459,7 +495,7 @@ export default function LandingPage() {
             flexDirection: 'column',
             justifyContent: 'flex-start',
             alignItems: 'center',
-            paddingTop: '200px',
+            paddingTop: 'clamp(80px, 15vw, 200px)',
             background: 'transparent'
           }}
         >
@@ -563,13 +599,13 @@ export default function LandingPage() {
             className="mx-auto"
             style={{
               fontFamily: '"Google Sans", Arial, Helvetica, sans-serif',
-              fontSize: '124px',
+              fontSize: 'clamp(48px, 12vw, 124px)',
               fontStyle: 'normal',
               fontWeight: '400',
-              height: '128px',
+              height: 'clamp(52px, 13vw, 128px)',
               letterSpacing: '0.1px',
-              lineHeight: '128px',
-              maxWidth: '1069px',
+              lineHeight: 'clamp(52px, 13vw, 128px)',
+              maxWidth: 'min(95vw, 1069px)',
               opacity: '1',
               textAlign: 'center',
               textRendering: 'optimizelegibility',
@@ -590,7 +626,7 @@ export default function LandingPage() {
           
           {/* Subtitle */}
           <p 
-            className="text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto"
+            className="text-base md:text-xl lg:text-2xl text-gray-400 max-w-2xl mx-auto px-4"
             style={{ marginBottom: 'clamp(24px, 5vw, 40px)' }}
           >
             Our most intelligent voice-powered journaling companion
@@ -598,9 +634,9 @@ export default function LandingPage() {
           
           {/* CTA Buttons - Exact Gemini Design */}
           <div 
-            className="flex flex-col sm:flex-row gap-4 justify-center relative z-10"
+            className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center relative z-10 w-full px-4"
             style={{
-              marginBottom: 'clamp(128px, 20vw, 224px)'
+              marginBottom: 'clamp(64px, 15vw, 224px)'
             }}
           >
             {/* Primary Button - Chat with Gemini Style */}
@@ -610,46 +646,50 @@ export default function LandingPage() {
                 console.log('Button clicked!')
                 handleGetStarted()
               }}
-              className="px-5 py-5 rounded-full font-medium text-white text-xl
+              className="px-4 py-3 md:px-5 md:py-5 rounded-full font-medium text-white text-base md:text-xl
                          shadow-lg hover:shadow-blue-500/50 
                          transition-all duration-300 flex items-center gap-2
-                         min-w-[240px] justify-center cursor-pointer
+                         w-full sm:w-auto sm:min-w-[200px] md:min-w-[240px] justify-center cursor-pointer
                          hover:shadow-xl hover:shadow-blue-500/40"
               style={{
                 background: 'linear-gradient(90deg, #3b6bff, #2e96ff 65%, #acb7ff)'
               }}
             >
               <span style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>{user ? 'Go to App' : 'Start Your Journey'}</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="18" height="18" className="md:w-5 md:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M9 5l7 7-7 7"/>
               </svg>
             </button>
             
-            {/* Secondary Button - Build with Gemini Style */}
+            {/* Secondary Button - Download App */}
             <button
               onClick={(e) => {
                 e.preventDefault()
-                console.log('Second button clicked!')
-                handleTryJournal()
+                console.log('Download App button clicked!')
+                navigate('/coming-soon')
               }}
-              className="px-5 py-5 rounded-full font-medium text-white text-xl
+              className="px-4 py-3 md:px-5 md:py-5 rounded-full font-medium text-white text-base md:text-xl
                          border border-blue-400 
                          hover:border-blue-500 hover:shadow-lg hover:shadow-blue-500/30 
                          transition-all duration-300 flex items-center gap-2
-                         min-w-[240px] justify-center cursor-pointer"
+                         w-full sm:w-auto sm:min-w-[200px] md:min-w-[240px] justify-center cursor-pointer"
             >
-              <span style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>{user ? 'Go to App' : 'Try Voice Agent'}</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <span style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>Download App</span>
+              <svg width="18" height="18" className="md:w-5 md:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M9 5l7 7-7 7"/>
               </svg>
             </button>
           </div>
 
           {/* Card Carousel - Inside Hero Section */}
-          <div className="w-full max-w-4xl mx-auto">
-            {/* Card Stack Container */}
+          <div className="w-full max-w-4xl mx-auto px-2 md:px-4">
+            {/* Card Stack Container - Better mobile sizing with proper spacing */}
             <div 
-              className="relative w-full max-w-[720px] h-[240px] mx-auto overflow-visible"
+              className="relative w-full max-w-[720px] mx-auto overflow-visible mb-12 md:mb-4"
+              style={{
+                height: 'clamp(160px, 35vh, 240px)',
+                paddingBottom: 'clamp(40px, 10vh, 60px)'
+              }}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
             >
@@ -673,8 +713,8 @@ export default function LandingPage() {
               })}
             </div>
             
-            {/* Navigation Dots - Gemini Style */}
-            <div className="gemini-loader-container mt-1">
+            {/* Navigation Dots - Gemini Style - Positioned below cards on mobile */}
+            <div className="gemini-loader-container flex justify-center relative z-10 mt-4 md:mt-1">
               {cards.map((_, index) => {
                 const isActive = index === currentCardIndex;
                 return (
@@ -699,10 +739,10 @@ export default function LandingPage() {
         </section>
 
          {/* Vision Section */}
-         <section className="py-20 px-6" style={{ background: 'linear-gradient(135deg, #000000 0%, #000000 40%, #020202 80%, #000000 100%)' }} data-vision-section>
+         <section className="py-12 md:py-20 px-3 md:px-6" style={{ background: 'linear-gradient(135deg, #000000 0%, #000000 40%, #020202 80%, #000000 100%)' }} data-vision-section>
         {/* Vision Text */}
-        <div className="text-center mb-16 max-w-5xl mx-auto">
-          <div className="text-4xl md:text-6xl font-semibold tracking-tight text-center text-blue-400">
+        <div className="text-center mb-8 md:mb-16 max-w-5xl mx-auto">
+          <div className="text-2xl md:text-4xl lg:text-6xl font-semibold tracking-tight text-center text-blue-400">
             {[
               "Sahayata empowers youth with",
               "a trusted, voice-powered companion",
@@ -756,7 +796,7 @@ export default function LandingPage() {
          {/* Navigation Card - Transitions from normal to sticky */}
          <div 
            ref={navigationCardRef}
-           className={`px-6 py-4 max-w-2xl mx-auto transition-all duration-300 ${
+           className={`px-3 md:px-6 py-3 md:py-4 max-w-2xl mx-auto transition-all duration-300 ${
              showStickyNav 
                ? 'fixed top-0 left-0 right-0 z-40 backdrop-blur-lg border border-gray-800/30 rounded-full' 
                : 'relative backdrop-blur-lg border border-gray-800/30 rounded-full'
@@ -765,7 +805,7 @@ export default function LandingPage() {
              background: 'linear-gradient(135deg, #000000 0%, #000000 30%, #060606 70%, #000000 100%)'
            }}
          >
-           <div className="flex flex-wrap justify-center gap-6">
+           <div className="flex flex-wrap justify-center gap-2 md:gap-6">
               {[
                 { name: 'Features', target: 'features-section' },
                 { name: 'Research', target: 'research-section' },
@@ -775,7 +815,7 @@ export default function LandingPage() {
                 ].map((item, index) => (
                  <button
                    key={item.name}
-                   className={`px-4 py-2 rounded-full text-lg font-medium transition-all duration-300 ${
+                   className={`px-3 md:px-4 py-1.5 md:py-2 rounded-full text-sm md:text-lg font-medium transition-all duration-300 ${
                      activeSection === item.target
                        ? 'text-white font-medium border border-gray-400/60 rounded-full bg-gray-800'
                        : 'text-gray-400 hover:text-white hover:bg-gray-800/30'
@@ -802,15 +842,15 @@ export default function LandingPage() {
       {/* All Content Sections - Unified Background */}
       <div style={{ background: 'linear-gradient(135deg, #000000 0%, #000000 30%, #060606 70%, #000000 100%)' }}>
         {/* Features Section */}
-      <section id="features-section" className="py-20 px-6" style={{ background: 'transparent' }}>
+      <section id="features-section" className="py-12 md:py-20 px-3 md:px-6" style={{ background: 'transparent' }}>
         <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-6xl font-bold text-gray-100 mb-8" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
+          <div className="text-center mb-8 md:mb-16">
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-gray-100 mb-4 md:mb-8" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
               Core Features
             </h2>
-            <p className="text-2xl text-gray-400 max-w-3xl mx-auto" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
-              Everything you need for a comprehensive<br />
-              mental wellness journey
+            <p className="text-base md:text-xl lg:text-2xl text-gray-400 max-w-3xl mx-auto px-4" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
+              Everything you need for a comprehensive<br className="hidden md:block" />
+              <span className="md:hidden"> </span>mental wellness journey
             </p>
           </div>
           
@@ -966,16 +1006,16 @@ export default function LandingPage() {
       </section>
 
       {/* Research Section */}
-      <section id="research-section" className="py-20 px-6" style={{ background: '#000000' }}>
+      <section id="research-section" className="py-12 md:py-20 px-3 md:px-6" style={{ background: '#000000' }}>
         <div className="container mx-auto max-w-7xl">
           {/* Header */}
-          <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-6xl font-bold text-white mb-8" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
+          <div className="text-center mb-8 md:mb-16">
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4 md:mb-8" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
               Research & Science
             </h2>
-            <p className="text-2xl text-gray-300 max-w-3xl mx-auto font-medium" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
-              Our research advances the science of artificial intelligence<br />
-              and its applications in mental health and wellness.
+            <p className="text-base md:text-xl lg:text-2xl text-gray-300 max-w-3xl mx-auto font-medium px-4" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
+              Our research advances the science of artificial intelligence<br className="hidden md:block" />
+              <span className="md:hidden"> </span>and its applications in mental health and wellness.
             </p>
           </div>
           
@@ -1103,10 +1143,10 @@ export default function LandingPage() {
       <TechnicalArchitecture />
 
       {/* Safety Section */}
-      <section id="safety-section" className="py-20 px-6" style={{ background: '#000000' }}>
+      <section id="safety-section" className="py-12 md:py-20 px-3 md:px-6" style={{ background: '#000000' }}>
         <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-6xl font-bold text-white mb-8" style={{ 
+          <div className="text-center mb-8 md:mb-16">
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4 md:mb-8" style={{ 
               fontFamily: 'Google Sans, Arial, Helvetica, sans-serif',
               textShadow: '0 0 15px rgba(255, 255, 255, 0.4)',
               filter: 'brightness(1.15)',
@@ -1114,7 +1154,7 @@ export default function LandingPage() {
             }}>
               Safety & Privacy
             </h2>
-            <p className="text-2xl text-gray-300 max-w-3xl mx-auto font-medium" style={{ 
+            <p className="text-base md:text-xl lg:text-2xl text-gray-300 max-w-3xl mx-auto font-medium px-4" style={{ 
               fontFamily: 'Google Sans, Arial, Helvetica, sans-serif',
               textShadow: '0 0 10px rgba(255, 255, 255, 0.25)',
               filter: 'brightness(1.1)',
@@ -1222,10 +1262,10 @@ export default function LandingPage() {
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing-section" className="py-16 px-6" style={{ background: '#000000' }}>
+      <section id="pricing-section" className="py-12 md:py-16 px-3 md:px-6" style={{ background: '#000000' }}>
         <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-12">
-            <h2 className="text-5xl md:text-6xl font-bold text-white mb-8" style={{ 
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4 md:mb-8" style={{ 
               fontFamily: 'Google Sans, Arial, Helvetica, sans-serif',
               textShadow: '0 0 15px rgba(255, 255, 255, 0.4)',
               filter: 'brightness(1.15)',
@@ -1233,7 +1273,7 @@ export default function LandingPage() {
             }}>
               Simple, Transparent Pricing
             </h2>
-            <p className="text-2xl text-gray-300 max-w-3xl mx-auto font-medium" style={{ 
+            <p className="text-base md:text-xl lg:text-2xl text-gray-300 max-w-3xl mx-auto font-medium px-4" style={{ 
               fontFamily: 'Google Sans, Arial, Helvetica, sans-serif',
               textShadow: '0 0 10px rgba(255, 255, 255, 0.25)',
               filter: 'brightness(1.1)',
@@ -1410,9 +1450,9 @@ export default function LandingPage() {
       </section>
       </div>
 
-      <footer className="py-8 px-6 border-t border-gray-800" style={{ background: 'linear-gradient(135deg, #000000 0%, #000000 30%, #060606 70%, #000000 100%)' }}>
+      <footer className="py-6 md:py-8 px-3 md:px-6 border-t border-gray-800" style={{ background: 'linear-gradient(135deg, #000000 0%, #000000 30%, #060606 70%, #000000 100%)' }}>
         <div className="container mx-auto max-w-6xl text-center">
-          <p className="text-gray-400">
+          <p className="text-sm md:text-base text-gray-400">
             Built with ❤️ for your mental wellness journey
           </p>
         </div>

@@ -313,23 +313,23 @@ export default function WellnessPage() {
       {/* Content */}
       <div className="relative z-10">
       <WellnessMoodBoardWidget />
-        <div className="px-6 pb-6 flex gap-6 mt-8">
+        <div className="px-3 md:px-6 pb-6 flex flex-col md:flex-row gap-4 md:gap-6 mt-4 md:mt-8">
           <NeumorphicCard 
-            className="w-1/5 h-96 p-6"
+            className="w-full md:w-1/5 h-auto md:h-96 p-4 md:p-6"
             mode="wellness"
             starCount={8}
           >
             <Community />
           </NeumorphicCard>
           <NeumorphicCard 
-            className="w-1/5 h-96"
+            className="w-full md:w-1/5 h-auto md:h-96"
             mode="wellness"
             starCount={8}
           >
             <World />
           </NeumorphicCard>
           <NeumorphicCard 
-            className="w-3/5 h-96 p-6"
+            className="w-full md:w-3/5 h-auto md:h-96 p-4 md:p-6"
             mode="wellness"
             starCount={18}
           >

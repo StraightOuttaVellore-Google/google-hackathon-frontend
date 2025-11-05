@@ -113,17 +113,17 @@ function QuadrantView({ quadrant, tasks, onUpdateStatus }) {
   };
 
   return (
-    <div className={`${getMatrixCardClass()} flex flex-col`} style={{ height: '140px' }}>
+    <div className={`${getMatrixCardClass()} flex flex-col h-auto md:h-[140px]`} style={{ minHeight: '120px' }}>
       <div className="p-2 rounded-t-xl bg-black/20 dark:bg-black/20 light:bg-white/20">
         <div className="flex items-center gap-2">
-          <Icon size={14} className={config.iconColor} />
+          <Icon size={12} className={`${config.iconColor} md:w-3.5 md:h-3.5`} />
           <div className="min-w-0 flex-1">
-            <h3 className="font-semibold text-xs text-white dark:text-white light:text-black truncate">{config.title}</h3>
-            <p className="text-xs text-white/60 dark:text-white/60 light:text-black/60 truncate">{config.subtitle}</p>
+            <h3 className="font-semibold text-[10px] md:text-xs text-white dark:text-white light:text-black truncate">{config.title}</h3>
+            <p className="text-[9px] md:text-xs text-white/60 dark:text-white/60 light:text-black/60 truncate">{config.subtitle}</p>
           </div>
         </div>
       </div>
-      <div className="flex-1 overflow-y-auto min-h-0 p-2 neumorphic-scrollbar">
+      <div className="flex-1 overflow-y-auto min-h-0 p-1 md:p-2 neumorphic-scrollbar">
         <div className="space-y-1">
           {tasks.map(task => (
             <TaskItem 
@@ -179,15 +179,15 @@ export default function EisenhowerMatrix() {
     <div className="h-full flex flex-col min-h-0">
       <div className="flex items-center justify-between mb-3 flex-shrink-0">
         <div className="min-w-0 flex-1">
-          <h2 className="text-lg font-semibold dark:text-white truncate">Eisenhower Matrix</h2>
-          <p className="text-sm text-gray-600 dark:text-gray-400 truncate">
+          <h2 className="text-base md:text-lg font-semibold dark:text-white truncate">Eisenhower Matrix</h2>
+          <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 truncate">
             {getCompletedTasks()}/{getTotalTasks()} tasks completed
           </p>
         </div>
         {/* Removed external link button - no longer needed */}
       </div>
       
-      <div className="grid grid-cols-2 gap-2 flex-1 min-h-0">
+      <div className="grid grid-cols-2 gap-1 md:gap-2 flex-1 min-h-0">
         {Object.values(TaskQuadrant).map(quadrant => (
           <QuadrantView
             key={quadrant}

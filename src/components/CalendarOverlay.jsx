@@ -234,31 +234,31 @@ const CalendarOverlay = ({ isOpen, onClose, selectedDate }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-black/50 flex items-start justify-center z-50 px-3 pt-20 pb-3 md:p-4 md:items-center">
       <div 
-        className="neumorphic-timer-card-container max-w-4xl w-full h-[80vh] overflow-hidden"
+        className="neumorphic-timer-card-container w-full max-w-[95%] md:max-w-4xl h-[calc(100vh-6rem)] md:h-[80vh] overflow-hidden rounded-lg md:rounded-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-6 bg-black/20 calendar-header">
+        <div className="flex items-center justify-between p-4 md:p-6 bg-black/20 calendar-header">
           <div>
-            <h2 className="text-2xl font-bold text-white dark:text-white light:text-black">
+            <h2 className="text-xl md:text-2xl font-bold text-white dark:text-white light:text-black">
               {selectedDate ? `Tasks for ${selectedDate.toLocaleDateString()}` : 'Daily Tasks'}
             </h2>
-            <p className="text-white/80 dark:text-white/80 light:text-black/80">
+            <p className="text-sm md:text-base text-white/80 dark:text-white/80 light:text-black/80">
               Manage your tasks for this day
             </p>
           </div>
           <button
             onClick={onClose}
-            className="neumorphic-matrix-close-button"
+            className="neumorphic-matrix-close-button min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0"
           >
-            <X className="w-4 h-4" />
+            <X className="w-5 h-5 md:w-4 md:h-4" />
           </button>
         </div>
 
         {/* Content */}
-        <div className="p-6 max-h-[calc(80vh-120px)] overflow-y-auto neumorphic-scrollbar" style={{ overflowX: 'visible', position: 'relative', paddingBottom: '100px' }}>
+        <div className="p-4 md:p-6 h-[calc(100vh-6rem-120px)] md:max-h-[calc(80vh-120px)] overflow-y-auto neumorphic-scrollbar" style={{ overflowX: 'visible', position: 'relative', paddingBottom: '100px' }}>
           {/* Daily Summary Section */}
           <div className="mb-6 p-4 bg-black/20 dark:bg-black/20 light:bg-[rgba(116,200,163,0.15)] rounded-lg daily-summary">
             <h3 className="text-lg font-semibold text-white dark:text-white light:text-black mb-3 flex items-center gap-2">

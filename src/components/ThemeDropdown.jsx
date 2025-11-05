@@ -38,11 +38,11 @@ const ThemeDropdown = () => {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="neumorphic-dropdown-button flex items-center gap-2 px-4 py-2"
+        className="neumorphic-dropdown-button flex items-center gap-1 md:gap-2 px-2 md:px-4 py-1.5 md:py-2"
       >
-        <Icon className="w-4 h-4" />
+        <Icon className="w-3.5 h-3.5 md:w-4 md:h-4" />
         <span className="hidden sm:inline">{currentTheme.name}</span>
-        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+        <ChevronDown className={`w-3.5 h-3.5 md:w-4 md:h-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
       {isOpen && (

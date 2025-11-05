@@ -159,38 +159,39 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
     const statusInfo = statusConfig[task.status] || statusConfig[TaskStatus.TODO];
     
     return (
-      <div className="group p-3 bg-black/20 dark:bg-black/20 light:bg-[rgba(116,200,163,0.1)] rounded-lg hover:bg-black/30 dark:hover:bg-black/30 light:hover:bg-[rgba(116,200,163,0.2)] transition-all duration-200 mb-2 task-item">
-        <div className="flex items-start justify-between">
+      <div className="group p-3 md:p-3 bg-black/20 dark:bg-black/20 light:bg-[rgba(116,200,163,0.1)] rounded-lg hover:bg-black/30 dark:hover:bg-black/30 light:hover:bg-[rgba(116,200,163,0.2)] transition-all duration-200 mb-2 task-item w-full">
+        <div className="flex items-start justify-between gap-2">
           <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-1">
-              <h4 className={`font-medium text-sm truncate text-white dark:text-white light:text-black ${task.status === TaskStatus.COMPLETED ? 'line-through opacity-60' : ''}`}>
+            <div className="flex items-center gap-2 mb-2 flex-wrap">
+              <h4 className={`font-semibold text-sm md:text-base text-white dark:text-white light:text-black break-words ${task.status === TaskStatus.COMPLETED ? 'line-through opacity-60' : ''}`}>
                 {task.title}
               </h4>
-              <span className={`px-2 py-1 rounded-full text-xs font-medium ${statusInfo.color}`}>
+              <span className={`px-2 py-1 md:py-1 rounded-full text-xs md:text-xs font-medium flex-shrink-0 ${statusInfo.color}`}>
                 {statusInfo.label}
               </span>
             </div>
             {task.description && (
-              <p className="text-xs text-white/60 dark:text-white/60 light:text-black/60 line-clamp-2 mb-2">
+              <p className="text-sm text-white/80 dark:text-white/80 light:text-black/80 mb-2 break-words">
                 {task.description}
               </p>
             )}
-            <div className="text-xs text-white/40 dark:text-white/40 light:text-black/40">
+            <div className="text-xs md:text-xs text-white/60 dark:text-white/60 light:text-black/60">
               {task.due_date ? `Due ${new Date(task.due_date).toLocaleDateString()}` : `Created ${new Date(task.created_at).toLocaleDateString()}`}
             </div>
           </div>
-          <div className="flex items-center gap-1 ml-2">
+          <div className="flex items-center gap-1 ml-2 flex-shrink-0">
             <div className="relative">
               <button
                 onClick={(e) => {
                   e.stopPropagation();
                   toggleStatusDropdown(task.id);
                 }}
-                className="neumorphic-dropdown-button text-xs px-2 py-1"
+                className="neumorphic-dropdown-button text-xs md:text-xs px-2 py-1.5 md:py-1 min-h-[36px] md:min-h-0"
               >
-                <span>{statusConfig[task.status]?.label || 'Select Status'}</span>
+                <span className="hidden sm:inline">{statusConfig[task.status]?.label || 'Select Status'}</span>
+                <span className="sm:hidden">{statusConfig[task.status]?.label?.charAt(0) || 'S'}</span>
                 <svg 
-                  className={`w-3 h-3 text-white/60 dark:text-white/60 light:text-black/60 transition-transform duration-200 ${isStatusDropdownOpen[task.id] ? 'rotate-180' : ''}`} 
+                  className={`w-3 h-3 md:w-3 md:h-3 text-white/60 dark:text-white/60 light:text-black/60 transition-transform duration-200 ${isStatusDropdownOpen[task.id] ? 'rotate-180' : ''}`} 
                   fill="none" 
                   stroke="currentColor" 
                   viewBox="0 0 24 24"
@@ -272,25 +273,27 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
     };
 
     return (
-      <div className={`${getMatrixCardClass()} h-full flex flex-col`}>
-        <div className="p-4 rounded-t-xl bg-black/20 dark:bg-black/20 light:bg-[rgba(116,200,163,0.15)]">
+      <div className={`${getMatrixCardClass()} h-auto md:h-full flex flex-col min-h-[200px] md:min-h-0`}>
+        <div className="p-3 md:p-4 rounded-t-xl bg-black/20 dark:bg-black/20 light:bg-[rgba(116,200,163,0.15)] flex-shrink-0">
           <div className="flex items-center gap-2">
-            <Icon size={18} className="text-white/80 dark:text-white/80 light:text-black/80" />
+            <Icon size={16} className="md:w-[18px] md:h-[18px] text-white/80 dark:text-white/80 light:text-black/80" />
             <div>
-              <h3 className="font-semibold text-base text-white dark:text-white light:text-black">{config.title}</h3>
-              <p className="text-sm text-white/60 dark:text-white/60 light:text-black/60">{config.subtitle}</p>
+              <h3 className="font-semibold text-sm md:text-base text-white dark:text-white light:text-black">{config.title}</h3>
+              <p className="text-xs md:text-sm text-white/60 dark:text-white/60 light:text-black/60">{config.subtitle}</p>
             </div>
           </div>
         </div>
-        <div className="flex-1 p-4 overflow-y-auto neumorphic-scrollbar">
+        <div className="p-3 md:p-4 md:overflow-y-auto md:flex-1 md:min-h-0 neumorphic-scrollbar">
           {tasks.length === 0 ? (
             <div className="text-center text-white/60 dark:text-white/60 light:text-black/60 py-8">
               <p className="text-sm">No tasks in this quadrant</p>
             </div>
           ) : (
-            tasks.map(task => (
-              <TaskItem key={task.id} task={task} />
-            ))
+            <div className="space-y-2">
+              {tasks.map(task => (
+                <TaskItem key={task.id} task={task} />
+              ))}
+            </div>
           )}
         </div>
       </div>
@@ -303,18 +306,18 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-black/50 flex items-start justify-center z-50 px-3 pt-20 pb-3 md:p-4 md:items-center">
       <div 
-        className="neumorphic-timer-card-container max-w-7xl w-full max-h-[90vh] overflow-hidden"
+        className="neumorphic-timer-card-container w-full max-w-[95%] md:max-w-7xl h-[calc(100vh-6rem)] md:max-h-[90vh] overflow-hidden rounded-lg md:rounded-2xl"
         onClick={handleContainerClick}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-6">
+        <div className="flex items-center justify-between p-4 md:p-6">
           <div>
-            <h2 className="text-2xl font-bold text-white dark:text-white light:text-black">
+            <h2 className="text-xl md:text-2xl font-bold text-white dark:text-white light:text-black">
               Eisenhower Matrix
             </h2>
-            <p className="text-white/80 dark:text-white/80 light:text-black/70">
+            <p className="text-sm md:text-base text-white/80 dark:text-white/80 light:text-black/70">
               Organize your tasks by urgency and importance
             </p>
           </div>
@@ -324,9 +327,9 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
                 e.stopPropagation();
                 setIsAddingTask(true);
               }}
-              className="neumorphic-matrix-button"
+              className="neumorphic-matrix-button min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0"
             >
-              <Plus className="w-4 h-4" />
+              <Plus className="w-5 h-5 md:w-4 md:h-4" />
               Add Task
             </button>
             <button
@@ -334,15 +337,15 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
                 e.stopPropagation();
                 onClose();
               }}
-              className="neumorphic-matrix-close-button"
+              className="neumorphic-matrix-close-button min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0"
             >
-              <X className="w-6 h-6" />
+              <X className="w-5 h-5 md:w-6 md:h-6" />
             </button>
           </div>
         </div>
 
         {/* Content */}
-        <div className="p-6 overflow-y-auto max-h-[calc(90vh-120px)] neumorphic-scrollbar">
+        <div className="p-4 md:p-6 overflow-y-auto h-[calc(100vh-6rem-120px)] md:max-h-[calc(90vh-120px)] neumorphic-scrollbar">
           {/* Add/Edit Task Form */}
           {isAddingTask && (
             <div className="mb-6 p-4 bg-black/20 dark:bg-black/20 light:bg-[rgba(116,200,163,0.15)] rounded-lg add-task-form">
@@ -453,7 +456,7 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
           )}
 
           {/* Matrix Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 neumorphic-scrollbar">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 neumorphic-scrollbar">
             {Object.values(TaskQuadrant).map(quadrant => (
               <QuadrantView key={quadrant} quadrant={quadrant} />
             ))}

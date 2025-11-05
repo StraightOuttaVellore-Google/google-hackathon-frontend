@@ -411,7 +411,7 @@ export default function App() {
       )}
 
       {/* Logo + Theme Dropdown - Top Left */}
-      <div className="fixed top-6 left-6 z-50 flex items-center gap-4">
+      <div className="fixed top-3 md:top-6 left-3 md:left-6 z-50 flex items-center gap-2 md:gap-4">
         <button 
           onClick={() => navigate('/')}
           className="flex items-center gap-2 hover:opacity-80 transition-opacity"
@@ -422,19 +422,19 @@ export default function App() {
               : '/images/16f6e1ea-b24f-4aa3-826c-1d847809b91a-removebg-preview.png'
             } 
             alt="Sahayata Logo" 
-            className="h-12 w-12 object-contain"
+            className="h-8 w-8 md:h-12 md:w-12 object-contain"
           />
         </button>
         <ThemeDropdown />
       </div>
 
       {/* User Dropdown - Top Right */}
-      <div className="fixed top-6 right-6 z-50">
+      <div className="fixed top-3 md:top-6 right-3 md:right-6 z-50">
         <UserDropdown />
       </div>
 
       {/* Floating Toggle Switch */}
-      <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50">
+      <div className="fixed top-3 md:top-4 left-1/2 z-50 w-auto md:w-auto transform -translate-x-1/2 ml-4 md:ml-0">
         <div 
           className="backdrop-blur-lg rounded-full p-1 shadow-xl relative overflow-hidden"
           style={{
@@ -472,7 +472,7 @@ export default function App() {
           ))}
           
           {/* Toggle Buttons */}
-          <div className="flex items-center gap-2 relative z-10">
+          <div className="flex items-center gap-1.5 md:gap-2 relative z-10">
             <NeumorphicButton
               onClick={toggleMode}
               isSelected={isStudyMode}
@@ -490,7 +490,7 @@ export default function App() {
       </div>
 
       {/* Page Content */}
-      <div className="pt-24">
+      <div className="pt-20 md:pt-24">
         {isStudyMode ? <StudyPage /> : <WellnessPage />}
       </div>
     </div>

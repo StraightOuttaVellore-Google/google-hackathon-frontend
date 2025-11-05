@@ -47,28 +47,28 @@ const HistoryOverlay = ({ isOpen, onClose }) => {
   const recentDays = getRecentDays();
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="neumorphic-timer-card-container max-w-4xl w-full max-h-[90vh] overflow-hidden rounded-2xl">
+    <div className="fixed inset-0 bg-black/50 flex items-start justify-center z-50 px-3 pt-20 pb-3 md:p-4 md:items-center">
+      <div className="neumorphic-timer-card-container w-full max-w-[95%] md:max-w-4xl h-[calc(100vh-6rem)] md:max-h-[90vh] overflow-hidden rounded-lg md:rounded-2xl">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-white/20 dark:border-white/20 light:border-black/20 bg-black/20 calendar-header">
+        <div className="flex items-center justify-between p-4 md:p-6 border-b border-white/20 dark:border-white/20 light:border-black/20 bg-black/20 calendar-header">
           <div>
-            <h2 className="text-2xl font-bold text-white dark:text-white light:text-black">
+            <h2 className="text-xl md:text-2xl font-bold text-white dark:text-white light:text-black">
               Study History & Progress
             </h2>
-            <p className="text-white/80 dark:text-white/80 light:text-black/80">
+            <p className="text-sm md:text-base text-white/80 dark:text-white/80 light:text-black/80">
               Track your study patterns and progress
             </p>
           </div>
           <button
             onClick={onClose}
-            className="neumorphic-matrix-close-button"
+            className="neumorphic-matrix-close-button min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0"
           >
-            <X className="w-4 h-4" />
+            <X className="w-5 h-5 md:w-4 md:h-4" />
           </button>
         </div>
 
         {/* Content */}
-        <div className="p-6 overflow-y-auto max-h-[calc(90vh-120px)] neumorphic-scrollbar">
+        <div className="p-4 md:p-6 overflow-y-auto h-[calc(100vh-6rem-120px)] md:max-h-[calc(90vh-120px)] neumorphic-scrollbar">
           {/* Progress Overview */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div className="neumorphic-matrix-card p-6 rounded-xl">

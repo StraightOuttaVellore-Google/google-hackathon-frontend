@@ -202,11 +202,11 @@ export default function SoundPlayer() {
         <div className="h-full p-6">
       <div className="flex flex-col h-full">
         {/* Header */}
-        <div className="text-center mb-6">
-          <h3 className="text-lg font-semibold text-white dark:text-white light:text-black mb-2">
+        <div className="text-center mb-4 md:mb-6">
+          <h3 className="text-base md:text-lg font-semibold text-white dark:text-white light:text-black mb-2">
             Ambient & Focus
           </h3>
-          <p className="text-sm text-white/80 dark:text-white/80 light:text-black/70">
+          <p className="text-xs md:text-sm text-white/80 dark:text-white/80 light:text-black/70">
             Choose your focus sound
           </p>
         </div>
@@ -216,16 +216,16 @@ export default function SoundPlayer() {
           <div className="flex items-center justify-between bg-black/20 dark:bg-black/20 light:bg-white/20 rounded-lg p-3 backdrop-blur-sm">
             <button 
               onClick={() => navigateSoundType('prev')}
-              className={`neumorphic-sound-button ${
+              className={`neumorphic-sound-button min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0 ${
                 isAmbient ? 'opacity-50' : ''
               }`}
               disabled={isAmbient}
             >
-              <ChevronLeft className="w-4 h-4" />
+              <ChevronLeft className="w-5 h-5 md:w-4 md:h-4" />
             </button>
             
             <div className="text-center flex-1">
-              <p className="text-lg font-semibold text-white dark:text-white light:text-black">
+              <p className="text-base md:text-lg font-semibold text-white dark:text-white light:text-black">
                 {isAmbient ? 'Ambient' : 'Noise'}
               </p>
               <p className="text-xs text-white/60 dark:text-white/60 light:text-black/60">
@@ -235,12 +235,12 @@ export default function SoundPlayer() {
             
             <button 
               onClick={() => navigateSoundType('next')}
-              className={`neumorphic-sound-button ${
+              className={`neumorphic-sound-button min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0 ${
                 !isAmbient ? 'opacity-50' : ''
               }`}
               disabled={!isAmbient}
             >
-              <ChevronRight className="w-4 h-4" />
+              <ChevronRight className="w-5 h-5 md:w-4 md:h-4" />
             </button>
           </div>
         </div>
@@ -250,13 +250,13 @@ export default function SoundPlayer() {
           <div className="flex items-center justify-between bg-black/20 dark:bg-black/20 light:bg-white/20 rounded-lg p-3 backdrop-blur-sm">
             <button 
               onClick={() => navigateSound('prev')}
-              className="neumorphic-sound-button"
+              className="neumorphic-sound-button min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0"
             >
-              <ChevronLeft className="w-4 h-4" />
+              <ChevronLeft className="w-5 h-5 md:w-4 md:h-4" />
             </button>
             
             <div className="text-center flex-1">
-              <p className="text-lg font-semibold text-white dark:text-white light:text-black">
+              <p className="text-base md:text-lg font-semibold text-white dark:text-white light:text-black">
                 {SOUND_LABELS[selectedSound]}
               </p>
               <div className="flex justify-center mt-2 space-x-1">
@@ -276,9 +276,9 @@ export default function SoundPlayer() {
             
             <button 
               onClick={() => navigateSound('next')}
-              className="neumorphic-sound-button"
+              className="neumorphic-sound-button min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0"
             >
-              <ChevronRight className="w-4 h-4" />
+              <ChevronRight className="w-5 h-5 md:w-4 md:h-4" />
             </button>
           </div>
         </div>
@@ -287,12 +287,12 @@ export default function SoundPlayer() {
         <div className="flex justify-center items-center flex-1">
           <button
             onClick={togglePlayPause}
-            className="neumorphic-play-button"
+            className="neumorphic-play-button min-h-[56px] min-w-[56px] md:min-h-0 md:min-w-0"
           >
             {isPlaying ? (
-              <Pause className="w-6 h-6" />
+              <Pause className="w-7 h-7 md:w-6 md:h-6" />
             ) : (
-              <Play className="w-6 h-6 ml-1" />
+              <Play className="w-7 h-7 md:w-6 md:h-6 ml-1" />
             )}
           </button>
         </div>
