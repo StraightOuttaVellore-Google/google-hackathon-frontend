@@ -477,13 +477,13 @@ export default function App() {
               onClick={toggleMode}
               isSelected={isStudyMode}
             >
-              📚 Study
+              Study
             </NeumorphicButton>
             <NeumorphicButton
               onClick={toggleMode}
               isSelected={!isStudyMode}
             >
-              🌿 Wellness
+              Wellness
             </NeumorphicButton>
           </div>
         </div>

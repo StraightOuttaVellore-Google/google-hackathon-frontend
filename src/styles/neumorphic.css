@@ -73,10 +73,19 @@
 .neumorphic-button-selected {
   background: #000000;
   color: white;
-  border: none;
+  border: 2px solid transparent;
+  background-image: 
+    linear-gradient(#000000, #000000),
+    linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
   border-radius: 9999px;
   padding: 12px 24px;
-  box-shadow: 2px 2px 4px #000000, -2px -2px 4px #1a1a1a;
+  box-shadow: 
+    2px 2px 4px #000000, 
+    -2px -2px 4px #1a1a1a,
+    0 0 20px rgba(102, 126, 234, 0.3),
+    0 0 40px rgba(79, 172, 254, 0.2);
   transform: scale(1.05);
   transition: all 0.5s ease;
   cursor: pointer;
@@ -91,8 +100,37 @@
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.08), -2px -2px 4px rgba(255, 255, 255, 0.8);
 }
 
+/* Black mode specific styling for selected button */
+.black .neumorphic-button-selected {
+  background: #000000;
+  border: 2px solid transparent;
+  background-image: 
+    linear-gradient(#000000, #000000),
+    linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  box-shadow: 
+    2px 2px 4px rgba(0, 0, 0, 0.8), 
+    -2px -2px 4px rgba(26, 26, 26, 0.5),
+    0 0 25px rgba(102, 126, 234, 0.4),
+    0 0 50px rgba(79, 172, 254, 0.3);
+}
+
 .neumorphic-button-selected:hover {
-  box-shadow: 3px 3px 6px #000000, -3px -3px 6px #1a1a1a;
+  box-shadow: 
+    3px 3px 6px #000000, 
+    -3px -3px 6px #1a1a1a,
+    0 0 25px rgba(102, 126, 234, 0.4),
+    0 0 50px rgba(79, 172, 254, 0.3);
+  transform: scale(1.08);
+}
+
+.black .neumorphic-button-selected:hover {
+  box-shadow: 
+    3px 3px 6px rgba(0, 0, 0, 0.9), 
+    -3px -3px 6px rgba(26, 26, 26, 0.6),
+    0 0 30px rgba(102, 126, 234, 0.5),
+    0 0 60px rgba(79, 172, 254, 0.4);
   transform: scale(1.08);
 }
 
@@ -110,12 +148,12 @@
 .light .neumorphic-card-with-stars {
   background: var(--surface);
   border: 1px solid var(--border-subtle);
-  box-shadow: inset 2px 2px 4px rgba(221, 231, 224, 0.3), inset -2px -2px 4px rgba(255, 255, 255, 0.8);
+  box-shadow: inset 2px 2px 4px rgba(221, 231, 224, 0.3), inset -2px -2px 4px rgba(255, 255, 255, 0.8), 0 0 0 0 transparent;
   color: var(--text-color);
 }
 
 .light .neumorphic-card-with-stars:hover {
-  box-shadow: inset 2px 2px 6px rgba(221, 231, 224, 0.4), inset -2px -2px 6px rgba(255, 255, 255, 0.9);
+  box-shadow: inset 2px 2px 6px rgba(221, 231, 224, 0.4), inset -2px -2px 6px rgba(255, 255, 255, 0.9), 0 0 0 0 transparent;
 }
 
 .neumorphic-card-with-stars:hover {
@@ -711,9 +749,11 @@ body.light .neumorphic-timer-card:hover,
   position: absolute;
   top: 100%;
   left: 0;
-  right: 0;
   z-index: 99999;
   margin-top: 8px;
+  min-width: 150px;
+  width: max-content;
+  max-width: 250px;
   max-height: 160px;
   overflow-y: auto;
   scrollbar-width: thin;
@@ -840,6 +880,31 @@ body.light .neumorphic-timer-card:hover,
     0 10px 30px rgba(0, 0, 0, 0.5),
     0 5px 15px rgba(0, 0, 0, 0.4),
     0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Light mode overrides for Overlay Card */
+.light .neumorphic-overlay-card {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 
+    inset 8px 8px 16px rgba(221, 231, 224, 0.3), 
+    inset -8px -8px 16px rgba(255, 255, 255, 0.8),
+    0 25px 80px rgba(221, 231, 224, 0.25),
+    0 15px 50px rgba(221, 231, 224, 0.2),
+    0 8px 25px rgba(221, 231, 224, 0.15),
+    0 4px 12px rgba(221, 231, 224, 0.1),
+    0 2px 6px rgba(221, 231, 224, 0.08);
+}
+
+.light .neumorphic-overlay-card:hover {
+  box-shadow: 
+    inset 6px 6px 12px rgba(221, 231, 224, 0.4), 
+    inset -6px -6px 12px rgba(255, 255, 255, 0.9),
+    0 30px 100px rgba(221, 231, 224, 0.3),
+    0 18px 60px rgba(221, 231, 224, 0.25),
+    0 10px 30px rgba(221, 231, 224, 0.2),
+    0 5px 15px rgba(221, 231, 224, 0.15),
+    0 2px 8px rgba(221, 231, 224, 0.1);
 }
 
 /* Neomorphic Pomodoro Buttons */
@@ -1342,6 +1407,12 @@ body.light .neumorphic-timer-card:hover,
   overflow: hidden;
 }
 
+/* Allow dropdown to overflow when open */
+.neumorphic-matrix-card-dropdown-open {
+  overflow: visible !important;
+  z-index: 100 !important;
+}
+
 .neumorphic-matrix-card:hover {
   box-shadow: 
     inset 2px 2px 4px rgba(0, 0, 0, 0.8), 
@@ -1489,6 +1560,39 @@ body.light .neumorphic-timer-card:hover,
     inset -2px -2px 4px rgba(60, 60, 60, 0.2);
 }
 
+/* Light mode overrides for input */
+.light .neumorphic-input {
+  background: var(--surface);
+  color: var(--text-color);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 
+    inset 6px 6px 12px rgba(221, 231, 224, 0.3), 
+    inset -6px -6px 12px rgba(255, 255, 255, 0.8),
+    0 4px 12px rgba(221, 231, 224, 0.1),
+    0 2px 6px rgba(221, 231, 224, 0.08);
+}
+
+.light .neumorphic-input:focus {
+  box-shadow: 
+    inset 4px 4px 8px rgba(221, 231, 224, 0.4), 
+    inset -4px -4px 8px rgba(255, 255, 255, 0.9),
+    0 0 0 2px rgba(116, 200, 163, 0.3),
+    0 8px 16px rgba(221, 231, 224, 0.15);
+}
+
+.light .neumorphic-input:disabled {
+  background: rgba(232, 242, 236, 0.5);
+  color: rgba(37, 50, 59, 0.3);
+  cursor: not-allowed;
+  box-shadow: 
+    inset 2px 2px 4px rgba(221, 231, 224, 0.2),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.4);
+}
+
+.light .neumorphic-input::placeholder {
+  color: rgba(37, 50, 59, 0.4);
+}
+
 /* Neomorphic Close Button */
 .neumorphic-close-button {
   background: #000000;
@@ -1516,6 +1620,25 @@ body.light .neumorphic-timer-card:hover,
 
 .neumorphic-close-button:active {
   box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.9), inset -4px -4px 8px rgba(26, 26, 26, 0.3);
+  transform: scale(1);
+}
+
+/* Light mode overrides for close button */
+.light .neumorphic-close-button {
+  background: var(--surface);
+  color: var(--text-color);
+  border: 1px solid var(--border-subtle);
+  box-shadow: inset 3px 3px 6px rgba(221, 231, 224, 0.3), inset -3px -3px 6px rgba(255, 255, 255, 0.8);
+}
+
+.light .neumorphic-close-button:hover {
+  color: var(--text-color);
+  box-shadow: inset 2px 2px 4px rgba(221, 231, 224, 0.4), inset -2px -2px 4px rgba(255, 255, 255, 0.9);
+  transform: scale(1.05);
+}
+
+.light .neumorphic-close-button:active {
+  box-shadow: inset 4px 4px 8px rgba(221, 231, 224, 0.5), inset -4px -4px 8px rgba(255, 255, 255, 0.7);
   transform: scale(1);
 }
 
@@ -1593,7 +1716,7 @@ body.light .neumorphic-timer-card:hover,
   background: rgba(5, 5, 5, 0.95);
   color: white;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 8px 16px;
+  padding: 10px 20px;
   cursor: pointer;
   font-size: 14px;
   font-weight: 500;
@@ -1605,6 +1728,7 @@ body.light .neumorphic-timer-card:hover,
   position: relative;
   margin: 4px;
   border-radius: 12px;
+  white-space: nowrap;
   box-shadow: 
     inset 2px 2px 4px rgba(0, 0, 0, 0.8), 
     inset -2px -2px 4px rgba(60, 60, 60, 0.4);

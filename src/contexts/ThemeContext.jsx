@@ -16,7 +16,8 @@ export const ThemeProvider = ({ children }) => {
     if (savedTheme !== null) {
       return savedTheme
     }
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+    // Default to dark mode for first-time users
+    return 'dark'
   })
 
   const isDarkMode = theme === 'dark' || theme === 'black'

@@ -30,11 +30,15 @@ export const loginApi = {
    */
   async login(username, password) {
     try {
+      console.log('[LOGIN] Starting login request...');
+      console.log('[LOGIN] Username:', username);
+      
       // Backend expects username and password in form format for OAuth2PasswordRequestForm
       const formData = new URLSearchParams();
       formData.append('username', username);
       formData.append('password', password);
 
+      console.log('[LOGIN] Calling /login endpoint...');
       return await apiRequest('/login', {
         method: 'POST',
         headers: {

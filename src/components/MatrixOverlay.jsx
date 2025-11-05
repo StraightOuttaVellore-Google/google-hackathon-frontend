@@ -159,7 +159,7 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
     const statusInfo = statusConfig[task.status] || statusConfig[TaskStatus.TODO];
     
     return (
-      <div className="group p-3 bg-black/20 rounded-lg hover:bg-black/30 transition-all duration-200 mb-2 task-item">
+      <div className="group p-3 bg-black/20 dark:bg-black/20 light:bg-[rgba(116,200,163,0.1)] rounded-lg hover:bg-black/30 dark:hover:bg-black/30 light:hover:bg-[rgba(116,200,163,0.2)] transition-all duration-200 mb-2 task-item">
         <div className="flex items-start justify-between">
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
@@ -273,7 +273,7 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
 
     return (
       <div className={`${getMatrixCardClass()} h-full flex flex-col`}>
-        <div className="p-4 rounded-t-xl bg-black/20 dark:bg-black/20 light:bg-white/20">
+        <div className="p-4 rounded-t-xl bg-black/20 dark:bg-black/20 light:bg-[rgba(116,200,163,0.15)]">
           <div className="flex items-center gap-2">
             <Icon size={18} className="text-white/80 dark:text-white/80 light:text-black/80" />
             <div>
@@ -345,7 +345,7 @@ const MatrixOverlay = ({ isOpen, onClose }) => {
         <div className="p-6 overflow-y-auto max-h-[calc(90vh-120px)] neumorphic-scrollbar">
           {/* Add/Edit Task Form */}
           {isAddingTask && (
-            <div className="mb-6 p-4 bg-black/20 rounded-lg add-task-form">
+            <div className="mb-6 p-4 bg-black/20 dark:bg-black/20 light:bg-[rgba(116,200,163,0.15)] rounded-lg add-task-form">
               <h3 className="text-lg font-semibold mb-4 text-white dark:text-white light:text-black">
                 {editingTask ? 'Edit Task' : 'Add New Task'}
               </h3>

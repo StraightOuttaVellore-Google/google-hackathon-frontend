@@ -29,6 +29,9 @@ export class ApiError extends Error {
  */
 export async function apiRequest(endpoint, options = {}) {
   const url = `${API_BASE_URL}${endpoint}`;
+  console.log(`[API] Making request to: ${url}`);
+  console.log(`[API] Method: ${options.method || 'GET'}`);
+  console.log(`[API] Headers:`, options.headers || {});
   
   const defaultOptions = {
     headers: {
@@ -55,12 +58,14 @@ export async function apiRequest(endpoint, options = {}) {
 
   // Add timeout handling
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 30000); // 30s timeout
+  const timeoutId = setTimeout(() => controller.abort(), 60000); // 60s timeout
   config.signal = controller.signal;
 
   try {
+    console.log(`[API] Sending fetch request to: ${url}`);
     const response = await fetch(url, config);
     clearTimeout(timeoutId);
+    console.log(`[API] Response received: ${response.status} ${response.statusText}`);
     
     if (!response.ok) {
       // Try to get detailed error message from response body
@@ -87,11 +92,15 @@ export async function apiRequest(endpoint, options = {}) {
     return await response.json();
   } catch (error) {
     clearTimeout(timeoutId);
+    console.error(`[API] Request failed:`, error);
+    console.error(`[API] Error name:`, error.name);
+    console.error(`[API] Error message:`, error.message);
     
     if (error instanceof ApiError) {
       throw error;
     }
     if (error.name === 'AbortError') {
+      console.error(`[API] Request timed out after 60 seconds`);
       throw new ApiError('Request timeout', 408);
     }
     

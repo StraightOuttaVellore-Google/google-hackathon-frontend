@@ -580,7 +580,7 @@ export default function VoiceAIOverlay({ isOpen, onClose, mode = 'wellness' }) {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div 
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/50 dark:bg-black/50 light:bg-[rgba(37,50,59,0.3)] backdrop-blur-sm"
         onClick={onClose}
       ></div>
       
@@ -607,7 +607,7 @@ export default function VoiceAIOverlay({ isOpen, onClose, mode = 'wellness' }) {
         ))}
 
         {/* Header */}
-        <div className="relative z-10 flex items-center justify-between p-6 border-b border-white/20">
+        <div className="relative z-10 flex items-center justify-between p-6 border-b border-white/20 dark:border-white/20 light:border-[rgba(116,200,163,0.3)]">
           <div className="flex items-center gap-4">
             <img
               src="images/38dc7c1a-2e26-44b6-9c9b-97ca9ff38a60.png"
@@ -644,7 +644,7 @@ export default function VoiceAIOverlay({ isOpen, onClose, mode = 'wellness' }) {
         {/* Content */}
         <div className="flex h-[calc(90vh-140px)]">
           {/* Voice Interface */}
-          <div className="relative z-10 flex-1 p-6 border-r border-white/20">
+          <div className="relative z-10 flex-1 p-6 border-r border-white/20 dark:border-white/20 light:border-[rgba(116,200,163,0.3)] overflow-y-auto neumorphic-scrollbar">
             {/* Voice Control Panel */}
             <div className="text-center mb-6">
               {/* Voice Agent Image */}
@@ -772,23 +772,23 @@ export default function VoiceAIOverlay({ isOpen, onClose, mode = 'wellness' }) {
 
             {/* Live Transcription Display */}
             <div className="neumorphic-timer-card rounded-xl p-4 mb-4">
-              <h3 className="text-sm font-semibold text-white/70 mb-2">
+              <h3 className="text-sm font-semibold text-white/70 dark:text-white/70 light:text-black/70 mb-2">
                 🎙️ Live Transcription
               </h3>
               {currentTranscript.user && (
                 <div className="mb-2">
-                  <span className="text-xs text-blue-400">You: </span>
-                  <span className="text-sm text-white">{currentTranscript.user}</span>
+                  <span className="text-xs text-blue-400 dark:text-blue-400 light:text-blue-600">You: </span>
+                  <span className="text-sm text-white dark:text-white light:text-black">{currentTranscript.user}</span>
                 </div>
               )}
               {currentTranscript.assistant && (
                 <div>
-                  <span className="text-xs text-green-400">AI: </span>
-                  <span className="text-sm text-white">{currentTranscript.assistant}</span>
+                  <span className="text-xs text-green-400 dark:text-green-400 light:text-green-600">AI: </span>
+                  <span className="text-sm text-white dark:text-white light:text-black">{currentTranscript.assistant}</span>
                 </div>
               )}
               {!currentTranscript.user && !currentTranscript.assistant && (
-                <p className="text-xs text-white/50">
+                <p className="text-xs text-white/50 dark:text-white/50 light:text-black/50">
                   {isConnected 
                     ? 'Listening... Speak to see transcription here'
                     : 'Click "Start Conversation" to begin'
@@ -820,15 +820,15 @@ export default function VoiceAIOverlay({ isOpen, onClose, mode = 'wellness' }) {
                       <div
                         className={`max-w-md px-4 py-3 rounded-2xl ${
                           message.role === 'user'
-                            ? 'bg-blue-500/20 border border-blue-500/30'
-                            : 'bg-green-500/20 border border-green-500/30'
+                            ? 'bg-blue-500/20 dark:bg-blue-500/20 light:bg-[rgba(116,200,163,0.15)] border border-blue-500/30 dark:border-blue-500/30 light:border-[rgba(116,200,163,0.4)]'
+                            : 'bg-green-500/20 dark:bg-green-500/20 light:bg-[rgba(56,178,163,0.15)] border border-green-500/30 dark:border-green-500/30 light:border-[rgba(56,178,163,0.4)]'
                         }`}
                       >
-                        <p className="text-xs text-white/60 mb-1">
+                        <p className="text-xs text-white/60 dark:text-white/60 light:text-black/60 mb-1">
                           {message.role === 'user' ? '👤 You' : '🤖 AI'}
                         </p>
-                        <p className="text-sm text-white leading-relaxed">{message.text}</p>
-                        <p className="text-xs text-white/50 mt-2">
+                        <p className="text-sm text-white dark:text-white light:text-black leading-relaxed">{message.text}</p>
+                        <p className="text-xs text-white/50 dark:text-white/50 light:text-black/50 mt-2">
                           {new Date(message.timestamp).toLocaleTimeString()}
                         </p>
                       </div>
@@ -1013,15 +1013,15 @@ export default function VoiceAIOverlay({ isOpen, onClose, mode = 'wellness' }) {
 
         {/* Analysis Status Footer */}
         {analysisSessionId && !showAnalysis && (
-          <div className="relative z-10 p-4 border-t border-white/20 bg-gradient-to-r from-purple-900/50 to-blue-900/50">
+          <div className="relative z-10 p-4 border-t border-white/20 dark:border-white/20 light:border-[rgba(116,200,163,0.3)] bg-gradient-to-r from-purple-900/50 to-blue-900/50 dark:from-purple-900/50 dark:to-blue-900/50 light:from-[rgba(116,200,163,0.3)] light:to-[rgba(56,178,163,0.3)]">
             <div className="flex items-center justify-center gap-3">
-              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-purple-400" />
-              <p className="text-white font-medium">
+              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-purple-400 dark:border-purple-400 light:border-[#74C8A3]" />
+              <p className="text-white dark:text-white light:text-black font-medium">
                 {analysisStatus === 'processing' ? '🧠 Analyzing your conversation...' : '⏳ Processing...'}
               </p>
             </div>
             {analysisError && (
-              <p className="text-red-400 text-sm text-center mt-2">
+              <p className="text-red-400 dark:text-red-400 light:text-red-600 text-sm text-center mt-2">
                 ⚠️ {analysisError}
               </p>
             )}

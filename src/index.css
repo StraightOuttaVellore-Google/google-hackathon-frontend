@@ -26,9 +26,9 @@
 :root.light,
 .light :root {
   /* Core palette */
-  --sky-0: #F8FBF6; /* page bg */
-  --sky-1: #F1F7F2; /* panel bg */
-  --sky-2: #E8F2EC; /* surface */
+  --sky-0: #F2F8F4; /* page bg - light aurora green with cloud-like softness */
+  --sky-1: #EBF3ED; /* panel bg - soft mint cloud with aurora undertones */
+  --sky-2: #E0E8E3; /* surface - slightly darker and warmer */
   --mist: #DDE7E0; /* subtle border */
   --stone: #25323B; /* neutral text */
   --stone-muted: #5B6A73; /* neutral text muted */

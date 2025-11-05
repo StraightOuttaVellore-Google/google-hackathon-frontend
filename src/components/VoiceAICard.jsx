@@ -21,14 +21,6 @@ export default function VoiceAICard({ mode = 'wellness' }) {
               borderRadius: '0.5rem'
             }}
           />
-          {/* Overlay effect on hover */}
-          <div className="absolute inset-0 bg-black/0 hover:bg-black/10 dark:hover:bg-black/10 light:hover:bg-white/10 rounded-lg transition-colors duration-200 flex items-center justify-center">
-            <div className="opacity-0 hover:opacity-100 transition-opacity duration-200">
-              <div className="bg-white/90 dark:bg-gray-800/90 light:bg-white/90 rounded-full p-3 shadow-lg">
-                <span className="text-2xl">🎤</span>
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* Single Talk Button */}

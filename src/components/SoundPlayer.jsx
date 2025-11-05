@@ -220,7 +220,7 @@ export default function SoundPlayer() {
                 }`}
               >
                 <div className="text-center">
-                  <div className="text-lg font-semibold">🌊 Noise</div>
+                  <div className="text-lg font-semibold">Noise</div>
                   <div className="text-xs opacity-75">Colored Noise</div>
                 </div>
               </button>
@@ -234,7 +234,7 @@ export default function SoundPlayer() {
                 }`}
               >
                 <div className="text-center">
-                  <div className="text-lg font-semibold">🌿 Ambient</div>
+                  <div className="text-lg font-semibold">Ambient</div>
                   <div className="text-xs opacity-75">Natural Sounds</div>
                 </div>
               </button>
@@ -250,17 +250,7 @@ export default function SoundPlayer() {
               <div className={`w-20 h-20 mx-auto rounded-full flex items-center justify-center text-4xl mb-4 ${
                 isPlaying ? 'animate-pulse' : ''
               } ${currentTint.replace('/10', '/20')}`}>
-                {isAmbient ? (
-                  selectedSound === 'forest' ? '🌲' :
-                  selectedSound === 'rain' ? '🌧️' :
-                  selectedSound === 'ocean' ? '🌊' :
-                  selectedSound === 'city' ? '🏙️' :
-                  selectedSound === 'cafe_chatter' ? '☕' : '🎵'
-                ) : (
-                  selectedSound === 'white' ? '⚪' :
-                  selectedSound === 'pink' ? '🩷' :
-                  selectedSound === 'brown' ? '🤎' : '🔊'
-                )}
+                <div className="w-8 h-8 rounded-full bg-white/20 dark:bg-white/20 light:bg-black/20"></div>
               </div>
             </div>
 

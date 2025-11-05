@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import { 
     ClockIcon, 
-    FireIcon, 
     SpeakerWaveIcon,
     CpuChipIcon
 } from '@heroicons/react/24/solid';
@@ -55,6 +54,37 @@ export default function MonthlyStats({ onHistoryClick }) {
 
     const statsCards = [
         {
+            id: 'wearable-insights',
+            title: 'Wearable Insights',
+            icon: <CpuChipIcon className="w-6 h-6 text-purple-500" />,
+            render: () => (
+                <div className="space-y-3 w-full">
+                    <div className="text-center">
+                        <div className="text-base font-semibold text-gray-700 dark:text-gray-300">
+                            Smart Wearables
+                        </div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">
+                            Click to view IoT insights
+                        </div>
+                    </div>
+                    <div className="space-y-2">
+                        <div className="flex items-center justify-between text-sm">
+                            <span className="text-gray-600 dark:text-gray-400">Ray-Ban Meta Glasses</span>
+                            <span className="text-green-500 text-xs">● Connected</span>
+                        </div>
+                        <div className="flex items-center justify-between text-sm">
+                            <span className="text-gray-600 dark:text-gray-400">Apple Watch Series 9</span>
+                            <span className="text-green-500 text-xs">● Connected</span>
+                        </div>
+                        <div className="flex items-center justify-between text-sm">
+                            <span className="text-gray-600 dark:text-gray-400">Fitbit Sense 2</span>
+                            <span className="text-green-500 text-xs">● Connected</span>
+                        </div>
+                    </div>
+                </div>
+            )
+        },
+        {
             id: 'study-overview',
             title: 'Study Overview',
             icon: <ClockIcon className="w-6 h-6 text-blue-500" />,
@@ -92,7 +122,7 @@ export default function MonthlyStats({ onHistoryClick }) {
         {
             id: 'focus-analytics',
             title: 'Focus Analytics',
-            icon: <FireIcon className="w-6 h-6 text-red-500" />,
+            icon: <ClockIcon className="w-6 h-6 text-red-500" />,
             render: () => (
                 <div className="space-y-3 w-full">
                     <div className="text-center">
@@ -134,7 +164,6 @@ export default function MonthlyStats({ onHistoryClick }) {
             render: () => (
                 <div className="space-y-3 w-full">
                     <div className="text-center">
-                        <div className="text-2xl mb-1">🎵</div>
                         <div className="text-base font-semibold text-gray-700 dark:text-gray-300">
                             {stats?.soundPreferences.mostUsedSound}
                         </div>
@@ -162,38 +191,6 @@ export default function MonthlyStats({ onHistoryClick }) {
                     </div>
                     <div className="text-center text-sm text-gray-600 dark:text-gray-400">
                         {stats?.soundPreferences.totalSessions} sound sessions
-                    </div>
-                </div>
-            )
-        },
-        {
-            id: 'wearable-insights',
-            title: 'Wearable Insights',
-            icon: <CpuChipIcon className="w-6 h-6 text-purple-500" />,
-            render: () => (
-                <div className="space-y-3 w-full">
-                    <div className="text-center">
-                        <div className="text-2xl mb-1">⌚</div>
-                        <div className="text-base font-semibold text-gray-700 dark:text-gray-300">
-                            Smart Wearables
-                        </div>
-                        <div className="text-xs text-gray-500 dark:text-gray-400">
-                            Click to view IoT insights
-                        </div>
-                    </div>
-                    <div className="space-y-2">
-                        <div className="flex items-center justify-between text-sm">
-                            <span className="text-gray-600 dark:text-gray-400">Ray-Ban Meta Glasses</span>
-                            <span className="text-green-500 text-xs">● Connected</span>
-                        </div>
-                        <div className="flex items-center justify-between text-sm">
-                            <span className="text-gray-600 dark:text-gray-400">Apple Watch Series 9</span>
-                            <span className="text-green-500 text-xs">● Connected</span>
-                        </div>
-                        <div className="flex items-center justify-between text-sm">
-                            <span className="text-gray-600 dark:text-gray-400">Fitbit Sense 2</span>
-                            <span className="text-green-500 text-xs">● Connected</span>
-                        </div>
                     </div>
                 </div>
             )
@@ -231,7 +228,6 @@ export default function MonthlyStats({ onHistoryClick }) {
                 <h1 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">Monthly Stats</h1>
                 <div className="flex-1 flex items-center justify-center">
                     <div className="text-red-500 dark:text-red-400 text-center">
-                        <div className="text-lg mb-2">⚠️</div>
                         <div className="text-sm">{error}</div>
                     </div>
                 </div>
@@ -290,7 +286,7 @@ export default function MonthlyStats({ onHistoryClick }) {
 
                 {/* Card Content */}
                 <div 
-                  className="flex-1 flex items-center justify-center cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-lg transition-colors"
+                  className="flex-1 flex items-center justify-center cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/50 light:hover:bg-[rgba(116,200,163,0.1)] rounded-lg transition-colors"
                   onClick={() => {
                     if (currentCardData.id === 'wearable-insights') {
                         handleWearableCardClick();

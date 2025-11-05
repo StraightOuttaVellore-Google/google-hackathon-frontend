@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
 import { Star, Trophy, Target, Zap, Heart, Brain, Shield, Flame } from 'lucide-react'
 import { getUserPathways } from '../utils/voiceJournalApi'
+import { useTheme } from '../contexts/ThemeContext'
 
 export default function Pathways() {
+  const { theme } = useTheme()
   const [registeredPathways, setRegisteredPathways] = useState([])
   const [selectedPathIndex, setSelectedPathIndex] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
@@ -114,6 +116,13 @@ export default function Pathways() {
     )
   }
 
+  // Function to remove emojis from text
+  const removeEmojis = (text) => {
+    if (!text) return text
+    // Remove emojis using regex
+    return text.replace(/[\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/gu, '').trim()
+  }
+
   // Get current pathway
   const currentPath = registeredPathways[selectedPathIndex]
   const Icon = currentPath.icon
@@ -154,10 +163,10 @@ export default function Pathways() {
                   }`}
                 >
                   <div className="flex items-center gap-1">
-                    <div className={`w-5 h-5 rounded-lg bg-gradient-to-r ${path.color} flex items-center justify-center text-white`}>
+                    <div className={`w-5 h-5 rounded-lg bg-gradient-to-r ${theme === 'light' ? 'from-[#74C8A3] to-[#38B2A3]' : path.color} flex items-center justify-center text-white`}>
                       <PathIcon className="w-3 h-3" />
                     </div>
-                    <span className="truncate text-[11px] font-medium">{path.name}</span>
+                    <span className="truncate text-[11px] font-medium">{removeEmojis(path.name)}</span>
                   </div>
                 </button>
               )
@@ -169,11 +178,17 @@ export default function Pathways() {
       {/* Tube Progress with Level Marker */}
       <div className="relative flex-1 min-h-0 flex items-center justify-center">
         <div className="w-full px-2">
-          <div className="relative h-4 rounded-full bg-black/30 border border-white/10 shadow-inner">
+          <div className="relative h-4 rounded-full bg-black/30 dark:bg-black/30 light:bg-[rgba(116,200,163,0.15)] border border-white/10 dark:border-white/10 light:border-[rgba(116,200,163,0.3)] shadow-inner">
             {/* Tube fill */}
             <div
-              className={`absolute left-0 top-0 h-full rounded-full bg-gradient-to-r ${currentPath.color}`}
-              style={{ width: `${levelPercent}%` }}
+              className={`absolute left-0 top-0 h-full rounded-full bg-gradient-to-r ${theme === 'light' ? 'from-[#74C8A3] to-[#38B2A3]' : currentPath.color}`}
+              style={{ 
+                width: `${levelPercent}%`,
+                ...(theme === 'light' && {
+                  background: 'linear-gradient(90deg, #74C8A3 0%, #38B2A3 50%, #5FA88E 100%)',
+                  boxShadow: '0 0 8px rgba(116, 200, 163, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
+                })
+              }}
             />
 
             {/* Step markers */}
@@ -186,12 +201,12 @@ export default function Pathways() {
                     <div
                       className={`w-3 h-3 rounded-full border ${
                         isActive
-                          ? 'bg-white/90 border-white/80'
-                          : 'bg-white/20 border-white/30'
+                          ? 'bg-white/90 dark:bg-white/90 light:bg-[#74C8A3] border-white/80 dark:border-white/80 light:border-[#38B2A3]'
+                          : 'bg-white/20 dark:bg-white/20 light:bg-[rgba(116,200,163,0.3)] border-white/30 dark:border-white/30 light:border-[rgba(116,200,163,0.5)]'
                       }`}
                     />
                     {isCurrent && (
-                      <div className="absolute -inset-1 rounded-full ring-2 ring-cyan-400/60 animate-pulse" />
+                      <div className="absolute -inset-1 rounded-full ring-2 ring-cyan-400/60 dark:ring-cyan-400/60 light:ring-[#74C8A3]/70 animate-pulse" />
                     )}
                   </div>
                 )
@@ -199,16 +214,16 @@ export default function Pathways() {
             </div>
           </div>
 
-          <div className="mt-2 text-center text-[11px] text-gray-400">
+          <div className="mt-2 text-center text-[11px] text-gray-400 dark:text-gray-400 light:text-gray-600">
             <div className="inline-flex items-center gap-1">
-              <div className={`w-4 h-4 rounded-md bg-gradient-to-r ${currentPath.color} flex items-center justify-center text-white`}>
+              <div className={`w-4 h-4 rounded-md bg-gradient-to-r ${theme === 'light' ? 'from-[#74C8A3] to-[#38B2A3]' : currentPath.color} flex items-center justify-center text-white`}>
                 <Icon className="w-3 h-3" />
               </div>
-              <span className="font-medium text-gray-200">Level {clampedLevel}</span>
-              <span className="text-gray-400">/ {totalSteps}</span>
+              <span className="font-medium text-gray-200 dark:text-gray-200 light:text-[#25323B]">Level {clampedLevel}</span>
+              <span className="text-gray-400 dark:text-gray-400 light:text-gray-500">/ {totalSteps}</span>
             </div>
-            <div className="text-[10px] text-gray-500 mt-1">
-              {currentPath.name}
+            <div className="text-[10px] text-gray-500 dark:text-gray-500 light:text-gray-600 mt-1">
+              {removeEmojis(currentPath.name)}
             </div>
           </div>
         </div>
