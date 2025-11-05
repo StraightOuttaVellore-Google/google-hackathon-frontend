@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Users, MessageCircle, Heart, Share2, ExternalLink, Loader, AlertCircle, Hash, Zap } from 'lucide-react'
-
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+import { API_BASE_URL } from '../config/apiConfig'
 
 /**
  * Community Chat Widget Component
@@ -190,8 +189,40 @@ export default function Community() {
     const token = localStorage.getItem('access_token')
     
     // Navigate to the chat app with token in query parameter
-    // Production Discord URL (hardcoded to avoid backend redeploy)
-    const DISCORD_APP_URL = import.meta.env.VITE_DISCORD_URL || 'https://sahay-discord-3ftxajsf4q-uc.a.run.app'
+    // Smart URL detection: use env var, or auto-detect local vs production
+    const getDiscordUrl = () => {
+      // 1. Check for explicit environment variable (highest priority)
+      if (import.meta.env.VITE_DISCORD_URL) {
+        return import.meta.env.VITE_DISCORD_URL;
+      }
+      
+      // 2. Auto-detect: if running locally, use localhost
+      const isLocal = window.location.hostname === 'localhost' || 
+                     window.location.hostname === '127.0.0.1' ||
+                     window.location.hostname.includes('localhost');
+      
+      if (isLocal) {
+        return 'http://localhost:3000'; // Discord app runs on port 3000 locally
+      }
+      
+      // 3. Production fallback: try to construct from current hostname
+      const currentHost = window.location.hostname;
+      const currentProtocol = window.location.protocol;
+      
+      // Try to replace 'frontend' with 'discord' in hostname
+      const discordHostname = currentHost.replace('frontend', 'discord')
+                                         .replace('sahay-frontend', 'sahay-discord')
+                                         .replace('google-hackathon-frontend', 'google-hackathon-discord');
+      
+      if (discordHostname !== currentHost) {
+        return `${currentProtocol}//${discordHostname}`;
+      }
+      
+      // Last resort: use hardcoded production URL
+      return 'https://sahay-discord-3ftxajsf4q-uc.a.run.app';
+    };
+    
+    const DISCORD_APP_URL = getDiscordUrl();
     
     if (token) {
       window.open(`${DISCORD_APP_URL}?token=${encodeURIComponent(token)}`, '_blank')

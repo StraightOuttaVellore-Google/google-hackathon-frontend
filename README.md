@@ -348,3 +348,4 @@ This project is part of the Google Hackathon submission.
 
 **Note**: For production deployment, ensure all environment variables are configured correctly. The frontend uses `VITE_` prefixed variables that are embedded at build time.
 
+

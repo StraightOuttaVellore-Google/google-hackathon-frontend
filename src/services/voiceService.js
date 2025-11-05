@@ -3,6 +3,7 @@
  */
 
 import { logger } from './loggingService';
+import { getWebSocketUrl } from '../config/apiConfig';
 
 export class VoiceService {
   constructor(onMessage, onStatusChange, onError) {
@@ -16,20 +17,8 @@ export class VoiceService {
   async connect(config) {
     return new Promise((resolve, reject) => {
       try {
-        // Get backend URL from environment variable
-        const apiBaseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-        
-        // Convert HTTP(S) URL to WebSocket URL
-        let wsUrl;
-        if (apiBaseUrl.startsWith('https://')) {
-          wsUrl = apiBaseUrl.replace('https://', 'wss://') + `/ws/${this.clientId}`;
-        } else if (apiBaseUrl.startsWith('http://')) {
-          wsUrl = apiBaseUrl.replace('http://', 'ws://') + `/ws/${this.clientId}`;
-        } else {
-          // Fallback for local development
-          const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-          wsUrl = `${protocol}//${window.location.hostname}:8000/ws/${this.clientId}`;
-        }
+        // Get backend URL from centralized config
+        const wsUrl = getWebSocketUrl(`/ws/${this.clientId}`);
         
         logger.info('Starting connection process', { wsUrl, clientId: this.clientId, config }, 'VoiceService');
         

@@ -1,7 +1,7 @@
 // Generic API utilities for all backend API calls
 // This file provides reusable functions and classes for API communication
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+import { API_BASE_URL } from '../config/apiConfig';
 
 /**
  * Custom error class for API errors

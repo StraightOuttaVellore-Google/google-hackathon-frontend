@@ -2,8 +2,6 @@
 // Handles all wearable device and health data API calls
 import { apiRequest } from "./utilApi";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-
 /**
  * Register a new wearable device
  * @param {Object} deviceData - Device information

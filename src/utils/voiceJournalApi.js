@@ -4,8 +4,7 @@
  */
 
 import { getAuthToken } from './loginApi';
-
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+import { API_BASE_URL } from '../config/apiConfig';
 
 /**
  * Complete a voice journal session and trigger wellness analysis

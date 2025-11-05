@@ -2,8 +2,6 @@
 // Fetches study and sound analytics from the backend
 import { apiRequest } from "./utilApi";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-
 /**
  * Base API call function with error handling
  */
