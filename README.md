@@ -9,24 +9,20 @@ This document provides a comprehensive overview of the Sahayata frontend applica
 ## 📸 Dashboard Screenshots
 
 ### Desktop Dashboard - Study Mode
-![Dashboard Screenshot 1 - Study Mode](./images/dashboard-study-mode.png)
+![Dashboard Screenshot 1 - Study Mode](./Screenshot%202025-11-06%20215335.png)
 *The clean, minimal dashboard interface in Study Mode with Pomodoro Timer, Sound Player, and Priority Matrix*
 
 ### Desktop Dashboard - Wellness Mode
-![Dashboard Screenshot 2 - Wellness Mode](./images/dashboard-wellness-mode.png)
+![Dashboard Screenshot 2 - Wellness Mode](./Screenshot%202025-11-06%20215349.png)
 *Wellness Mode featuring the Global Wellness Globe, Community Chat, and Wellness Pathways*
 
-### Mobile Responsive View
-![Mobile Dashboard](./images/dashboard-mobile.png)
-*Fully responsive design that adapts beautifully to mobile devices*
-
 ### 3D Globe Overlay
-![3D Globe Overlay](Screenshot 2025-11-06 215317.png)
+![3D Globe Overlay](./Screenshot%202025-11-06%20215407.png)
 *Interactive React 3D Globe with Reddit integration - click countries to explore communities*
 
-### Priority Matrix Overlay
-![Priority Matrix]()
-*Eisenhower Matrix in full overlay mode for comprehensive task management*
+### Landing Page 
+![Landing Page](./Screenshot%202025-11-06%20215317.png)
+*A production level landing page*
 
 ---
 
