@@ -21,11 +21,11 @@ This document provides a comprehensive overview of the Sahayata frontend applica
 *Fully responsive design that adapts beautifully to mobile devices*
 
 ### 3D Globe Overlay
-![3D Globe Overlay](./images/globe-overlay.png)
+![3D Globe Overlay](Screenshot 2025-11-06 215317.png)
 *Interactive React 3D Globe with Reddit integration - click countries to explore communities*
 
 ### Priority Matrix Overlay
-![Priority Matrix](./images/matrix-overlay.png)
+![Priority Matrix]()
 *Eisenhower Matrix in full overlay mode for comprehensive task management*
 
 ---
