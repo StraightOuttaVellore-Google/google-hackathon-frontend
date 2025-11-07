@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ArrowLeft, Smartphone, Globe, Download } from 'lucide-react'
+import { ArrowLeft, Smartphone, Globe, Download, ExternalLink, Mic, Heart, Brain, Shield, Zap, Link as LinkIcon } from 'lucide-react'
 import UserDropdown from '../components/UserDropdown'
 
 export default function ComingSoonPage() {
@@ -182,88 +182,296 @@ export default function ComingSoonPage() {
                 filter: 'brightness(1.2)'
               }}
             >
-              App Coming Soon
+              Sahayata App is Here
             </h1>
             <p 
               className="text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed relative z-10 mb-8"
               style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}
             >
-              We're working hard to bring you the Sahayata mobile app. 
+              Experience the power of AI-driven mental wellness in the palm of your hand. 
               <br />
-              <span className="text-blue-400 font-semibold">Enjoy our mobile-optimized web experience on your phone till then!</span>
+              <span className="text-blue-400 font-semibold">Download now and take your wellness journey anywhere.</span>
             </p>
+            
+            {/* Download Button */}
+            <div className="mt-8">
+              <a
+                href="https://drive.google.com/drive/folders/196kAG3SR_JZJdXmtmpvn3QjwlyFL9Et0?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 px-8 py-5 rounded-full font-medium text-white text-xl transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/50 hover:scale-105"
+                style={{
+                  background: 'linear-gradient(90deg, #3b6bff, #2e96ff 65%, #acb7ff)',
+                  fontFamily: 'Google Sans, Arial, Helvetica, sans-serif'
+                }}
+              >
+                <Download className="w-6 h-6" />
+                <span>Download Sahayata App</span>
+                <ExternalLink className="w-5 h-5" />
+              </a>
+            </div>
           </div>
 
-          {/* Features Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-            {/* Mobile Web Experience */}
+          {/* App Features Section */}
+          <div className="mb-20">
+            <h2 
+              className="text-4xl md:text-5xl font-bold text-white mb-12 text-center"
+              style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}
+            >
+              Powerful Features at Your Fingertips
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+              {/* Voice Journaling */}
             <div className="bg-black rounded-2xl p-8 border border-white/10 hover:border-blue-400/60 transition-all duration-300">
               <div className="flex items-center justify-center mb-4">
                 <div className="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center">
-                  <Smartphone className="w-8 h-8 text-blue-400" />
+                    <Mic className="w-8 h-8 text-blue-400" />
+                  </div>
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-4 text-center" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
+                  Voice Journaling
+                </h3>
+                <p className="text-gray-300 text-center leading-relaxed">
+                  Express your thoughts naturally through voice. Our AI-powered companion listens, understands, and provides personalized insights.
+                </p>
+              </div>
+
+              {/* Mood Tracking */}
+              <div className="bg-black rounded-2xl p-8 border border-white/10 hover:border-blue-400/60 transition-all duration-300">
+                <div className="flex items-center justify-center mb-4">
+                  <div className="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center">
+                    <Heart className="w-8 h-8 text-blue-400" />
                 </div>
               </div>
               <h3 className="text-2xl font-bold text-white mb-4 text-center" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
-                Mobile Web Experience
+                  Mood Tracking
               </h3>
               <p className="text-gray-300 text-center leading-relaxed">
-                Our web app is fully optimized for mobile devices. Access all features seamlessly on your smartphone browser.
+                  Track your emotional patterns over time with intelligent mood analysis and personalized wellness recommendations.
               </p>
             </div>
 
-            {/* Coming Soon */}
+              {/* AI-Powered Insights */}
             <div className="bg-black rounded-2xl p-8 border border-white/10 hover:border-blue-400/60 transition-all duration-300">
               <div className="flex items-center justify-center mb-4">
                 <div className="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center">
-                  <Download className="w-8 h-8 text-blue-400" />
+                    <Brain className="w-8 h-8 text-blue-400" />
+                  </div>
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-4 text-center" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
+                  AI-Powered Insights
+                </h3>
+                <p className="text-gray-300 text-center leading-relaxed">
+                  Leverage cutting-edge voice-based depression recognition technology with 96.5% accuracy for early detection.
+                </p>
+              </div>
+
+              {/* Privacy & Security */}
+              <div className="bg-black rounded-2xl p-8 border border-white/10 hover:border-blue-400/60 transition-all duration-300">
+                <div className="flex items-center justify-center mb-4">
+                  <div className="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center">
+                    <Shield className="w-8 h-8 text-blue-400" />
                 </div>
               </div>
               <h3 className="text-2xl font-bold text-white mb-4 text-center" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
-                Native App Coming Soon
+                  Privacy & Security
               </h3>
               <p className="text-gray-300 text-center leading-relaxed">
-                We're developing a native mobile app with enhanced features and offline capabilities. Stay tuned!
+                  Your data is encrypted with AES-256 encryption. All voice recordings and personal information remain completely private.
               </p>
             </div>
 
-            {/* Full Features */}
+              {/* Study & Wellness Modes */}
             <div className="bg-black rounded-2xl p-8 border border-white/10 hover:border-blue-400/60 transition-all duration-300">
               <div className="flex items-center justify-center mb-4">
                 <div className="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center">
-                  <Globe className="w-8 h-8 text-blue-400" />
+                    <Zap className="w-8 h-8 text-blue-400" />
+                  </div>
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-4 text-center" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
+                  Study & Wellness Modes
+                </h3>
+                <p className="text-gray-300 text-center leading-relaxed">
+                  Switch between study-focused journaling and wellness pathways. Tailored experiences for every aspect of your life.
+                </p>
+              </div>
+
+              {/* Offline Capabilities */}
+              <div className="bg-black rounded-2xl p-8 border border-white/10 hover:border-blue-400/60 transition-all duration-300">
+                <div className="flex items-center justify-center mb-4">
+                  <div className="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center">
+                    <Smartphone className="w-8 h-8 text-blue-400" />
                 </div>
               </div>
               <h3 className="text-2xl font-bold text-white mb-4 text-center" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
-                Full Feature Access
+                  Native App Experience
               </h3>
               <p className="text-gray-300 text-center leading-relaxed">
-                All features are available on the mobile web version. Voice journaling, mood tracking, and more!
+                  Faster performance, smoother animations, and better integration with your device. Experience Sahayata like never before.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Benefits of Native App */}
+          <div className="mb-20">
+            <div className="bg-gradient-to-br from-blue-900/20 to-black rounded-3xl p-8 md:p-12 border border-blue-400/30">
+              <h2 
+                className="text-3xl md:text-4xl font-bold text-white mb-8 text-center"
+                style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}
+              >
+                Why Choose the Native App?
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Zap className="w-6 h-6 text-blue-400" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-white mb-2" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
+                      Lightning Fast Performance
+                    </h3>
+                    <p className="text-gray-300 leading-relaxed">
+                      Native app architecture ensures instant loading, smooth animations, and responsive interactions that feel natural on your device.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Smartphone className="w-6 h-6 text-blue-400" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-white mb-2" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
+                      Optimized Mobile Experience
+                    </h3>
+                    <p className="text-gray-300 leading-relaxed">
+                      Built specifically for mobile devices with touch-optimized controls, gesture support, and seamless integration with your phone's capabilities.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Shield className="w-6 h-6 text-blue-400" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-white mb-2" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
+                      Enhanced Security
+                    </h3>
+                    <p className="text-gray-300 leading-relaxed">
+                      Benefit from device-level security features, secure local storage, and advanced encryption protocols for maximum data protection.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Globe className="w-6 h-6 text-blue-400" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-white mb-2" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
+                      Always Accessible
+                    </h3>
+                    <p className="text-gray-300 leading-relaxed">
+                      Access your wellness journey anytime, anywhere. The app icon on your home screen makes it just one tap away whenever you need support.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Future MCP Integration */}
+          <div className="mb-20">
+            <div className="bg-black rounded-3xl p-8 md:p-12 border border-white/10">
+              <div className="flex items-center justify-center mb-6">
+                <div className="w-20 h-20 bg-gradient-to-br from-blue-500/30 to-purple-500/30 rounded-full flex items-center justify-center">
+                  <LinkIcon className="w-10 h-10 text-blue-400" />
+                </div>
+              </div>
+              <h2 
+                className="text-3xl md:text-4xl font-bold text-white mb-6 text-center"
+                style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}
+              >
+                Coming Soon: MCP Server Integration
+              </h2>
+              <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto text-center leading-relaxed" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
+                We're revolutionizing how you interact with AI assistants. Soon, you'll be able to connect your MCP (Model Context Protocol) server directly to your Gemini CLI, creating a seamless bridge between your AI tools and your wellness journey.
               </p>
+              
+              <div className="bg-gradient-to-br from-blue-900/20 to-purple-900/20 rounded-2xl p-6 md:p-8 border border-blue-400/20 max-w-3xl mx-auto">
+                <h3 className="text-2xl font-bold text-white mb-4 text-center" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
+                  How It Works
+                </h3>
+                <div className="space-y-4 text-gray-300">
+                  <div className="flex items-start gap-3">
+                    <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <span className="text-white text-sm font-bold">1</span>
+                    </div>
+                    <p className="leading-relaxed">
+                      <strong className="text-white">Connect Your MCP Server:</strong> Our MCP server infrastructure is already operational and ready. Simply link it to your Gemini CLI environment.
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <span className="text-white text-sm font-bold">2</span>
+                    </div>
+                    <p className="leading-relaxed">
+                      <strong className="text-white">Seamless Task Integration:</strong> When you create tasks or reminders through Gemini CLI, they automatically sync to your Sahayata app.
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <span className="text-white text-sm font-bold">3</span>
+                    </div>
+                    <p className="leading-relaxed">
+                      <strong className="text-white">Unified Experience:</strong> Manage your wellness tasks, journal entries, and AI interactions all in one place. Your Gemini CLI becomes an extension of your wellness journey.
+                    </p>
+                  </div>
+                </div>
+                <div className="mt-6 p-4 bg-blue-500/10 rounded-xl border border-blue-400/30">
+                  <p className="text-blue-300 text-center" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
+                    <strong>Status:</strong> MCP server is fully operational. Gemini CLI integration coming soon!
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 
           {/* CTA Section */}
           <div className="text-center">
-            <div className="bg-black rounded-2xl p-8 md:p-12 border border-white/10 max-w-3xl mx-auto">
+            <div className="bg-gradient-to-br from-blue-900/20 to-black rounded-2xl p-8 md:p-12 border border-blue-400/30 max-w-3xl mx-auto">
               <h2 
                 className="text-3xl md:text-4xl font-bold text-white mb-6"
                 style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}
               >
-                Get Started Today
+                Start Your Wellness Journey Today
               </h2>
               <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto" style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}>
-                Access Sahayata on your mobile browser right now. No app download needed!
+                Download the Sahayata app now and experience the future of AI-powered mental wellness. Available for Android devices.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button
-                  onClick={() => navigate('/app')}
-                  className="px-6 py-4 rounded-full font-medium text-white text-lg transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/50"
+                <a
+                  href="https://drive.google.com/drive/folders/196kAG3SR_JZJdXmtmpvn3QjwlyFL9Et0?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full font-medium text-white text-lg transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/50 hover:scale-105"
                   style={{
                     background: 'linear-gradient(90deg, #3b6bff, #2e96ff 65%, #acb7ff)',
                     fontFamily: 'Google Sans, Arial, Helvetica, sans-serif'
                   }}
                 >
-                  Go to Web App
+                  <Download className="w-5 h-5" />
+                  <span>Download App</span>
+                  <ExternalLink className="w-5 h-5" />
+                </a>
+                <button
+                  onClick={() => navigate('/app')}
+                  className="px-6 py-4 rounded-full font-medium text-white text-lg transition-all duration-300 hover:bg-white/10 border border-blue-400"
+                  style={{
+                    background: 'rgba(255,255,255,0.08)',
+                    fontFamily: 'Google Sans, Arial, Helvetica, sans-serif'
+                  }}
+                >
+                  Try Web App
                 </button>
                 <button
                   onClick={() => navigate('/')}

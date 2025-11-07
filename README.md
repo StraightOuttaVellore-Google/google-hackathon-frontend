@@ -788,3 +788,5 @@ This project is part of the Google Hackathon submission.
 
 *Every design decision, every component, every feature was created with the goal of supporting and enhancing the mental wellbeing of young people. We believe technology should be a tool for healing, growth, and connection.*
 
+
+
