@@ -289,16 +289,10 @@ export default function SoundPlayer() {
           </div>
 
           {/* Open YouTube Music Button */}
-          <div className="flex-shrink-0">
-            {/* "Now with Youtube!!" text */}
-            <div className="text-center mb-2 flex-shrink-0">
-              <p className="text-xs md:text-sm text-white dark:text-white light:text-black font-medium">
-                Now with Youtube!!
-              </p>
-            </div>
+          <div className="flex-shrink-0 mt-4">
             <button
               onClick={() => setIsYouTubeOverlayOpen(true)}
-              className="w-full neumorphic-button-selected py-2 px-4 text-sm font-medium transition-all duration-500 flex items-center justify-center gap-2"
+              className="w-full neumorphic-button-selected py-3 px-4 text-sm font-medium transition-all duration-500 flex items-center justify-center gap-2 min-h-[44px]"
             >
               Open Youtube Music
             </button>

@@ -84,8 +84,8 @@
   box-shadow: 
     2px 2px 4px #000000, 
     -2px -2px 4px #1a1a1a,
-    0 0 20px rgba(102, 126, 234, 0.3),
-    0 0 40px rgba(79, 172, 254, 0.2);
+    0 0 12px rgba(102, 126, 234, 0.2),
+    0 0 24px rgba(79, 172, 254, 0.15);
   transform: scale(1.05);
   transition: all 0.5s ease;
   cursor: pointer;
@@ -112,16 +112,16 @@
   box-shadow: 
     2px 2px 4px rgba(0, 0, 0, 0.8), 
     -2px -2px 4px rgba(26, 26, 26, 0.5),
-    0 0 25px rgba(102, 126, 234, 0.4),
-    0 0 50px rgba(79, 172, 254, 0.3);
+    0 0 15px rgba(102, 126, 234, 0.25),
+    0 0 30px rgba(79, 172, 254, 0.2);
 }
 
 .neumorphic-button-selected:hover {
   box-shadow: 
     3px 3px 6px #000000, 
     -3px -3px 6px #1a1a1a,
-    0 0 25px rgba(102, 126, 234, 0.4),
-    0 0 50px rgba(79, 172, 254, 0.3);
+    0 0 15px rgba(102, 126, 234, 0.25),
+    0 0 30px rgba(79, 172, 254, 0.2);
   transform: scale(1.08);
 }
 
@@ -129,8 +129,8 @@
   box-shadow: 
     3px 3px 6px rgba(0, 0, 0, 0.9), 
     -3px -3px 6px rgba(26, 26, 26, 0.6),
-    0 0 30px rgba(102, 126, 234, 0.5),
-    0 0 60px rgba(79, 172, 254, 0.4);
+    0 0 18px rgba(102, 126, 234, 0.3),
+    0 0 36px rgba(79, 172, 254, 0.25);
   transform: scale(1.08);
 }
 
