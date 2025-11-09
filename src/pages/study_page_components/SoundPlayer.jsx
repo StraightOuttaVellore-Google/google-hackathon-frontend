@@ -3,6 +3,7 @@ import { Play, Pause, ChevronLeft, ChevronRight } from 'lucide-react';
 import useStudyStore from '../../stores/studyStore';
 import { TypeOfSound, Noises, Ambient } from '../../types/studyTypes';
 import { soundApi } from '../../utils/soundApi';
+import YouTubeIntegrationOverlay from '../../components/YouTubeIntegrationOverlay';
 
 // Import sounds
 import brownSound from '../../sounds/brown.mp3';
@@ -62,6 +63,9 @@ export default function SoundPlayer() {
   
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentSessionId, setCurrentSessionId] = useState(null);
+  const [isYouTubeOverlayOpen, setIsYouTubeOverlayOpen] = useState(false);
+  const [currentYouTubeVideo, setCurrentYouTubeVideo] = useState(null);
+  const [isUsingYouTube, setIsUsingYouTube] = useState(false);
   const audioRef = useRef(null);
   
   // Get current sound type and array
@@ -145,14 +149,35 @@ export default function SoundPlayer() {
     }
   };
 
-  // Toggle play/pause
+  // Toggle play/pause - handles both default sounds and YouTube videos
   const togglePlayPause = async () => {
-    if (audioRef.current) {
+    if (isUsingYouTube && currentYouTubeVideo) {
+      // Handle YouTube video play/pause
+      const { playVideo, pauseVideo, isPlaying: ytIsPlaying } = await import('../../utils/youtubePlayer');
+      if (ytIsPlaying()) {
+        pauseVideo();
+        setIsPlaying(false);
+      } else {
+        playVideo();
+        setIsPlaying(true);
+      }
+    } else if (audioRef.current) {
+      // Handle default sound play/pause
       if (isPlaying) {
         // Stopping playback
         audioRef.current.pause();
         await endCurrentSession(false);
+        setIsPlaying(false);
       } else {
+        // Stop YouTube if playing
+        if (isUsingYouTube && currentYouTubeVideo) {
+          const { pauseVideo, destroyPlayer } = await import('../../utils/youtubePlayer');
+          pauseVideo();
+          destroyPlayer();
+          setCurrentYouTubeVideo(null);
+          setIsUsingYouTube(false);
+        }
+        
         // Starting playback - create new session
         try {
           const response = await soundApi.startSession(sound.class_of_noise, sound.sub_classification);
@@ -166,14 +191,14 @@ export default function SoundPlayer() {
           console.error(`Error playing ${selectedSound} sound:`, error);
         });
         console.log(`Playing ${selectedSound} sound`);
+        setIsPlaying(true);
       }
-      setIsPlaying(!isPlaying);
     }
   };
 
   // Update audio source when selected sound changes
   useEffect(() => {
-    if (audioRef.current && selectedSound) {
+    if (audioRef.current && selectedSound && !isUsingYouTube) {
       const wasPlaying = isPlaying;
       audioRef.current.src = soundMap[selectedSound];
       audioRef.current.load();
@@ -185,7 +210,23 @@ export default function SoundPlayer() {
         });
       }
     }
-  }, [selectedSound, isPlaying]);
+  }, [selectedSound, isPlaying, isUsingYouTube]);
+
+  // Sync YouTube player state with main card
+  useEffect(() => {
+    if (isUsingYouTube && currentYouTubeVideo) {
+      const checkYouTubeState = async () => {
+        const { isPlaying: ytIsPlaying } = await import('../../utils/youtubePlayer');
+        const playing = ytIsPlaying();
+        if (playing !== isPlaying) {
+          setIsPlaying(playing);
+        }
+      };
+      
+      const interval = setInterval(checkYouTubeState, 500);
+      return () => clearInterval(interval);
+    }
+  }, [isUsingYouTube, currentYouTubeVideo, isPlaying]);
 
   // Get the dynamic card class based on selected sound
   const getMusicCardClass = () => {
@@ -199,109 +240,108 @@ export default function SoundPlayer() {
       {/* Neumorphic Music Card */}
       <div className={`h-full ${getMusicCardClass()}`}>
         {/* Content */}
-        <div className="h-full p-6">
-      <div className="flex flex-col h-full">
-        {/* Header */}
-        <div className="text-center mb-4 md:mb-6">
-          <h3 className="text-base md:text-lg font-semibold text-white dark:text-white light:text-black mb-2">
-            Ambient & Focus
-          </h3>
-          <p className="text-xs md:text-sm text-white/80 dark:text-white/80 light:text-black/70">
-            Choose your focus sound
-          </p>
-        </div>
-
-        {/* Sound Type Navigation */}
-        <div className="mb-6">
-          <div className="flex items-center justify-between bg-black/20 dark:bg-black/20 light:bg-white/20 rounded-lg p-3 backdrop-blur-sm">
-            <button 
-              onClick={() => navigateSoundType('prev')}
-              className={`neumorphic-sound-button min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0 ${
-                isAmbient ? 'opacity-50' : ''
-              }`}
-              disabled={isAmbient}
-            >
-              <ChevronLeft className="w-5 h-5 md:w-4 md:h-4" />
-            </button>
-            
-            <div className="text-center flex-1">
-              <p className="text-base md:text-lg font-semibold text-white dark:text-white light:text-black">
-                {isAmbient ? 'Ambient' : 'Noise'}
+        <div className="h-full p-6 flex flex-col">
+          {/* Header */}
+          <div className="text-center mb-4 md:mb-6 flex-shrink-0">
+            <h3 className="text-base md:text-lg font-semibold text-white dark:text-white light:text-black mb-2">
+              Ambient & Focus
+            </h3>
+            <p className="text-xs md:text-sm text-white/80 dark:text-white/80 light:text-black/70">
+              {isUsingYouTube ? 'YouTube Video' : 'Choose your focus sound'}
+            </p>
+            {isUsingYouTube && currentYouTubeVideo && (
+              <p className="text-xs text-white/60 dark:text-white/60 light:text-black/60 mt-1 truncate px-8">
+                {currentYouTubeVideo.title}
               </p>
-              <p className="text-xs text-white/60 dark:text-white/60 light:text-black/60">
-                {isAmbient ? 'Natural Sounds' : 'Colored Noise'}
-              </p>
-            </div>
-            
-            <button 
-              onClick={() => navigateSoundType('next')}
-              className={`neumorphic-sound-button min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0 ${
-                !isAmbient ? 'opacity-50' : ''
-              }`}
-              disabled={!isAmbient}
-            >
-              <ChevronRight className="w-5 h-5 md:w-4 md:h-4" />
-            </button>
-          </div>
-        </div>
-
-        {/* Specific Sound Navigation */}
-        <div className="mb-6 flex-1">
-          <div className="flex items-center justify-between bg-black/20 dark:bg-black/20 light:bg-white/20 rounded-lg p-3 backdrop-blur-sm">
-            <button 
-              onClick={() => navigateSound('prev')}
-              className="neumorphic-sound-button min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0"
-            >
-              <ChevronLeft className="w-5 h-5 md:w-4 md:h-4" />
-            </button>
-            
-            <div className="text-center flex-1">
-              <p className="text-base md:text-lg font-semibold text-white dark:text-white light:text-black">
-                {SOUND_LABELS[selectedSound]}
-              </p>
-              <div className="flex justify-center mt-2 space-x-1">
-                {currentSoundArray.map((_, index) => (
-                  <div 
-                    key={index}
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      soundIndex === index ? 'bg-white dark:bg-white light:bg-[#DDE7E0] shadow-lg scale-125' : 'bg-white/50 dark:bg-white/50 light:bg-black/50'
-                    }`}
-                  ></div>
-                ))}
-              </div>
-              <p className="text-xs text-white/60 dark:text-white/60 light:text-black/60 mt-1">
-                {soundIndex + 1} of {currentSoundArray.length}
-              </p>
-            </div>
-            
-            <button 
-              onClick={() => navigateSound('next')}
-              className="neumorphic-sound-button min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0"
-            >
-              <ChevronRight className="w-5 h-5 md:w-4 md:h-4" />
-            </button>
-          </div>
-        </div>
-
-        {/* Play/Pause Button */}
-        <div className="flex justify-center items-center flex-1">
-          <button
-            onClick={togglePlayPause}
-            className="neumorphic-play-button min-h-[56px] min-w-[56px] md:min-h-0 md:min-w-0"
-          >
-            {isPlaying ? (
-              <Pause className="w-7 h-7 md:w-6 md:h-6" />
-            ) : (
-              <Play className="w-7 h-7 md:w-6 md:h-6 ml-1" />
             )}
-          </button>
-        </div>
+          </div>
 
-        {/* Hidden audio element */}
-        <audio ref={audioRef} loop />
-        </div>
+          {/* Small Card with Current Sound and Play/Pause */}
+          <div 
+            onClick={() => setIsYouTubeOverlayOpen(true)}
+            className="neumorphic-button-selected p-4 mb-2 mt-4 cursor-pointer flex items-center justify-between gap-4 flex-shrink-0"
+          >
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-semibold text-white dark:text-white light:text-black truncate">
+                {isUsingYouTube && currentYouTubeVideo 
+                  ? currentYouTubeVideo.title 
+                  : SOUND_LABELS[selectedSound]}
+              </p>
+              <p className="text-xs text-white/60 dark:text-white/60 light:text-black/60 mt-1">
+                {isUsingYouTube 
+                  ? 'YouTube Music' 
+                  : `${isAmbient ? 'Ambient' : 'Noise'} • ${soundIndex + 1} of ${currentSoundArray.length}`}
+              </p>
+            </div>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                togglePlayPause();
+              }}
+              className="neumorphic-play-button min-h-[40px] min-w-[40px] flex-shrink-0"
+            >
+              {isPlaying && ((isUsingYouTube && currentYouTubeVideo) || (!isUsingYouTube && audioRef.current)) ? (
+                <Pause className="w-4 h-4" />
+              ) : (
+                <Play className="w-4 h-4 ml-0.5" />
+              )}
+            </button>
+          </div>
+
+          {/* Open YouTube Music Button */}
+          <div className="flex-shrink-0">
+            {/* "Now with Youtube!!" text */}
+            <div className="text-center mb-2 flex-shrink-0">
+              <p className="text-xs md:text-sm text-white dark:text-white light:text-black font-medium">
+                Now with Youtube!!
+              </p>
+            </div>
+            <button
+              onClick={() => setIsYouTubeOverlayOpen(true)}
+              className="w-full neumorphic-button-selected py-2 px-4 text-sm font-medium transition-all duration-500 flex items-center justify-center gap-2"
+            >
+              Open Youtube Music
+            </button>
+          </div>
+
+          {/* Hidden audio element */}
+          <audio ref={audioRef} loop />
+          
+          {/* Hidden YouTube Player Container - always present, persists even when overlay is closed */}
+          <div id="youtube-player-container" className="hidden fixed -z-10" style={{ width: '1px', height: '1px' }}></div>
         </div>
       </div>
+
+      {/* YouTube Integration Overlay */}
+      <YouTubeIntegrationOverlay
+        isOpen={isYouTubeOverlayOpen}
+        onClose={() => setIsYouTubeOverlayOpen(false)}
+        onVideoSelect={async (video) => {
+          // Stop default sound if playing
+          if (audioRef.current && isPlaying) {
+            audioRef.current.pause();
+            await endCurrentSession(false);
+          }
+          
+          setCurrentYouTubeVideo(video);
+          setIsUsingYouTube(true);
+          setIsPlaying(true);
+        }}
+        currentYouTubeVideo={currentYouTubeVideo}
+        isUsingYouTube={isUsingYouTube}
+        onUsingYouTubeChange={setIsUsingYouTube}
+        onPlayingChange={setIsPlaying}
+        // Sound selection props
+        currentSound={sound}
+        selectedSound={selectedSound}
+        soundIndex={soundIndex}
+        currentSoundArray={currentSoundArray}
+        isAmbient={isAmbient}
+        onNavigateSoundType={navigateSoundType}
+        onNavigateSound={navigateSound}
+        onTogglePlayPause={togglePlayPause}
+        isPlaying={isPlaying}
+      />
     </div>
   );
 }

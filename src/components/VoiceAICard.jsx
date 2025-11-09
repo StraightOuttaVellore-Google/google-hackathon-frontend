@@ -27,7 +27,7 @@ export default function VoiceAICard({ mode = 'wellness' }) {
         <div className="flex justify-center mt-4 md:mt-6">
           <button
             onClick={handleTalkClick}
-            className="relative backdrop-blur-lg rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden neumorphic-button min-h-[44px] px-4 md:px-4 py-2 md:py-2"
+            className="relative backdrop-blur-lg rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden neumorphic-button-selected min-h-[44px] px-4 md:px-4 py-2 md:py-2"
           >
             {/* Button Stars */}
             {[...Array(6)].map((_, i) => (

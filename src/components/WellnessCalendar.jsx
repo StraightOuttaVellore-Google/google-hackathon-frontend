@@ -121,14 +121,14 @@ export default function WellnessCalendar({ onDayClick }) {
             dayData 
               ? `${getMoodColor(dayData.emoji)} hover:shadow-md` 
               : 'hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400'
-          } ${isToday ? 'ring-2 ring-teal-400 dark:ring-teal-500' : ''}`}
+          } ${isToday ? 'neumorphic-calendar-button-today' : ''}`}
         >
           {dayData ? (
             <span className="text-lg" title={dayData.emoji}>
               {getMoodEmoji(dayData.emoji)}
             </span>
           ) : (
-            <span className={isToday ? 'font-bold text-teal-600 dark:text-teal-400' : ''}>{day}</span>
+            <span className={isToday ? 'font-bold' : ''}>{day}</span>
           )}
         </div>
       )
