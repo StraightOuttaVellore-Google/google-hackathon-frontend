@@ -134,6 +134,54 @@
   transform: scale(1.08);
 }
 
+/* Neomorphic Button - Selected State - Small Variant (for status badges) */
+.neumorphic-button-selected-small {
+  background: #000000;
+  color: white;
+  border: 1px solid transparent;
+  background-image: 
+    linear-gradient(#000000, #000000),
+    linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  border-radius: 6px;
+  padding: 3px 6px;
+  box-shadow: 
+    1px 1px 2px #000000, 
+    -1px -1px 2px #1a1a1a,
+    0 0 8px rgba(102, 126, 234, 0.2),
+    0 0 16px rgba(79, 172, 254, 0.15);
+  transform: scale(1);
+  transition: all 0.3s ease;
+  cursor: default;
+  font-weight: 500;
+  font-size: 9px;
+  line-height: 1.2;
+}
+
+.light .neumorphic-button-selected-small {
+  background: var(--primary);
+  color: #ffffff;
+  border: 1px solid color-mix(in srgb, var(--primary) 60%, var(--border-subtle));
+  background-image: none;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.08), -1px -1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.black .neumorphic-button-selected-small {
+  background: #000000;
+  border: 1px solid transparent;
+  background-image: 
+    linear-gradient(#000000, #000000),
+    linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  box-shadow: 
+    1px 1px 2px rgba(0, 0, 0, 0.8), 
+    -1px -1px 2px rgba(26, 26, 26, 0.5),
+    0 0 8px rgba(102, 126, 234, 0.2),
+    0 0 16px rgba(79, 172, 254, 0.15);
+}
+
 /* Neomorphic Card with Star Effects */
 .neumorphic-card-with-stars {
   background: rgba(0, 0, 0, 0.3);

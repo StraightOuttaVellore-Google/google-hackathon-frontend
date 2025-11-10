@@ -51,23 +51,23 @@ const statusColors = {
 // Remove taskService - now using Zustand store
 
 function TaskItem({ task, onUpdateStatus, isWidget = false }) {
-  const getStatusBadgeClass = () => {
+  const getStatusTextColor = () => {
     switch (task.status) {
       case TaskStatus.TODO:
-        return 'bg-gray-500/20 dark:bg-gray-500/20 light:bg-white text-gray-300 dark:text-gray-300 light:text-black border-gray-400/30 dark:border-gray-400/30 light:border-black/20';
+        return 'text-gray-300 dark:text-gray-300 light:text-black';
       case TaskStatus.IN_PROGRESS:
-        return 'bg-blue-500/20 text-blue-300 border-blue-400/30';
+        return 'text-blue-300 dark:text-blue-300 light:text-blue-600';
       case TaskStatus.COMPLETED:
-        return 'bg-green-500/20 text-green-300 border-green-400/30';
+        return 'text-green-300 dark:text-green-300 light:text-green-600';
       default:
-        return 'bg-gray-500/20 dark:bg-gray-500/20 light:bg-white text-gray-300 dark:text-gray-300 light:text-black border-gray-400/30 dark:border-gray-400/30 light:border-black/20';
+        return 'text-gray-300 dark:text-gray-300 light:text-black';
     }
   };
 
   return (
     <div className="neumorphic-matrix-card p-3 rounded-lg relative flex-shrink-0">
       <div className="flex items-center gap-2 min-w-0">
-        <div className={`text-xs px-2 py-1 rounded-md border font-medium flex-shrink-0 status-badge ${getStatusBadgeClass()}`}>
+        <div className={`flex-shrink-0 status-badge neumorphic-button-selected-small ${getStatusTextColor()}`}>
           {statusLabels[task.status]}
         </div>
         <h4 className={`text-xs font-semibold truncate ${task.status === TaskStatus.COMPLETED ? 'line-through opacity-60' : ''} text-white dark:text-white light:text-black flex-1 min-w-0`}>
