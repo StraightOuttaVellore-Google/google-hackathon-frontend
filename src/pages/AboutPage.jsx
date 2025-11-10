@@ -780,7 +780,7 @@ export default function AboutPage() {
                   <div className="bg-orange-500/20 rounded-xl p-6 border border-orange-400/40">
                     <div className="flex items-center gap-3 mb-3">
                       <Database className="w-6 h-6 text-orange-400" />
-                      <h5 className="text-white font-bold text-lg">PostgreSQL Database</h5>
+                      <h5 className="text-white font-bold text-lg">Firebase Firestore Database</h5>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-300">
                       <div>• User Accounts</div>
@@ -789,6 +789,9 @@ export default function AboutPage() {
                       <div>• Community Data</div>
                       <div>• Reddit Posts/Comments</div>
                       <div>• Wearable Data</div>
+                      <div>• Voice Journal Sessions</div>
+                      <div>• Chat Messages</div>
+                      <div>• Moodboard Data</div>
                     </div>
                   </div>
                 </div>
@@ -810,13 +813,14 @@ export default function AboutPage() {
                 <div className="bg-black/50 rounded-xl p-6 border border-white/5">
                   <h4 className="text-white font-bold mb-3">Backend Stack:</h4>
                   <ul className="text-gray-300 space-y-1 text-sm">
-                    <li>• FastAPI 0.115.0</li>
-                    <li>• SQLModel 0.0.22 (SQLAlchemy ORM)</li>
-                    <li>• PostgreSQL Database</li>
+                    <li>• FastAPI 0.120.4</li>
+                    <li>• Firebase Firestore Database</li>
+                    <li>• Google Gemini Live API</li>
                     <li>• JWT Authentication</li>
                     <li>• WebSocket Support</li>
-                    <li>• Google Gemini Live API</li>
                     <li>• MCP Server</li>
+                    <li>• Google ADK (Agent Development Kit)</li>
+                    <li>• Mem0 for conversation memory</li>
                   </ul>
                 </div>
               </div>

@@ -51,23 +51,8 @@ const ArchitectureCard = () => {
   ];
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-3 md:px-6">
-      <div 
-        className="rounded-2xl md:rounded-3xl p-6 md:p-12 transition-all duration-300"
-        style={{
-          background: '#000000',
-          borderRadius: '24px',
-          border: '1px solid rgba(255,255,255,0.3)',
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.border = '1px solid rgba(66, 133, 244, 0.6)';
-          e.currentTarget.style.boxShadow = '0 0 20px rgba(66, 133, 244, 0.3), 0 0 40px rgba(66, 133, 244, 0.15)';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.border = '1px solid rgba(255,255,255,0.3)';
-          e.currentTarget.style.boxShadow = 'none';
-        }}
-      >
+    <div className="w-full">
+      <div className="transition-all duration-300">
         {/* Architecture Diagram */}
         <div className="space-y-4 md:space-y-6">
           {architectureLayers.map((layer, index) => (

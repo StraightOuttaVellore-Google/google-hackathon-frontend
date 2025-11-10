@@ -353,6 +353,7 @@ export default function LandingPage() {
                 <button 
                   onClick={() => navigate('/models')}
                   className="text-white/80 hover:text-white font-medium text-xl transition-all duration-300 relative group"
+                  style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}
                 >
                   Models
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#4285f4] to-[#a142f4] group-hover:w-full transition-all duration-300"></span>
@@ -360,6 +361,7 @@ export default function LandingPage() {
                 <button 
                   onClick={() => navigate('/research')}
                   className="text-white/80 hover:text-white font-medium text-xl transition-all duration-300 relative group"
+                  style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}
                 >
                   Research
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#4285f4] to-[#a142f4] group-hover:w-full transition-all duration-300"></span>
@@ -367,6 +369,7 @@ export default function LandingPage() {
                 <button 
                   onClick={() => navigate('/science')}
                   className="text-white/80 hover:text-white font-medium text-xl transition-all duration-300 relative group"
+                  style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}
                 >
                   Science
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#4285f4] to-[#a142f4] group-hover:w-full transition-all duration-300"></span>
@@ -374,6 +377,7 @@ export default function LandingPage() {
                 <button 
                   onClick={() => navigate('/about')}
                   className="text-white/80 hover:text-white font-medium text-xl transition-all duration-300 relative group"
+                  style={{ fontFamily: 'Google Sans, Arial, Helvetica, sans-serif' }}
                 >
                   About
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#4285f4] to-[#a142f4] group-hover:w-full transition-all duration-300"></span>
@@ -1026,9 +1030,10 @@ export default function LandingPage() {
               <div className="bg-black rounded-2xl overflow-hidden border border-gray-300/30 hover:border-blue-400/60 transition-all duration-300">
                 <div className="aspect-video overflow-hidden bg-black flex items-center justify-center">
                   <img 
-                    src="/images/16f6e1ea-b24f-4aa3-826c-1d847809b91a-removebg-preview.png" 
+                    src="/images/sahayataAILOGO.png" 
                     alt="AI-Driven Conversational Agents for Youth"
                     className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                    style={{ filter: 'brightness(1.2) contrast(1.1)', opacity: 1 }}
                   />
                 </div>
                 <div className="p-6 relative z-10">
@@ -1055,9 +1060,10 @@ export default function LandingPage() {
               <div className="bg-black rounded-2xl overflow-hidden border border-gray-300/30 hover:border-blue-400/60 transition-all duration-300">
                 <div className="aspect-video overflow-hidden bg-black flex items-center justify-center">
                   <img 
-                    src="/images/16f6e1ea-b24f-4aa3-826c-1d847809b91a-removebg-preview.png" 
+                    src="/images/SAHAYATAR&DLOGO.png" 
                     alt="Voice-Based Depression Recognition"
                     className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                    style={{ filter: 'brightness(1.2) contrast(1.1)', opacity: 1 }}
                   />
                 </div>
                 <div className="p-6 relative z-10">
@@ -1084,9 +1090,10 @@ export default function LandingPage() {
               <div className="bg-black rounded-2xl overflow-hidden border border-gray-300/30 hover:border-blue-400/60 transition-all duration-300">
                 <div className="aspect-video overflow-hidden bg-black flex items-center justify-center">
                   <img 
-                    src="/images/16f6e1ea-b24f-4aa3-826c-1d847809b91a-removebg-preview.png" 
+                    src="/images/SAHAYATAIOTLOGO.png" 
                     alt="STARS Guided Chatbot Trial"
                     className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                    style={{ filter: 'brightness(1.2) contrast(1.1)', opacity: 1 }}
                   />
                 </div>
                 <div className="p-6 relative z-10">
@@ -1113,9 +1120,10 @@ export default function LandingPage() {
               <div className="bg-black rounded-2xl overflow-hidden border border-gray-300/30 hover:border-blue-400/60 transition-all duration-300">
                 <div className="aspect-video overflow-hidden bg-black flex items-center justify-center">
                   <img 
-                    src="/images/16f6e1ea-b24f-4aa3-826c-1d847809b91a-removebg-preview.png" 
+                    src="/images/googlesahayatalogo.png" 
                     alt="Federated Learning in Mental Health"
                     className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                    style={{ filter: 'brightness(1.2) contrast(1.1)', opacity: 1 }}
                   />
                 </div>
                 <div className="p-6 relative z-10">
@@ -1453,7 +1461,7 @@ export default function LandingPage() {
       <footer className="py-6 md:py-8 px-3 md:px-6 border-t border-gray-800" style={{ background: 'linear-gradient(135deg, #000000 0%, #000000 30%, #060606 70%, #000000 100%)' }}>
         <div className="container mx-auto max-w-6xl text-center">
           <p className="text-sm md:text-base text-gray-400">
-            Built with ❤️ for your mental wellness journey
+            © 2025 Sahayata. All rights reserved. Sahayata™ is a trademark of Sahayata Inc.
           </p>
         </div>
       </footer>
