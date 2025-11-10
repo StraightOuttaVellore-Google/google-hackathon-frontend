@@ -7,6 +7,7 @@ import {
 } from '@heroicons/react/24/solid';
 import { fetchAllMonthlyStats, transformStatsData, generateMockStats } from '../utils/statsApi';
 import WearableInsightsOverlay from './WearableInsightsOverlay';
+import { useTheme } from '../contexts/ThemeContext';
 
 export default function MonthlyStats({ onHistoryClick }) {
     const [currentCard, setCurrentCard] = useState(0);
@@ -14,6 +15,8 @@ export default function MonthlyStats({ onHistoryClick }) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [wearableOverlayOpen, setWearableOverlayOpen] = useState(false);
+    const { theme } = useTheme();
+    const isDark = theme === 'dark' || theme === 'black';
 
     useEffect(() => {
         const fetchStats = async () => {
@@ -286,7 +289,44 @@ export default function MonthlyStats({ onHistoryClick }) {
 
                 {/* Card Content */}
                 <div 
-                  className="flex-1 flex items-center justify-center cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/50 light:hover:bg-[rgba(116,200,163,0.1)] rounded-lg transition-colors"
+                  className="flex-1 flex items-center justify-center cursor-pointer rounded-lg transition-all duration-300 relative"
+                  style={{
+                    border: '2px solid transparent',
+                    background: 'transparent',
+                  }}
+                  onMouseEnter={(e) => {
+                    // Apply hover effect - theme-aware
+                    if (isDark) {
+                      // Dark mode: gradient border
+                      const bgColor = '#000000';
+                      e.currentTarget.style.background = bgColor;
+                      e.currentTarget.style.backgroundImage = 
+                        `linear-gradient(${bgColor}, ${bgColor}), linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%)`;
+                      e.currentTarget.style.backgroundOrigin = 'border-box';
+                      e.currentTarget.style.backgroundClip = 'padding-box, border-box';
+                      e.currentTarget.style.border = '2px solid transparent';
+                      e.currentTarget.style.boxShadow = 
+                        '2px 2px 4px #000000, -2px -2px 4px #1a1a1a, 0 0 12px rgba(102, 126, 234, 0.2), 0 0 24px rgba(79, 172, 254, 0.15)';
+                    } else {
+                      // Light mode: just aurora green background, no border
+                      e.currentTarget.style.background = 'rgba(56, 178, 163, 0.25)';
+                      e.currentTarget.style.backgroundImage = 'none';
+                      e.currentTarget.style.backgroundOrigin = 'initial';
+                      e.currentTarget.style.backgroundClip = 'initial';
+                      e.currentTarget.style.border = '2px solid transparent';
+                      e.currentTarget.style.boxShadow = 
+                        '2px 2px 4px rgba(0, 0, 0, 0.1), -2px -2px 4px rgba(56, 178, 163, 0.4)';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    // Remove hover effect
+                    e.currentTarget.style.background = 'transparent';
+                    e.currentTarget.style.backgroundImage = 'none';
+                    e.currentTarget.style.backgroundOrigin = 'initial';
+                    e.currentTarget.style.backgroundClip = 'initial';
+                    e.currentTarget.style.border = '2px solid transparent';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
                   onClick={() => {
                     if (currentCardData.id === 'wearable-insights') {
                         handleWearableCardClick();

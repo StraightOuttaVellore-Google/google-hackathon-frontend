@@ -216,12 +216,12 @@ const YouTubeIntegrationOverlay = ({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-4 md:p-6 bg-black/20">
+        <div className="flex items-center justify-between p-4 md:p-6 border-b border-white/20 dark:border-white/20 light:border-[rgba(116,200,163,0.3)] bg-black/20 dark:bg-black/20 light:bg-[rgba(116,200,163,0.15)]">
           <div>
             <h2 className="text-xl md:text-2xl font-bold text-white dark:text-white light:text-black">
               YouTube Music
             </h2>
-            <p className="text-sm md:text-base text-white/80 dark:text-white/80 light:text-black/80">
+            <p className="text-sm md:text-base text-white/80 dark:text-white/80 light:text-black/70">
               Search and play YouTube videos for focus and ambient sounds
             </p>
           </div>
@@ -244,7 +244,7 @@ const YouTubeIntegrationOverlay = ({
               
               {/* Sound Type Navigation */}
               <div className="mb-4">
-                <div className="flex items-center justify-between bg-black/20 dark:bg-black/20 light:bg-white/20 rounded-lg p-3 backdrop-blur-sm">
+                <div className="flex items-center justify-between bg-black/20 dark:bg-black/20 light:bg-[rgba(116,200,163,0.1)] rounded-lg p-3 backdrop-blur-sm">
                   <button 
                     onClick={async () => {
                       // Stop YouTube if playing
@@ -306,7 +306,7 @@ const YouTubeIntegrationOverlay = ({
 
               {/* Specific Sound Navigation */}
               <div className="mb-4">
-                <div className="flex items-center justify-between bg-black/20 dark:bg-black/20 light:bg-white/20 rounded-lg p-3 backdrop-blur-sm">
+                <div className="flex items-center justify-between bg-black/20 dark:bg-black/20 light:bg-[rgba(116,200,163,0.1)] rounded-lg p-3 backdrop-blur-sm">
                   <button 
                     onClick={async () => {
                       // Stop YouTube if playing
@@ -391,7 +391,7 @@ const YouTubeIntegrationOverlay = ({
 
           {/* YouTube Player Container - Shows player from main container */}
           {currentYouTubeVideo && currentVideoId && (
-            <div className="mb-6 p-4 bg-black/20 rounded-lg">
+            <div className="mb-6 p-4 bg-black/20 dark:bg-black/20 light:bg-[rgba(116,200,163,0.1)] rounded-lg">
               <h3 className="text-lg font-semibold text-white dark:text-white light:text-black mb-3">
                 Now Playing
               </h3>
@@ -457,7 +457,7 @@ const YouTubeIntegrationOverlay = ({
                   return (
                     <div
                       key={videoId}
-                      className="p-3 bg-black/20 rounded-lg cursor-pointer hover:bg-black/30 transition-colors flex items-center gap-3"
+                      className="p-3 bg-black/20 dark:bg-black/20 light:bg-[rgba(116,200,163,0.1)] rounded-lg cursor-pointer hover:bg-black/30 dark:hover:bg-black/30 light:hover:bg-[rgba(116,200,163,0.2)] transition-colors flex items-center gap-3"
                       onClick={() => handleVideoSelect(video)}
                     >
                       <img
